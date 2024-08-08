@@ -64,3 +64,5 @@ Route::post('/twilio/whatsapp', [TwilioController::class, 'handleIncomingMessage
 Route::get('/chatbot-script/{id}',[ChatBotController::class, 'getChatbotScript'])->name('chatbot.script');
 Route::get('/test-chatbot-script', [ChatBotController::class, 'testChatbotScript']);
 
+Route::get('/website-bot', [ChatBotController::class, 'websiteChat'])->name('website.bot');
+

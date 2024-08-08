@@ -96,13 +96,13 @@
                 <div class="bot-option">
                     <div class="d-flex align-items-center">
                         <i class="fa-solid fa-database"></i>
-                        <span class="lead"  data-type="lead">Lead Generation Bot (or) Any Data Collection Bot</span>
+                        <span class="lead"  onclick="dataType('lead')">Lead Generation Bot (or) Any Data Collection Bot</span>
                     </div>
                 </div>
                 <div class="bot-option">
                     <div class="d-flex align-items-center">
                         <i class="fa-solid fa-headphones"></i>
-                        <span style="float: right; line-height: 1;color: #000;" data-dismiss="modal" data-toggle="modal"  aria-label="Close" data-target="#createCustomerSupportBotModal" class="lead" data-type="support">Customer Support Bot</span>
+                        <span style="float: right; line-height: 1;color: #000;" data-dismiss="modal" data-toggle="modal"  aria-label="Close" data-target="#createCustomerSupportBotModal" class="lead"  onclick="dataType('support')" >Customer Support Bot</span>
                     </div>
                 </div>
             </div>
@@ -144,7 +144,7 @@
                 <form action="{{route('savebot')}}" method ="post">
                   @csrf
                     <div class="form-group w-80 pt-3">
-                    <input type="hidden" class="form-control" id="type" name ="type" value="">
+                    <input type="hidden" class="form-control" id="bottype" name ="type" value="">
 
                         <input type="text" class="form-control" id="botName" name ="name" placeholder="Enter bot name">
                     </div>
@@ -193,9 +193,10 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 4
     <script>
-        $('.lead').on('click',function(){
-          var val =  $('.lead').attr('data-type');
-          alert(val);
-        })
+       function dataType(data)
+      {
+        $('#bottype').val(data);
+      }
+     
     </script>
 @endsection

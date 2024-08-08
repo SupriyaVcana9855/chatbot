@@ -1,0 +1,444 @@
+[30-Oct-2023 11:52:40 UTC] PHP Warning:  require_once(include/db.php): Failed to open stream: No such file or directory in /home/vglobal/public_html/chatbot/config.php on line 15
+[30-Oct-2023 11:52:40 UTC] PHP Fatal error:  Uncaught Error: Failed opening required 'include/db.php' (include_path='.:/opt/cpanel/ea-php80/root/usr/share/pear') in /home/vglobal/public_html/chatbot/config.php:15
+Stack trace:
+#0 /home/vglobal/public_html/chatbot/index.php(15): require_once()
+#1 {main}
+  thrown in /home/vglobal/public_html/chatbot/config.php on line 15
+[30-Oct-2023 11:59:09 UTC] PHP Fatal error:  Uncaught Error: Undefined constant "JAK_IP_BLOCK" in /home/vglobal/public_html/chatbot/index.php:54
+Stack trace:
+#0 {main}
+  thrown in /home/vglobal/public_html/chatbot/index.php on line 54
+[30-Oct-2023 12:00:05 UTC] PHP Warning:  Undefined array key 1 in /home/vglobal/public_html/chatbot/index.php on line 63
+[30-Oct-2023 12:00:05 UTC] PHP Warning:  Undefined variable $LC_DEPARTMENTS in /home/vglobal/public_html/chatbot/index.php on line 82
+[30-Oct-2023 12:00:05 UTC] PHP Warning:  Undefined variable $jakwidget in /home/vglobal/public_html/chatbot/index.php on line 82
+[30-Oct-2023 12:00:05 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/vglobal/public_html/chatbot/index.php on line 82
+[30-Oct-2023 12:00:05 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/vglobal/public_html/chatbot/index.php on line 82
+[30-Oct-2023 12:00:05 UTC] PHP Warning:  Undefined variable $jakwidget in /home/vglobal/public_html/chatbot/index.php on line 82
+[30-Oct-2023 12:00:05 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/vglobal/public_html/chatbot/index.php on line 82
+[30-Oct-2023 12:00:05 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/vglobal/public_html/chatbot/index.php on line 82
+[30-Oct-2023 12:00:05 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ':opid OR opid = :opid) AND access = 1' at line 1 in /home/vglobal/public_html/chatbot/include/functions.php:216
+Stack trace:
+#0 /home/vglobal/public_html/chatbot/include/functions.php(216): PDOStatement->execute()
+#1 /home/vglobal/public_html/chatbot/index.php(82): online_operators(NULL, NULL, NULL, NULL)
+#2 {main}
+  thrown in /home/vglobal/public_html/chatbot/include/functions.php on line 216
+[30-Oct-2023 12:01:03 UTC] PHP Warning:  Undefined array key 1 in /home/vglobal/public_html/chatbot/index.php on line 63
+[30-Oct-2023 12:01:03 UTC] PHP Warning:  Undefined variable $LC_DEPARTMENTS in /home/vglobal/public_html/chatbot/index.php on line 82
+[30-Oct-2023 12:01:03 UTC] PHP Warning:  Undefined variable $jakwidget in /home/vglobal/public_html/chatbot/index.php on line 82
+[30-Oct-2023 12:01:03 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/vglobal/public_html/chatbot/index.php on line 82
+[30-Oct-2023 12:01:03 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/vglobal/public_html/chatbot/index.php on line 82
+[30-Oct-2023 12:01:03 UTC] PHP Warning:  Undefined variable $jakwidget in /home/vglobal/public_html/chatbot/index.php on line 82
+[30-Oct-2023 12:01:03 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/vglobal/public_html/chatbot/index.php on line 82
+[30-Oct-2023 12:01:03 UTC] PHP Warning:  Trying to access array offset on value of type null in /home/vglobal/public_html/chatbot/index.php on line 82
+[30-Oct-2023 12:01:03 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MariaDB server version for the right syntax to use near ':opid OR opid = :opid) AND access = 1' at line 1 in /home/vglobal/public_html/chatbot/include/functions.php:216
+Stack trace:
+#0 /home/vglobal/public_html/chatbot/include/functions.php(216): PDOStatement->execute()
+#1 /home/vglobal/public_html/chatbot/index.php(82): online_operators(NULL, NULL, NULL, NULL)
+#2 {main}
+  thrown in /home/vglobal/public_html/chatbot/include/functions.php on line 216
+[30-Oct-2023 12:01:05 UTC] PHP Warning:  Undefined array key 1 in /home/vglobal/public_html/chatbot/index.php on line 63
+[30-Oct-2023 12:01:05 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function online_operators() in /home/vglobal/public_html/chatbot/index.php:82
+Stack trace:
+#0 {main}
+  thrown in /home/vglobal/public_html/chatbot/index.php on line 82
+[30-Oct-2023 12:01:07 UTC] PHP Warning:  Undefined array key 1 in /home/vglobal/public_html/chatbot/index.php on line 63
+[30-Oct-2023 12:01:07 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function online_operators() in /home/vglobal/public_html/chatbot/index.php:82
+Stack trace:
+#0 {main}
+  thrown in /home/vglobal/public_html/chatbot/index.php on line 82
+[30-Oct-2023 12:01:08 UTC] PHP Warning:  Undefined array key 1 in /home/vglobal/public_html/chatbot/index.php on line 63
+[30-Oct-2023 12:01:08 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function online_operators() in /home/vglobal/public_html/chatbot/index.php:82
+Stack trace:
+#0 {main}
+  thrown in /home/vglobal/public_html/chatbot/index.php on line 82
+[30-Oct-2023 12:02:00 UTC] PHP Warning:  Undefined array key 1 in /home/vglobal/public_html/chatbot/index.php on line 63
+[30-Oct-2023 12:21:57 UTC] PHP Fatal error:  Uncaught Error: Class "JAK_rewrite" not found in /home/vglobal/public_html/chatbot/config.php:96
+Stack trace:
+#0 /home/vglobal/public_html/chatbot/index.php(15): require_once()
+#1 {main}
+  thrown in /home/vglobal/public_html/chatbot/config.php on line 96
+[30-Oct-2023 12:22:29 UTC] PHP Warning:  Undefined variable $getURL in /home/vglobal/public_html/chatbot/config.php on line 99
+[30-Oct-2023 12:22:29 UTC] PHP Fatal error:  Uncaught Error: Call to a member function jakGetseg() on null in /home/vglobal/public_html/chatbot/config.php:99
+Stack trace:
+#0 /home/vglobal/public_html/chatbot/index.php(15): require_once()
+#1 {main}
+  thrown in /home/vglobal/public_html/chatbot/config.php on line 99
+[30-Oct-2023 12:22:34 UTC] PHP Warning:  Undefined variable $getURL in /home/vglobal/public_html/chatbot/config.php on line 99
+[30-Oct-2023 12:22:34 UTC] PHP Fatal error:  Uncaught Error: Call to a member function jakGetseg() on null in /home/vglobal/public_html/chatbot/config.php:99
+Stack trace:
+#0 /home/vglobal/public_html/chatbot/index.php(15): require_once()
+#1 {main}
+  thrown in /home/vglobal/public_html/chatbot/config.php on line 99
+[30-Oct-2023 12:22:56 UTC] PHP Warning:  Undefined variable $tempp in /home/vglobal/public_html/chatbot/config.php on line 173
+[30-Oct-2023 12:22:56 UTC] PHP Warning:  Undefined variable $tempp1 in /home/vglobal/public_html/chatbot/config.php on line 174
+[30-Oct-2023 12:22:56 UTC] PHP Warning:  Undefined variable $tempp2 in /home/vglobal/public_html/chatbot/config.php on line 175
+[30-Oct-2023 12:22:56 UTC] PHP Warning:  Undefined variable $tempp3 in /home/vglobal/public_html/chatbot/config.php on line 176
+[30-Oct-2023 12:22:56 UTC] PHP Warning:  Undefined variable $tempp4 in /home/vglobal/public_html/chatbot/config.php on line 177
+[30-Oct-2023 12:22:56 UTC] PHP Warning:  Undefined variable $tempp5 in /home/vglobal/public_html/chatbot/config.php on line 178
+[30-Oct-2023 12:22:56 UTC] PHP Warning:  Undefined variable $tempp6 in /home/vglobal/public_html/chatbot/config.php on line 179
+[30-Oct-2023 12:22:56 UTC] PHP Warning:  Undefined variable $tempp7 in /home/vglobal/public_html/chatbot/config.php on line 180
+[30-Oct-2023 12:22:56 UTC] PHP Warning:  Undefined variable $getURL in /home/vglobal/public_html/chatbot/index.php on line 49
+[30-Oct-2023 12:22:56 UTC] PHP Fatal error:  Uncaught Error: Call to a member function jakRealrequest() on null in /home/vglobal/public_html/chatbot/index.php:49
+Stack trace:
+#0 {main}
+  thrown in /home/vglobal/public_html/chatbot/index.php on line 49
+[30-Oct-2023 12:23:01 UTC] PHP Warning:  Undefined variable $tempp in /home/vglobal/public_html/chatbot/config.php on line 173
+[30-Oct-2023 12:23:01 UTC] PHP Warning:  Undefined variable $tempp1 in /home/vglobal/public_html/chatbot/config.php on line 174
+[30-Oct-2023 12:23:01 UTC] PHP Warning:  Undefined variable $tempp2 in /home/vglobal/public_html/chatbot/config.php on line 175
+[30-Oct-2023 12:23:01 UTC] PHP Warning:  Undefined variable $tempp3 in /home/vglobal/public_html/chatbot/config.php on line 176
+[30-Oct-2023 12:23:01 UTC] PHP Warning:  Undefined variable $tempp4 in /home/vglobal/public_html/chatbot/config.php on line 177
+[30-Oct-2023 12:23:01 UTC] PHP Warning:  Undefined variable $tempp5 in /home/vglobal/public_html/chatbot/config.php on line 178
+[30-Oct-2023 12:23:01 UTC] PHP Warning:  Undefined variable $tempp6 in /home/vglobal/public_html/chatbot/config.php on line 179
+[30-Oct-2023 12:23:01 UTC] PHP Warning:  Undefined variable $tempp7 in /home/vglobal/public_html/chatbot/config.php on line 180
+[30-Oct-2023 12:23:01 UTC] PHP Warning:  Undefined variable $getURL in /home/vglobal/public_html/chatbot/index.php on line 49
+[30-Oct-2023 12:23:01 UTC] PHP Fatal error:  Uncaught Error: Call to a member function jakRealrequest() on null in /home/vglobal/public_html/chatbot/index.php:49
+Stack trace:
+#0 {main}
+  thrown in /home/vglobal/public_html/chatbot/index.php on line 49
+[30-Oct-2023 12:23:19 UTC] PHP Warning:  Undefined variable $tempp in /home/vglobal/public_html/chatbot/config.php on line 173
+[30-Oct-2023 12:23:19 UTC] PHP Warning:  Undefined variable $tempp1 in /home/vglobal/public_html/chatbot/config.php on line 174
+[30-Oct-2023 12:23:19 UTC] PHP Warning:  Undefined variable $tempp2 in /home/vglobal/public_html/chatbot/config.php on line 175
+[30-Oct-2023 12:23:19 UTC] PHP Warning:  Undefined variable $tempp3 in /home/vglobal/public_html/chatbot/config.php on line 176
+[30-Oct-2023 12:23:19 UTC] PHP Warning:  Undefined variable $tempp4 in /home/vglobal/public_html/chatbot/config.php on line 177
+[30-Oct-2023 12:23:19 UTC] PHP Warning:  Undefined variable $tempp5 in /home/vglobal/public_html/chatbot/config.php on line 178
+[30-Oct-2023 12:23:19 UTC] PHP Warning:  Undefined variable $tempp6 in /home/vglobal/public_html/chatbot/config.php on line 179
+[30-Oct-2023 12:23:19 UTC] PHP Warning:  Undefined variable $tempp7 in /home/vglobal/public_html/chatbot/config.php on line 180
+[30-Oct-2023 12:23:19 UTC] PHP Warning:  Undefined variable $realrequest in /home/vglobal/public_html/chatbot/index.php on line 50
+[30-Oct-2023 12:23:19 UTC] PHP Warning:  Undefined array key 1 in /home/vglobal/public_html/chatbot/index.php on line 63
+[22-Dec-2023 10:40:23 UTC] PHP Warning:  Undefined variable $tempp in /home/vglobal/public_html/chatbot/config.php on line 173
+[22-Dec-2023 10:40:23 UTC] PHP Warning:  Undefined variable $tempp1 in /home/vglobal/public_html/chatbot/config.php on line 174
+[22-Dec-2023 10:40:23 UTC] PHP Warning:  Undefined variable $tempp2 in /home/vglobal/public_html/chatbot/config.php on line 175
+[22-Dec-2023 10:40:23 UTC] PHP Warning:  Undefined variable $tempp3 in /home/vglobal/public_html/chatbot/config.php on line 176
+[22-Dec-2023 10:40:23 UTC] PHP Warning:  Undefined variable $tempp4 in /home/vglobal/public_html/chatbot/config.php on line 177
+[22-Dec-2023 10:40:23 UTC] PHP Warning:  Undefined variable $tempp5 in /home/vglobal/public_html/chatbot/config.php on line 178
+[22-Dec-2023 10:40:23 UTC] PHP Warning:  Undefined variable $tempp6 in /home/vglobal/public_html/chatbot/config.php on line 179
+[22-Dec-2023 10:40:23 UTC] PHP Warning:  Undefined variable $tempp7 in /home/vglobal/public_html/chatbot/config.php on line 180
+[22-Dec-2023 10:40:23 UTC] PHP Warning:  Undefined variable $realrequest in /home/vglobal/public_html/chatbot/index.php on line 50
+[22-Dec-2023 10:40:23 UTC] PHP Warning:  Undefined array key 1 in /home/vglobal/public_html/chatbot/index.php on line 63
+[22-Dec-2023 10:40:23 UTC] PHP Deprecated:  ip2long(): Passing null to parameter #1 ($ip) of type string is deprecated in /home/vglobal/public_html/chatbot/index.php on line 63
+[03-Feb-2024 14:01:43 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'vglobal_chatbot1'@'localhost' (using password: YES) in /home/vglobal/public_html/chatbot/class/class.db.php:331
+Stack trace:
+#0 /home/vglobal/public_html/chatbot/config.php(63): JAKWEB\JAKsql->__construct(Array)
+#1 /home/vglobal/public_html/chatbot/index.php(15): require_once('/home/vglobal/p...')
+#2 {main}
+  thrown in /home/vglobal/public_html/chatbot/class/class.db.php on line 331
+[05-Apr-2024 12:30:37 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'vglobal_chatbot1'@'localhost' (using password: YES) in /home/vglobal/public_html/chatbot/class/class.db.php:331
+Stack trace:
+#0 /home/vglobal/public_html/chatbot/config.php(61): JAKWEB\JAKsql->__construct(Array)
+#1 /home/vglobal/public_html/chatbot/index.php(15): require_once('/home/vglobal/p...')
+#2 {main}
+  thrown in /home/vglobal/public_html/chatbot/class/class.db.php on line 331
+[11-Jun-2024 07:03:47 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'vglobal_chatbot1'@'localhost' (using password: YES) in /home/vglobal/public_html/chatbot/class/class.db.php:331
+Stack trace:
+#0 /home/vglobal/public_html/chatbot/config.php(61): JAKWEB\JAKsql->__construct(Array)
+#1 /home/vglobal/public_html/chatbot/index.php(15): require_once('/home/vglobal/p...')
+#2 {main}
+  thrown in /home/vglobal/public_html/chatbot/class/class.db.php on line 331
+[11-Jun-2024 07:05:27 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'vglobal_chatbot1'@'localhost' (using password: YES) in /home/vglobal/public_html/chatbot/class/class.db.php:331
+Stack trace:
+#0 /home/vglobal/public_html/chatbot/config.php(61): JAKWEB\JAKsql->__construct(Array)
+#1 /home/vglobal/public_html/chatbot/index.php(15): require_once('/home/vglobal/p...')
+#2 {main}
+  thrown in /home/vglobal/public_html/chatbot/class/class.db.php on line 331
+[11-Jun-2024 07:18:11 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'vglobal_chatbot1'@'localhost' (using password: YES) in /home/vglobal/public_html/chatbot/class/class.db.php:331
+Stack trace:
+#0 /home/vglobal/public_html/chatbot/config.php(61): JAKWEB\JAKsql->__construct(Array)
+#1 /home/vglobal/public_html/chatbot/index.php(15): require_once('/home/vglobal/p...')
+#2 {main}
+  thrown in /home/vglobal/public_html/chatbot/class/class.db.php on line 331
+[11-Jun-2024 11:53:17 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'vglobal_chatbot1'@'localhost' (using password: YES) in /home/vglobal/public_html/chatbot/class/class.db.php:331
+Stack trace:
+#0 /home/vglobal/public_html/chatbot/config.php(61): JAKWEB\JAKsql->__construct(Array)
+#1 /home/vglobal/public_html/chatbot/index.php(15): require_once('/home/vglobal/p...')
+#2 {main}
+  thrown in /home/vglobal/public_html/chatbot/class/class.db.php on line 331
+[11-Jun-2024 12:47:59 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'vglobal_chatbot1'@'localhost' (using password: YES) in /home/vglobal/public_html/chatbot/class/class.db.php:331
+Stack trace:
+#0 /home/vglobal/public_html/chatbot/config.php(61): JAKWEB\JAKsql->__construct(Array)
+#1 /home/vglobal/public_html/chatbot/index.php(15): require_once('/home/vglobal/p...')
+#2 {main}
+  thrown in /home/vglobal/public_html/chatbot/class/class.db.php on line 331
+[11-Jun-2024 12:51:53 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'vglobal_chatbot1'@'localhost' (using password: YES) in /home/vglobal/public_html/chatbot/class/class.db.php:331
+Stack trace:
+#0 /home/vglobal/public_html/chatbot/config.php(61): JAKWEB\JAKsql->__construct(Array)
+#1 /home/vglobal/public_html/chatbot/index.php(15): require_once('/home/vglobal/p...')
+#2 {main}
+  thrown in /home/vglobal/public_html/chatbot/class/class.db.php on line 331
+[11-Jun-2024 12:51:53 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'vglobal_chatbot1'@'localhost' (using password: YES) in /home/vglobal/public_html/chatbot/class/class.db.php:331
+Stack trace:
+#0 /home/vglobal/public_html/chatbot/config.php(61): JAKWEB\JAKsql->__construct(Array)
+#1 /home/vglobal/public_html/chatbot/index.php(15): require_once('/home/vglobal/p...')
+#2 {main}
+  thrown in /home/vglobal/public_html/chatbot/class/class.db.php on line 331
+[11-Jun-2024 12:51:57 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'vglobal_chatbot1'@'localhost' (using password: YES) in /home/vglobal/public_html/chatbot/class/class.db.php:331
+Stack trace:
+#0 /home/vglobal/public_html/chatbot/config.php(61): JAKWEB\JAKsql->__construct(Array)
+#1 /home/vglobal/public_html/chatbot/index.php(15): require_once('/home/vglobal/p...')
+#2 {main}
+  thrown in /home/vglobal/public_html/chatbot/class/class.db.php on line 331
+[11-Jun-2024 12:51:58 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'vglobal_chatbot1'@'localhost' (using password: YES) in /home/vglobal/public_html/chatbot/class/class.db.php:331
+Stack trace:
+#0 /home/vglobal/public_html/chatbot/config.php(61): JAKWEB\JAKsql->__construct(Array)
+#1 /home/vglobal/public_html/chatbot/index.php(15): require_once('/home/vglobal/p...')
+#2 {main}
+  thrown in /home/vglobal/public_html/chatbot/class/class.db.php on line 331
+[11-Jun-2024 12:51:58 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'vglobal_chatbot1'@'localhost' (using password: YES) in /home/vglobal/public_html/chatbot/class/class.db.php:331
+Stack trace:
+#0 /home/vglobal/public_html/chatbot/config.php(61): JAKWEB\JAKsql->__construct(Array)
+#1 /home/vglobal/public_html/chatbot/index.php(15): require_once('/home/vglobal/p...')
+#2 {main}
+  thrown in /home/vglobal/public_html/chatbot/class/class.db.php on line 331
+[11-Jun-2024 12:51:58 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'vglobal_chatbot1'@'localhost' (using password: YES) in /home/vglobal/public_html/chatbot/class/class.db.php:331
+Stack trace:
+#0 /home/vglobal/public_html/chatbot/config.php(61): JAKWEB\JAKsql->__construct(Array)
+#1 /home/vglobal/public_html/chatbot/index.php(15): require_once('/home/vglobal/p...')
+#2 {main}
+  thrown in /home/vglobal/public_html/chatbot/class/class.db.php on line 331
+[11-Jun-2024 12:56:38 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [1045] Access denied for user 'vglobal_chatbot1'@'localhost' (using password: YES) in /home/vglobal/public_html/chatbot/class/class.db.php:331
+Stack trace:
+#0 /home/vglobal/public_html/chatbot/config.php(61): JAKWEB\JAKsql->__construct(Array)
+#1 /home/vglobal/public_html/chatbot/index.php(15): require_once('/home/vglobal/p...')
+#2 {main}
+  thrown in /home/vglobal/public_html/chatbot/class/class.db.php on line 331
+[11-Jun-2024 13:04:31 UTC] PHP Warning:  Undefined variable $tempp in /home/vglobal/public_html/chatbot/config.php on line 173
+[11-Jun-2024 13:04:31 UTC] PHP Warning:  Undefined variable $tempp1 in /home/vglobal/public_html/chatbot/config.php on line 174
+[11-Jun-2024 13:04:31 UTC] PHP Warning:  Undefined variable $tempp2 in /home/vglobal/public_html/chatbot/config.php on line 175
+[11-Jun-2024 13:04:31 UTC] PHP Warning:  Undefined variable $tempp3 in /home/vglobal/public_html/chatbot/config.php on line 176
+[11-Jun-2024 13:04:31 UTC] PHP Warning:  Undefined variable $tempp4 in /home/vglobal/public_html/chatbot/config.php on line 177
+[11-Jun-2024 13:04:31 UTC] PHP Warning:  Undefined variable $tempp5 in /home/vglobal/public_html/chatbot/config.php on line 178
+[11-Jun-2024 13:04:31 UTC] PHP Warning:  Undefined variable $tempp6 in /home/vglobal/public_html/chatbot/config.php on line 179
+[11-Jun-2024 13:04:31 UTC] PHP Warning:  Undefined variable $tempp7 in /home/vglobal/public_html/chatbot/config.php on line 180
+[11-Jun-2024 13:04:31 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[42S02]: Base table or view not found: 1146 Table 'vglobal_chatbot1.cc3_chatwidget' doesn't exist in /home/vglobal/public_html/chatbot/class/class.db.php:383
+Stack trace:
+#0 /home/vglobal/public_html/chatbot/class/class.db.php(383): PDOStatement->execute()
+#1 /home/vglobal/public_html/chatbot/class/class.db.php(1617): JAKWEB\JAKsql->exec('SELECT "opid" F...', Array)
+#2 /home/vglobal/public_html/chatbot/config.php(214): JAKWEB\JAKsql->get('chatwidget', 'opid', Array)
+#3 /home/vglobal/public_html/chatbot/index.php(15): require_once('/home/vglobal/p...')
+#4 {main}
+  thrown in /home/vglobal/public_html/chatbot/class/class.db.php on line 383
+[11-Jun-2024 13:05:46 UTC] PHP Warning:  Undefined variable $tempp in /home/vglobal/public_html/chatbot/config.php on line 173
+[11-Jun-2024 13:05:46 UTC] PHP Warning:  Undefined variable $tempp1 in /home/vglobal/public_html/chatbot/config.php on line 174
+[11-Jun-2024 13:05:46 UTC] PHP Warning:  Undefined variable $tempp2 in /home/vglobal/public_html/chatbot/config.php on line 175
+[11-Jun-2024 13:05:46 UTC] PHP Warning:  Undefined variable $tempp3 in /home/vglobal/public_html/chatbot/config.php on line 176
+[11-Jun-2024 13:05:46 UTC] PHP Warning:  Undefined variable $tempp4 in /home/vglobal/public_html/chatbot/config.php on line 177
+[11-Jun-2024 13:05:46 UTC] PHP Warning:  Undefined variable $tempp5 in /home/vglobal/public_html/chatbot/config.php on line 178
+[11-Jun-2024 13:05:46 UTC] PHP Warning:  Undefined variable $tempp6 in /home/vglobal/public_html/chatbot/config.php on line 179
+[11-Jun-2024 13:05:46 UTC] PHP Warning:  Undefined variable $tempp7 in /home/vglobal/public_html/chatbot/config.php on line 180
+[11-Jun-2024 13:05:46 UTC] PHP Fatal error:  Uncaught Error: Class "JAK_base" not found in /home/vglobal/public_html/chatbot/config.php:357
+Stack trace:
+#0 /home/vglobal/public_html/chatbot/index.php(15): require_once()
+#1 {main}
+  thrown in /home/vglobal/public_html/chatbot/config.php on line 357
+[11-Jun-2024 13:07:06 UTC] PHP Fatal error:  Uncaught Error: Class "JAK_base" not found in /home/vglobal/public_html/chatbot/config.php:357
+Stack trace:
+#0 /home/vglobal/public_html/chatbot/index.php(15): require_once()
+#1 {main}
+  thrown in /home/vglobal/public_html/chatbot/config.php on line 357
+[11-Jun-2024 13:07:39 UTC] PHP Warning:  include_once(/home/vglobal/public_html/chatbot/cache/opcache1.php): Failed to open stream: No such file or directory in /home/vglobal/public_html/chatbot/config.php on line 362
+[11-Jun-2024 13:07:39 UTC] PHP Warning:  include_once(): Failed opening '/home/vglobal/public_html/chatbot/cache/opcache1.php' for inclusion (include_path='.:/opt/cpanel/ea-php82/root/usr/share/pear') in /home/vglobal/public_html/chatbot/config.php on line 362
+[11-Jun-2024 13:07:39 UTC] PHP Fatal error:  Uncaught Error: Undefined constant "JAK_LANG" in /home/vglobal/public_html/chatbot/index.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/vglobal/public_html/chatbot/index.php on line 18
+[11-Jun-2024 13:10:39 UTC] PHP Warning:  Undefined variable $tempp in /home/vglobal/public_html/chatbot/config.php on line 173
+[11-Jun-2024 13:10:39 UTC] PHP Warning:  Undefined variable $tempp1 in /home/vglobal/public_html/chatbot/config.php on line 174
+[11-Jun-2024 13:10:39 UTC] PHP Warning:  Undefined variable $tempp2 in /home/vglobal/public_html/chatbot/config.php on line 175
+[11-Jun-2024 13:10:39 UTC] PHP Warning:  Undefined variable $tempp3 in /home/vglobal/public_html/chatbot/config.php on line 176
+[11-Jun-2024 13:10:39 UTC] PHP Warning:  Undefined variable $tempp4 in /home/vglobal/public_html/chatbot/config.php on line 177
+[11-Jun-2024 13:10:39 UTC] PHP Warning:  Undefined variable $tempp5 in /home/vglobal/public_html/chatbot/config.php on line 178
+[11-Jun-2024 13:10:39 UTC] PHP Warning:  Undefined variable $tempp6 in /home/vglobal/public_html/chatbot/config.php on line 179
+[11-Jun-2024 13:10:39 UTC] PHP Warning:  Undefined variable $tempp7 in /home/vglobal/public_html/chatbot/config.php on line 180
+[11-Jun-2024 13:10:39 UTC] PHP Fatal error:  Uncaught Error: Class "JAK_base" not found in /home/vglobal/public_html/chatbot/config.php:357
+Stack trace:
+#0 /home/vglobal/public_html/chatbot/index.php(15): require_once()
+#1 {main}
+  thrown in /home/vglobal/public_html/chatbot/config.php on line 357
+[11-Jun-2024 13:23:04 UTC] PHP Warning:  Undefined variable $tempp in /home/vglobal/public_html/chatbot/config.php on line 173
+[11-Jun-2024 13:23:04 UTC] PHP Warning:  Undefined variable $tempp1 in /home/vglobal/public_html/chatbot/config.php on line 174
+[11-Jun-2024 13:23:04 UTC] PHP Warning:  Undefined variable $tempp2 in /home/vglobal/public_html/chatbot/config.php on line 175
+[11-Jun-2024 13:23:04 UTC] PHP Warning:  Undefined variable $tempp3 in /home/vglobal/public_html/chatbot/config.php on line 176
+[11-Jun-2024 13:23:04 UTC] PHP Warning:  Undefined variable $tempp4 in /home/vglobal/public_html/chatbot/config.php on line 177
+[11-Jun-2024 13:23:04 UTC] PHP Warning:  Undefined variable $tempp5 in /home/vglobal/public_html/chatbot/config.php on line 178
+[11-Jun-2024 13:23:04 UTC] PHP Warning:  Undefined variable $tempp6 in /home/vglobal/public_html/chatbot/config.php on line 179
+[11-Jun-2024 13:23:04 UTC] PHP Warning:  Undefined variable $tempp7 in /home/vglobal/public_html/chatbot/config.php on line 180
+[11-Jun-2024 13:23:04 UTC] PHP Fatal error:  Uncaught Error: Class "JAK_base" not found in /home/vglobal/public_html/chatbot/config.php:357
+Stack trace:
+#0 /home/vglobal/public_html/chatbot/index.php(15): require_once()
+#1 {main}
+  thrown in /home/vglobal/public_html/chatbot/config.php on line 357
+[11-Jun-2024 13:27:05 UTC] PHP Warning:  Undefined variable $tempp in /home/vglobal/public_html/chatbot/config.php on line 173
+[11-Jun-2024 13:27:05 UTC] PHP Warning:  Undefined variable $tempp1 in /home/vglobal/public_html/chatbot/config.php on line 174
+[11-Jun-2024 13:27:05 UTC] PHP Warning:  Undefined variable $tempp2 in /home/vglobal/public_html/chatbot/config.php on line 175
+[11-Jun-2024 13:27:05 UTC] PHP Warning:  Undefined variable $tempp3 in /home/vglobal/public_html/chatbot/config.php on line 176
+[11-Jun-2024 13:27:05 UTC] PHP Warning:  Undefined variable $tempp4 in /home/vglobal/public_html/chatbot/config.php on line 177
+[11-Jun-2024 13:27:05 UTC] PHP Warning:  Undefined variable $tempp5 in /home/vglobal/public_html/chatbot/config.php on line 178
+[11-Jun-2024 13:27:05 UTC] PHP Warning:  Undefined variable $tempp6 in /home/vglobal/public_html/chatbot/config.php on line 179
+[11-Jun-2024 13:27:05 UTC] PHP Warning:  Undefined variable $tempp7 in /home/vglobal/public_html/chatbot/config.php on line 180
+[11-Jun-2024 13:27:05 UTC] PHP Fatal error:  Uncaught Error: Class "JAK_base" not found in /home/vglobal/public_html/chatbot/config.php:357
+Stack trace:
+#0 /home/vglobal/public_html/chatbot/index.php(15): require_once()
+#1 {main}
+  thrown in /home/vglobal/public_html/chatbot/config.php on line 357
+[11-Jun-2024 13:27:23 UTC] PHP Warning:  Undefined variable $tempp in /home/vglobal/public_html/chatbot/config.php on line 173
+[11-Jun-2024 13:27:23 UTC] PHP Warning:  Undefined variable $tempp1 in /home/vglobal/public_html/chatbot/config.php on line 174
+[11-Jun-2024 13:27:23 UTC] PHP Warning:  Undefined variable $tempp2 in /home/vglobal/public_html/chatbot/config.php on line 175
+[11-Jun-2024 13:27:23 UTC] PHP Warning:  Undefined variable $tempp3 in /home/vglobal/public_html/chatbot/config.php on line 176
+[11-Jun-2024 13:27:23 UTC] PHP Warning:  Undefined variable $tempp4 in /home/vglobal/public_html/chatbot/config.php on line 177
+[11-Jun-2024 13:27:23 UTC] PHP Warning:  Undefined variable $tempp5 in /home/vglobal/public_html/chatbot/config.php on line 178
+[11-Jun-2024 13:27:23 UTC] PHP Warning:  Undefined variable $tempp6 in /home/vglobal/public_html/chatbot/config.php on line 179
+[11-Jun-2024 13:27:23 UTC] PHP Warning:  Undefined variable $tempp7 in /home/vglobal/public_html/chatbot/config.php on line 180
+[11-Jun-2024 13:27:23 UTC] PHP Fatal error:  Uncaught Error: Class "JAK_base" not found in /home/vglobal/public_html/chatbot/config.php:357
+Stack trace:
+#0 /home/vglobal/public_html/chatbot/index.php(15): require_once()
+#1 {main}
+  thrown in /home/vglobal/public_html/chatbot/config.php on line 357
+[11-Jun-2024 13:28:14 UTC] PHP Warning:  Undefined variable $tempp in /home/vglobal/public_html/chatbot/config.php on line 173
+[11-Jun-2024 13:28:14 UTC] PHP Warning:  Undefined variable $tempp1 in /home/vglobal/public_html/chatbot/config.php on line 174
+[11-Jun-2024 13:28:14 UTC] PHP Warning:  Undefined variable $tempp2 in /home/vglobal/public_html/chatbot/config.php on line 175
+[11-Jun-2024 13:28:14 UTC] PHP Warning:  Undefined variable $tempp3 in /home/vglobal/public_html/chatbot/config.php on line 176
+[11-Jun-2024 13:28:14 UTC] PHP Warning:  Undefined variable $tempp4 in /home/vglobal/public_html/chatbot/config.php on line 177
+[11-Jun-2024 13:28:14 UTC] PHP Warning:  Undefined variable $tempp5 in /home/vglobal/public_html/chatbot/config.php on line 178
+[11-Jun-2024 13:28:14 UTC] PHP Warning:  Undefined variable $tempp6 in /home/vglobal/public_html/chatbot/config.php on line 179
+[11-Jun-2024 13:28:14 UTC] PHP Warning:  Undefined variable $tempp7 in /home/vglobal/public_html/chatbot/config.php on line 180
+[11-Jun-2024 13:28:14 UTC] PHP Fatal error:  Uncaught Error: Class "JAK_base" not found in /home/vglobal/public_html/chatbot/config.php:357
+Stack trace:
+#0 /home/vglobal/public_html/chatbot/index.php(15): require_once()
+#1 {main}
+  thrown in /home/vglobal/public_html/chatbot/config.php on line 357
+[11-Jun-2024 13:28:16 UTC] PHP Warning:  Undefined variable $tempp in /home/vglobal/public_html/chatbot/config.php on line 173
+[11-Jun-2024 13:28:16 UTC] PHP Warning:  Undefined variable $tempp1 in /home/vglobal/public_html/chatbot/config.php on line 174
+[11-Jun-2024 13:28:16 UTC] PHP Warning:  Undefined variable $tempp2 in /home/vglobal/public_html/chatbot/config.php on line 175
+[11-Jun-2024 13:28:16 UTC] PHP Warning:  Undefined variable $tempp3 in /home/vglobal/public_html/chatbot/config.php on line 176
+[11-Jun-2024 13:28:16 UTC] PHP Warning:  Undefined variable $tempp4 in /home/vglobal/public_html/chatbot/config.php on line 177
+[11-Jun-2024 13:28:16 UTC] PHP Warning:  Undefined variable $tempp5 in /home/vglobal/public_html/chatbot/config.php on line 178
+[11-Jun-2024 13:28:16 UTC] PHP Warning:  Undefined variable $tempp6 in /home/vglobal/public_html/chatbot/config.php on line 179
+[11-Jun-2024 13:28:16 UTC] PHP Warning:  Undefined variable $tempp7 in /home/vglobal/public_html/chatbot/config.php on line 180
+[11-Jun-2024 13:28:16 UTC] PHP Fatal error:  Uncaught Error: Class "JAK_base" not found in /home/vglobal/public_html/chatbot/config.php:357
+Stack trace:
+#0 /home/vglobal/public_html/chatbot/index.php(15): require_once()
+#1 {main}
+  thrown in /home/vglobal/public_html/chatbot/config.php on line 357
+[11-Jun-2024 13:28:17 UTC] PHP Warning:  Undefined variable $tempp in /home/vglobal/public_html/chatbot/config.php on line 173
+[11-Jun-2024 13:28:17 UTC] PHP Warning:  Undefined variable $tempp1 in /home/vglobal/public_html/chatbot/config.php on line 174
+[11-Jun-2024 13:28:17 UTC] PHP Warning:  Undefined variable $tempp2 in /home/vglobal/public_html/chatbot/config.php on line 175
+[11-Jun-2024 13:28:17 UTC] PHP Warning:  Undefined variable $tempp3 in /home/vglobal/public_html/chatbot/config.php on line 176
+[11-Jun-2024 13:28:17 UTC] PHP Warning:  Undefined variable $tempp4 in /home/vglobal/public_html/chatbot/config.php on line 177
+[11-Jun-2024 13:28:17 UTC] PHP Warning:  Undefined variable $tempp5 in /home/vglobal/public_html/chatbot/config.php on line 178
+[11-Jun-2024 13:28:17 UTC] PHP Warning:  Undefined variable $tempp6 in /home/vglobal/public_html/chatbot/config.php on line 179
+[11-Jun-2024 13:28:17 UTC] PHP Warning:  Undefined variable $tempp7 in /home/vglobal/public_html/chatbot/config.php on line 180
+[11-Jun-2024 13:28:17 UTC] PHP Fatal error:  Uncaught Error: Class "JAK_base" not found in /home/vglobal/public_html/chatbot/config.php:357
+Stack trace:
+#0 /home/vglobal/public_html/chatbot/index.php(15): require_once()
+#1 {main}
+  thrown in /home/vglobal/public_html/chatbot/config.php on line 357
+[11-Jun-2024 13:28:18 UTC] PHP Warning:  Undefined variable $tempp in /home/vglobal/public_html/chatbot/config.php on line 173
+[11-Jun-2024 13:28:18 UTC] PHP Warning:  Undefined variable $tempp1 in /home/vglobal/public_html/chatbot/config.php on line 174
+[11-Jun-2024 13:28:18 UTC] PHP Warning:  Undefined variable $tempp2 in /home/vglobal/public_html/chatbot/config.php on line 175
+[11-Jun-2024 13:28:18 UTC] PHP Warning:  Undefined variable $tempp3 in /home/vglobal/public_html/chatbot/config.php on line 176
+[11-Jun-2024 13:28:18 UTC] PHP Warning:  Undefined variable $tempp4 in /home/vglobal/public_html/chatbot/config.php on line 177
+[11-Jun-2024 13:28:18 UTC] PHP Warning:  Undefined variable $tempp5 in /home/vglobal/public_html/chatbot/config.php on line 178
+[11-Jun-2024 13:28:18 UTC] PHP Warning:  Undefined variable $tempp6 in /home/vglobal/public_html/chatbot/config.php on line 179
+[11-Jun-2024 13:28:18 UTC] PHP Warning:  Undefined variable $tempp7 in /home/vglobal/public_html/chatbot/config.php on line 180
+[11-Jun-2024 13:28:18 UTC] PHP Fatal error:  Uncaught Error: Class "JAK_base" not found in /home/vglobal/public_html/chatbot/config.php:357
+Stack trace:
+#0 /home/vglobal/public_html/chatbot/index.php(15): require_once()
+#1 {main}
+  thrown in /home/vglobal/public_html/chatbot/config.php on line 357
+[11-Jun-2024 13:34:47 UTC] PHP Warning:  Undefined variable $getURL in /home/vglobal/public_html/chatbot/config.php on line 99
+[11-Jun-2024 13:34:47 UTC] PHP Fatal error:  Uncaught Error: Call to a member function jakGetseg() on null in /home/vglobal/public_html/chatbot/config.php:99
+Stack trace:
+#0 /home/vglobal/public_html/chatbot/index.php(15): require_once()
+#1 {main}
+  thrown in /home/vglobal/public_html/chatbot/config.php on line 99
+[11-Jun-2024 13:44:32 UTC] PHP Fatal error:  Uncaught Error: Class "JAK_rewrite" not found in /home/vglobal/public_html/chatbot/config.php:96
+Stack trace:
+#0 /home/vglobal/public_html/chatbot/index.php(15): require_once()
+#1 {main}
+  thrown in /home/vglobal/public_html/chatbot/config.php on line 96
+[11-Jun-2024 13:45:29 UTC] PHP Fatal error:  Uncaught Error: Class "JAK_rewrite" not found in /home/vglobal/public_html/chatbot/config.php:96
+Stack trace:
+#0 /home/vglobal/public_html/chatbot/index.php(15): require_once()
+#1 {main}
+  thrown in /home/vglobal/public_html/chatbot/config.php on line 96
+[11-Jun-2024 13:45:29 UTC] PHP Fatal error:  Uncaught Error: Class "JAK_rewrite" not found in /home/vglobal/public_html/chatbot/config.php:96
+Stack trace:
+#0 /home/vglobal/public_html/chatbot/index.php(15): require_once()
+#1 {main}
+  thrown in /home/vglobal/public_html/chatbot/config.php on line 96
+[11-Jun-2024 13:48:35 UTC] PHP Fatal error:  Uncaught Error: Class "JAK_rewrite" not found in /home/vglobal/public_html/chatbot/config.php:98
+Stack trace:
+#0 /home/vglobal/public_html/chatbot/index.php(15): require_once()
+#1 {main}
+  thrown in /home/vglobal/public_html/chatbot/config.php on line 98
+[11-Jun-2024 13:48:38 UTC] PHP Fatal error:  Uncaught Error: Class "JAK_rewrite" not found in /home/vglobal/public_html/chatbot/config.php:98
+Stack trace:
+#0 /home/vglobal/public_html/chatbot/index.php(15): require_once()
+#1 {main}
+  thrown in /home/vglobal/public_html/chatbot/config.php on line 98
+[11-Jun-2024 13:48:38 UTC] PHP Fatal error:  Uncaught Error: Class "JAK_rewrite" not found in /home/vglobal/public_html/chatbot/config.php:98
+Stack trace:
+#0 /home/vglobal/public_html/chatbot/index.php(15): require_once()
+#1 {main}
+  thrown in /home/vglobal/public_html/chatbot/config.php on line 98
+[11-Jun-2024 13:48:39 UTC] PHP Fatal error:  Uncaught Error: Class "JAK_rewrite" not found in /home/vglobal/public_html/chatbot/config.php:98
+Stack trace:
+#0 /home/vglobal/public_html/chatbot/index.php(15): require_once()
+#1 {main}
+  thrown in /home/vglobal/public_html/chatbot/config.php on line 98
+[11-Jun-2024 13:48:39 UTC] PHP Fatal error:  Uncaught Error: Class "JAK_rewrite" not found in /home/vglobal/public_html/chatbot/config.php:98
+Stack trace:
+#0 /home/vglobal/public_html/chatbot/index.php(15): require_once()
+#1 {main}
+  thrown in /home/vglobal/public_html/chatbot/config.php on line 98
+[11-Jun-2024 13:50:23 UTC] PHP Fatal error:  Uncaught PDOException: SQLSTATE[HY000] [2002] Connection refused in /home/vglobal/public_html/chatbot/class/class.db.php:331
+Stack trace:
+#0 /home/vglobal/public_html/chatbot/config.php(63): JAKWEB\JAKsql->__construct(Array)
+#1 /home/vglobal/public_html/chatbot/index.php(15): require_once('/home/vglobal/p...')
+#2 {main}
+  thrown in /home/vglobal/public_html/chatbot/class/class.db.php on line 331
+[11-Jun-2024 13:50:42 UTC] PHP Fatal error:  Uncaught Error: Class "JAK_rewrite" not found in /home/vglobal/public_html/chatbot/config.php:98
+Stack trace:
+#0 /home/vglobal/public_html/chatbot/index.php(15): require_once()
+#1 {main}
+  thrown in /home/vglobal/public_html/chatbot/config.php on line 98
+[11-Jun-2024 13:51:26 UTC] PHP Fatal error:  Uncaught Error: Class "JAK_rewrite" not found in /home/vglobal/public_html/chatbot/config.php:99
+Stack trace:
+#0 /home/vglobal/public_html/chatbot/index.php(15): require_once()
+#1 {main}
+  thrown in /home/vglobal/public_html/chatbot/config.php on line 99
+[11-Jun-2024 13:56:59 UTC] PHP Warning:  Undefined variable $tempp in /home/vglobal/public_html/chatbot/config.php on line 173
+[11-Jun-2024 13:56:59 UTC] PHP Warning:  Undefined variable $tempp1 in /home/vglobal/public_html/chatbot/config.php on line 174
+[11-Jun-2024 13:56:59 UTC] PHP Warning:  Undefined variable $tempp2 in /home/vglobal/public_html/chatbot/config.php on line 175
+[11-Jun-2024 13:56:59 UTC] PHP Warning:  Undefined variable $tempp3 in /home/vglobal/public_html/chatbot/config.php on line 176
+[11-Jun-2024 13:56:59 UTC] PHP Warning:  Undefined variable $tempp4 in /home/vglobal/public_html/chatbot/config.php on line 177
+[11-Jun-2024 13:56:59 UTC] PHP Warning:  Undefined variable $tempp5 in /home/vglobal/public_html/chatbot/config.php on line 178
+[11-Jun-2024 13:56:59 UTC] PHP Warning:  Undefined variable $tempp6 in /home/vglobal/public_html/chatbot/config.php on line 179
+[11-Jun-2024 13:56:59 UTC] PHP Warning:  Undefined variable $tempp7 in /home/vglobal/public_html/chatbot/config.php on line 180
+[11-Jun-2024 13:56:59 UTC] PHP Fatal error:  Uncaught Error: Class "JAK_base" not found in /home/vglobal/public_html/chatbot/config.php:357
+Stack trace:
+#0 /home/vglobal/public_html/chatbot/index.php(15): require_once()
+#1 {main}
+  thrown in /home/vglobal/public_html/chatbot/config.php on line 357
+[11-Jun-2024 13:57:56 UTC] PHP Fatal error:  Uncaught Error: Class "JAK_rewrite" not found in /home/vglobal/public_html/chatbot/config.php:96
+Stack trace:
+#0 /home/vglobal/public_html/chatbot/index.php(15): require_once()
+#1 {main}
+  thrown in /home/vglobal/public_html/chatbot/config.php on line 96
+[11-Jun-2024 13:58:22 UTC] PHP Fatal error:  Uncaught Error: Class "JAK_rewrite" not found in /home/vglobal/public_html/chatbot/config.php:96
+Stack trace:
+#0 /home/vglobal/public_html/chatbot/index.php(15): require_once()
+#1 {main}
+  thrown in /home/vglobal/public_html/chatbot/config.php on line 96
+[11-Jun-2024 13:59:18 UTC] PHP Warning:  Undefined variable $tempp in /home/vglobal/public_html/chatbot/config.php on line 173
+[11-Jun-2024 13:59:18 UTC] PHP Warning:  Undefined variable $tempp1 in /home/vglobal/public_html/chatbot/config.php on line 174
+[11-Jun-2024 13:59:18 UTC] PHP Warning:  Undefined variable $tempp2 in /home/vglobal/public_html/chatbot/config.php on line 175
+[11-Jun-2024 13:59:18 UTC] PHP Warning:  Undefined variable $tempp3 in /home/vglobal/public_html/chatbot/config.php on line 176
+[11-Jun-2024 13:59:18 UTC] PHP Warning:  Undefined variable $tempp4 in /home/vglobal/public_html/chatbot/config.php on line 177
+[11-Jun-2024 13:59:18 UTC] PHP Warning:  Undefined variable $tempp5 in /home/vglobal/public_html/chatbot/config.php on line 178
+[11-Jun-2024 13:59:18 UTC] PHP Warning:  Undefined variable $tempp6 in /home/vglobal/public_html/chatbot/config.php on line 179
+[11-Jun-2024 13:59:18 UTC] PHP Warning:  Undefined variable $tempp7 in /home/vglobal/public_html/chatbot/config.php on line 180
+[11-Jun-2024 13:59:18 UTC] PHP Fatal error:  Uncaught Error: Class "JAK_base" not found in /home/vglobal/public_html/chatbot/config.php:357
+Stack trace:
+#0 /home/vglobal/public_html/chatbot/index.php(15): require_once()
+#1 {main}
+  thrown in /home/vglobal/public_html/chatbot/config.php on line 357

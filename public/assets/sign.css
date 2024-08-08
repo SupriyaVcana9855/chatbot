@@ -1,0 +1,248 @@
+.login-container {
+    height: 100vh;
+
+
+}
+
+.login-container {
+    justify-content: center;
+    align-items: center;
+    background: url('./images/signbg.jpg') no-repeat;
+    background-size: cover;
+    /* background-position:bottom; */
+
+}
+
+.image-section {
+    flex: 1;
+    display: flex;
+
+}
+
+.form-section {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* .login-form {
+    position: relative;
+} */
+
+.setBtn_primary {
+    background: linear-gradient(88deg, #004485 -1%, #00315f 57%);
+    color: #fff;
+    font-size: 20px;
+    font-weight: 500;
+    padding: 10px 20px;
+    font-family: 'Roboto';
+    box-shadow: -1px 1px 9px 1px #8E8E8E;
+    border: none;
+    border-radius: 10px;
+    letter-spacing: 0.5px;
+    width: 100%;
+}
+
+.setBtn_primary_white {
+    background: #fff;
+    color: #005B96;
+    font-size: 20px;
+    font-weight: 500;
+    padding: 10px 20px;
+    font-family: Roboto;
+    box-shadow: -1px 1px 9px 1px #8E8E8E;
+    border: none;
+    border-radius: 10px;
+    letter-spacing: 0.5px;
+    width: 100%;
+}
+
+.set_mainheading {
+    font-size: 25px;
+    font-weight: 600;
+    font-family: 'Roboto';
+
+}
+
+.btn:hover {
+    color: #ffffff;
+    text-decoration: none;
+}
+
+.form_section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100vh;
+}
+
+.Set_usign {
+    text-align: left;
+    color: #767676;
+    font-family: 'Roboto';
+    font-weight: 600;
+    font-size: 17px;
+}
+
+.Set_usign::before {
+    content:'';
+    background-color:#b7b7b7!important;
+    width: 33px;
+    height: 3px;
+    position: absolute;
+    top: 0;
+    z-index: 10;
+}
+
+.Set_usign {
+    position: relative;
+    padding: 30px 0px;
+    margin: 40px 0px 0px 0px;
+}
+.form-group label{
+ color:#434343;
+ font-size: 18px;
+ font-family: roboto;
+ font-weight: 600;
+}
+.set_facebook{
+    position: relative;
+}
+.set_facebook::after {
+    content: url(./images/Whizbot\ 2.png);
+    top: -95px;
+    right: -100px;
+    position: absolute;
+}
+
+
+a.text-left.setacount {
+    color: #AEAEAE;
+    font-size: 18px;
+    font-weight: 600;
+    font-family: roboto;
+    text-decoration: null;
+}
+.set_remember{
+    color:#777777;
+    font-family:Roboto;
+    font-size: 17px;
+    font-weight:400;
+    padding-top: 30px;
+    padding-bottom: 30px;
+
+}
+.set_remember > input[type=radio] {
+    box-sizing: border-box;
+    padding: 0;
+    width: 17px;
+    height: 17px;
+    margin-right:5px;
+} 
+.set_pass{
+    color: #005B96;
+    font-family:'Roboto';
+    font-size: 16px;
+    font-weight:500;
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+.signin_button{
+    width:60%;
+}
+.set-pass-icon{
+    position:relative;
+
+}
+.field-icon {
+    float: right;
+    margin-right: 10px;
+    margin-top: -32px;
+    position: relative;
+    z-index: 2;
+    color: #777777;
+}
+.form-control{
+    color: #777777;
+    font-family:400;
+    font-size:14px;
+    font-family: 'Roboto';
+}
+input::placeholder {
+    font-family: 'Roboto';
+}
+.set-data input {
+    padding: 24px 10px;
+    border-radius: 10px;
+}
+  
+
+@media (max-width:768px) {
+    .set_facebook::after {
+        content: url(./images/Whizbot\ 2.png);
+        top: -173px;
+        right: 0px;
+        position: absolute;
+    }
+
+    .form_section {
+        padding-top: 100px;
+        padding-bottom: 100px;
+    }
+    .login-container {
+        justify-content: center;
+        align-items: center;
+        background: url('./images/signbg.jpg') rgba(0, 0, 0, 0.3) no-repeat;
+        background-size: cover;
+        background-blend-mode: multiply;
+        height: auto!important;
+    
+    }
+
+    .form_section {
+        display:block;
+        height:auto;
+        background-size: cover;
+    }
+    .Set_usign {
+        text-align: left;
+        color: #ffffff;
+        font-family: 'Roboto';
+        font-weight: 600;
+        font-size: 17px;
+    }
+    .form-group label {
+        color: #ffffff;
+        font-size: 18px;
+        font-family: roboto;
+        font-weight: 600;
+    }
+    .set_pass {
+        color: #005B96;
+        font-family: 'Roboto';
+        font-size: 16px;
+        font-weight: 500;
+        padding-top: 0px;
+        padding-bottom: 17px;
+        margin-left: 16px;
+    }
+    .set_remember {
+        color: #ffffff;
+        font-family: Roboto;
+        font-size: 17px;
+        font-weight: 400;
+        padding-top: 8px;
+        padding-bottom: 10px;
+        margin-left: 15px;
+        
+    }
+    
+    .set_mainheading{
+        color: #fff;
+        padding-bottom: 20px;
+    }
+    .set_sign{
+        text-align: center;
+    }
+}  

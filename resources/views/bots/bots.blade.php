@@ -96,13 +96,13 @@
                 <div class="bot-option">
                     <div class="d-flex align-items-center">
                         <i class="fa-solid fa-database"></i>
-                        <span>Lead Generation Bot (or) Any Data Collection Bot</span>
+                        <span class="lead"  data-type="lead">Lead Generation Bot (or) Any Data Collection Bot</span>
                     </div>
                 </div>
                 <div class="bot-option">
                     <div class="d-flex align-items-center">
                         <i class="fa-solid fa-headphones"></i>
-                        <span style="float: right; line-height: 1;color: #000;" data-dismiss="modal" data-toggle="modal"  aria-label="Close" data-target="#createCustomerSupportBotModal">Customer Support Bot</span>
+                        <span style="float: right; line-height: 1;color: #000;" data-dismiss="modal" data-toggle="modal"  aria-label="Close" data-target="#createCustomerSupportBotModal" class="lead" data-type="support">Customer Support Bot</span>
                     </div>
                 </div>
             </div>
@@ -122,9 +122,9 @@
             </div>
             <div class="modal-body">
                 <p>Creating a <strong>Customer Support Bot</strong> is just a matter of seconds now.</p>
-                <button type="button" class="btn btn-primary btn-template">Pick From Templates</button>
+                <button style="margin-left: 74px;" type="button" class="btn btn-primary btn-template">Pick From Templates</button>
                 <div>OR</div>
-                <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#createCustomBotModal" >Create Your Own Bot</button>
+                <button style="margin-left: 74px;" type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#createCustomBotModal" data-dismiss="modal"  aria-label="Close">Create Your Own Bot</button>
             </div>
         </div>
     </div>
@@ -141,9 +141,12 @@
                 </button>
             </div>
             <div class="modal-body text-center">
-                <form>
+                <form action="{{route('savebot')}}" method ="post">
+                  @csrf
                     <div class="form-group w-80 pt-3">
-                        <input type="text" class="form-control" id="botName" placeholder="Enter bot name">
+                    <input type="hidden" class="form-control" id="type" name ="type" value="">
+
+                        <input type="text" class="form-control" id="botName" name ="name" placeholder="Enter bot name">
                     </div>
                     <button type="submit" class="btn center btn-primary">Create</button>
                 </form>
@@ -152,4 +155,47 @@
     </div>
 </div>
 
+
+<style>
+        .bot-option {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            border: 1px solid #dee2e6;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+        .bot-option:hover {
+            background-color: #f8f9fa;
+        }
+        .bot-option i {
+            height: 24px;
+            margin-right: 15px;
+        }
+        .modal-body {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .modal-body {
+            text-align: center;
+        }
+        .modal-body p {
+            margin-bottom: 20px;
+        }
+        .btn-template {
+            margin-bottom: 10px;
+        }
+    </style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+4
+    <script>
+        $('.lead').on('click',function(){
+          var val =  $('.lead').attr('data-type');
+          alert(val);
+        })
+    </script>
 @endsection

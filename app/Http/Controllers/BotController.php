@@ -15,4 +15,10 @@ class BotController extends Controller
     {
         return view('bots.ai-agent');
     }
+    public function savebot(Request $request)
+    {
+        $bot = new ChatBot();
+        $bot->name =$request->name;
+        $bot->save();
+    }
 }

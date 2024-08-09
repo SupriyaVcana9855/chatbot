@@ -16,10 +16,49 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <title>Sign In</title>
+  <title>Email Verify</title>
 
 </head>
+<style>
 
+.login-form {
+    box-shadow: 0px 1px 17.1px 0px #96969645;
+    min-height: 450px;
+    display: flex;
+    border-radius: 10px;
+    padding: 50px 80px;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+  .set_facebook h3{
+   color: #005B96 !important;
+  }.set-data {
+    display: flex;
+    justify-content: center;
+}.set_facebook  h6{
+  
+  color: #434343;
+    font-size: 18px;
+    line-height:25px;
+    font-family: roboto;
+    font-weight: 600;
+}
+  .verify_button {   
+    width: 60%;
+    margin: auto;
+    display: block;
+    background: linear-gradient(88deg, #004485 -1%, #00315f 57%);
+    color: #fff;
+    font-size: 20px;
+    font-weight: 500;
+    padding: 10px 20px;
+    font-family: 'Roboto';
+    box-shadow: -1px 1px 9px 1px #8E8E8E;
+    border: none;
+    border-radius: 5px;
+    letter-spacing: 0.5px;
+}</style>
 <body>
 
   <section class="login-container">
@@ -27,60 +66,17 @@
       <div class="row">
         <div class="col-lg-6"></div>
         <div class="col-lg-6 form_section">
-          <div class="login-form ">
-            <div class="row">
-                <div class="col-6">
-                <h2 class="text-left set_mainheading">Sign In</h2>
-
-                </div>
-                <div class="col-6">
-                <a class="text-left setacount" href="{{url('/signup')}}">Create Your Acount</a>
-                </div>
-            </div>
-            
-            <div class="row">
-              <div class="col-lg-6">
-
-                <button class="btn setBtn_primary mb-2"><i class="fa-brands fa-google" style="color: #ffffff;"></i> Sign
-                  in with Google</button>
-              </div>
-
-               
-              <div class="col-lg-6 set_facebook">
-                
-                <button class="btn setBtn_primary_white mb-2"> <i class="fa-brands fa-facebook-f"
-                    style="color: #005b96;"></i> With Facebook</button>
-              </div>
-            </div>
-            <div class="Set_usign">Or Sign in Using Your Email Address</div>
-            <form action ="{{route('login')}}" method ="post">
-              @csrf()
+          <div class="login-form  set_facebook">
+           
+            <h3 class="text-center">Verify Your Email</h3>
+            <form action ="#" method ="post">
               <div class="row set-data">
-                <div class="form-group col-lg-6  ">
-                  <label for="email">Your Email</label>
-                  <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" id="email" placeholder="typeyourmail@example.com" >
-                  @error('email')
-                      <div style="color:red">{{ $message }}</div>
-                  @enderror
+                <div class="form-group col-lg-12  mt-3 ">
+                  <input type="email" class="form-control mt-3" name="email" id="email" placeholder="Enter Your Email" >
                 </div>
-
-                <div class="form-group col-lg-6 set-pass-icon"> 
-                  <label for="password">Password</label>
-                  <input id="password-field" type="password" class="form-control @error('password') is-invalid @enderror" name="password" >
-                  @error('password')
-                      <div style="color:red">{{ $message }}</div>
-                  @enderror
-                  <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
-                </div>
-                <!-- <div class="form-check col-lg-4 set_remember">
-                  <input type="radio" class="form-check-input" id="rememberMe">
-                  <label class="form-check-label" for="rememberMe">Remember Me</label>
-                </div> -->
-                <div class="col-lg-8 set_pass ">
-                  <a href="#">Forgot Password?</a>
-                </div>
-                <div class=" col-12 set_sign">
-                <button type="submit" class="setBtn_primary signin_button">Sign In</button>
+                <h6 class="text-center mt-3 mb-3">Enter the email address and then the <br>confirmation email will be sent</h6>
+                <div class=" col-12 set_sign mt-3">
+                <button type="submit" class="verify_button">Verify Email</button>
               </div>
               </div>
             </form>

@@ -27,6 +27,11 @@ Route::get('/emailverify', function () {
 Route::get('/otpverify', function () {
     return view('otpverify');
 });
+
+Route::get('/setup', function () {
+    return view('bots.setup');
+});
+
 Route::middleware(['guest'])->group(function () {
     Route::get('/login', function () {
         return view('login');

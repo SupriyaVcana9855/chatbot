@@ -1,4 +1,4 @@
-<div class="col-lg-3 col-md-3 pl-0 col-sm-2">
+<div class=" ">
             <div class="sidebar">
                 <div class="menu-btn"><i class="ph-bold ph-caret-left"></i></div>
                 <div class="head">

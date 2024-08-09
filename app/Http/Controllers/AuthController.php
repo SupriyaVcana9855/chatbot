@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Mail\SendEmail;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
@@ -56,5 +57,17 @@ class AuthController extends Controller
 
         // Redirect to the intended page
         return redirect()->intended('dashboard');
+    }
+
+    public function sendTestEmail()
+    {
+        $details = [
+            'title' => 'Mail from My Laravel App',
+            'body' => 'This is a test email sent from Laravel.'
+        ];
+
+        Mail::to('supriyachandel9855@gmail.com')->send(new SendEmail($details));
+
+        return 'Email sent successfully!';
     }
 }

@@ -14,7 +14,7 @@
                 <p>1</p>
               </div>
               <div class="">
-                <img src="./assets/images/totalchat.png" >
+                <img src="{{asset('/assets/images/totalchat.png')}}" >
               </div>
           </div>
         </div>
@@ -26,7 +26,7 @@
               </div>
              
               <div class="">
-                <img src="./assets/images/TOTAL MESSAGES.png" >
+                <img src="{{asset('/assets/images/TOTAL MESSAGES.png')}}" >
               </div>
           </div>
           </div>
@@ -38,7 +38,7 @@
               </div>
              
               <div class="">
-                <img src="./assets/images/TOTAL FEEDBACKS.png" >
+                <img src="{{asset('/assets/images/TOTAL FEEDBACKS.png')}}" >
               </div>
           </div>
           </div>
@@ -49,7 +49,7 @@
                 <p>189</p>
               </div>
               <div class="">
-                <img src="./assets/images/TOTAL VISITORS.png" >
+                <img src="{{asset('/assets/images/TOTAL VISITORS.png')}}" >
               </div>
           </div>
           </div>

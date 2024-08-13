@@ -104,4 +104,8 @@ class ChatBotController extends Controller
 
         return response($script)->header('Content-Type', 'application/javascript');
     }
+
+    public function websiteChat(){
+        return view('bots.website-bot');
+    }
 }

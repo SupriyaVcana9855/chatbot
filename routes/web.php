@@ -29,6 +29,10 @@ Route::get('/otpverify', function () {
 });
 Route::post('/otpverify', [AuthController::class, 'otpverify'])->name('otpverify');
 
+Route::get('/setup', function () {
+    return view('bots.setup');
+});
+
 Route::middleware(['guest'])->group(function () {
     Route::get('/login', function () {
         return view('login');

@@ -3,7 +3,7 @@
             <div class="col-2 set-logo">
                 <img src="{{asset('/assets/images/logo.png')}}" alt="">
             </div>
-            <div class="col-10 set-icon">
+            <div class="col-11 set-icon">
                 <div class="search-box set-search-color">
                     <button class="btn-search"><i class="fa-solid fa-magnifying-glass"
                             style="color: #777777;"></i></button>
@@ -53,4 +53,14 @@
             </div>
 
         </div>
+
     </div>
+    <style>
+        .set-header {
+            position: fixed;
+            padding-right:50px !important;
+            height: 100px;
+            z-index:99999;
+            background : #f4f4f4 !important;
+        }
+    </style>

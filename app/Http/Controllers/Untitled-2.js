@@ -234,7 +234,7 @@ class ChatBotController extends Controller
                             console.log('header2',header1);
                         });
                     }
-                            console.log('headerssssss',header1);
+                            console.log('headerssssss',header);
 
                 });
             }

@@ -1,9 +1,9 @@
 @extends('layout.app')
 @section('content')
 
-<div class="col-lg-9 col-md-9 col-sm-8">
+<div class="col-lg-10 col-md-10 col-sm-8">
     <div class="row searchi-section mt-4">
-        <div class="col-2 set-boat-heading">
+        <div class="col-2 set-boat-heading main-set">
             <h6>Bots</h6>
         </div>
         <div class="col-10">
@@ -25,7 +25,7 @@
         </div>
     </div>
 
-            <h1>sdas</h1>
+        
 
 </div>
 @endsection

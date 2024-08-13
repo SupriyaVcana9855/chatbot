@@ -1,6 +1,6 @@
 <div class="container-fluid set-header">
         <div class="row">
-            <div class="col-2 set-logo">
+            <div class="col-1 set-logo">
                 <img src="{{asset('/assets/images/logo.png')}}" alt="">
             </div>
             <div class="col-11 set-icon">

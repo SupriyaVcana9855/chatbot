@@ -27,7 +27,6 @@ Route::get('/sendTestEmail', function () {
 Route::get('/otpverify', function () {
     return view('otpverify');
 });
-Route::post('/otpverify', [AuthController::class, 'otpverify'])->name('otpverify');
 
 Route::get('/setup', function () {
     return view('bots.setup');

@@ -1,7 +1,7 @@
 <div class="container-fluid set-header">
         <div class="row">
             <div class="col-1 set-logo">
-                <img src="./assets/images/logo.png" alt="">
+                <img src="{{asset('/assets/images/logo.png')}}" alt="">
             </div>
             <div class="col-11 set-icon">
                 <div class="search-box set-search-color">
@@ -9,14 +9,14 @@
                             style="color: #777777;"></i></button>
                     <input type="text" class="input-search" placeholder="Type to Search...">
                 </div>
-                <div class="set-line"><img src="./assets/images/notifaction.png" alt=""></div>
+                <div class="set-line"><img src="{{asset('/assets/images/notifaction.png')}}" alt=""></div>
                 <!-- profile drop down  -->
                 <div class="dropdown ">
                     <div class="dropbtn set-profileimg ">
                         <h4>Kapil Kapoor</h4>
                         <p>kapil@vcanaglobal.com</p>
                     </div>
-                    <div class="set-profileimg"><img src="./assets/images/proimg.png"><i class="fa-solid fa-angle-down"
+                    <div class="set-profileimg"><img src="{{asset('/assets/images/proimg.png')}}"><i class="fa-solid fa-angle-down"
                             style="color: #777777;"></i></div>
                     <div class="dropdown-content">
                         <div class="chat-status ">

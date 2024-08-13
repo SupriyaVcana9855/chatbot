@@ -424,7 +424,6 @@ padding:25px 20px
 
 </style>
 
-
 <div class="boxpadding">
     <div class="row searchi-section mt-4">
         <div class="col-6 set-boat-heading">

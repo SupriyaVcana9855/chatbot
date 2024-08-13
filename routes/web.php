@@ -19,10 +19,10 @@ use App\Http\Controllers\BotController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/emailverify', function () {
+Route::get('/sendTestEmail', function () {
     return view('emailverify');
 });
+
 
 Route::get('/otpverify', function () {
     return view('otpverify');
@@ -31,6 +31,7 @@ Route::get('/otpverify', function () {
 Route::get('/setup', function () {
     return view('bots.setup');
 });
+Route::post('/otpverify', [AuthController::class, 'otpverify'])->name('otpverify');
 
 Route::middleware(['guest'])->group(function () {
     Route::get('/login', function () {
@@ -43,30 +44,31 @@ Route::middleware(['guest'])->group(function () {
 
     Route::post('/login', [AuthController::class, 'login'])->name('login');
     Route::post('/signup', [AuthController::class, 'signup'])->name('signup');
+  
 });
+    // Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
 
-
-
-Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-    Route::get('/users', [UserController::class, 'index'])->name('users');
+/// Admin Routes
+Route::middleware(['auth', 'role:1'])->group(function () {
+    Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
     Route::get('/bots', [BotController::class, 'bots'])->name('bots');
     Route::post('/savebot', [BotController::class, 'savebot'])->name('savebot');
-
-    
     Route::get('/agent', [BotController::class, 'agent'])->name('agent');
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
-    
-    // Admin-only routes
-    Route::middleware(['role:1'])->group(function () {
-        Route::post('/users', [UserController::class, 'store'])->name('users.store');
-        Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
-        Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
-        
-        Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
-        Route::post('/analytics', [AnalyticsController::class, 'update'])->name('analytics.update');
-    });
 });
+
+// Subadmin Routes
+Route::middleware(['auth', 'role:3'])->group(function () {
+    Route::get('/subadmin/dashboard', [DashboardController::class, 'index'])->name('subadmin.dashboard');
+    // Specific routes that subadmin can access...
+});
+
+// User Routes
+Route::middleware(['auth', 'role:2'])->group(function () {
+    Route::get('/user/dashboard', [DashboardController::class, 'index'])->name('user.dashboard');
+    // Other user routes...
+});
+
 
 
 Route::get('logout', function () {

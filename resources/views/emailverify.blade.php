@@ -69,7 +69,8 @@
           <div class="login-form  set_facebook">
            
             <h3 class="text-center">Verify Your Email</h3>
-            <form action ="#" method ="post">
+            <form action ="{{route('sendTestEmail')}}" method ="post">
+              @csrf
               <div class="row set-data">
                 <div class="form-group col-lg-12  mt-3 ">
                   <input type="email" class="form-control mt-3" name="email" id="email" placeholder="Enter Your Email" >

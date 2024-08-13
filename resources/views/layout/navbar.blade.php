@@ -1,12 +1,7 @@
 <div class="container-fluid set-header">
         <div class="row">
-<<<<<<< HEAD
             <div class="col-1 set-logo">
-                <img src="./assets/images/logo.png" alt="">
-=======
-            <div class="col-2 set-logo">
                 <img src="{{asset('/assets/images/logo.png')}}" alt="">
->>>>>>> f5ce1293264ebe3c95b6d532c5935dc34b0d4dd5
             </div>
             <div class="col-11 set-icon">
                 <div class="search-box set-search-color">

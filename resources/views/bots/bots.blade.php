@@ -6,6 +6,11 @@
         <div class="col-2 set-boat-heading">
             <h6>Bots</h6>
         </div>
+        @if(session('message'))
+    <div class="alert alert-success">
+        {{ session('message') }}
+    </div>
+@endif
         <div class="col-10">
             <div class="search-container">
                 <select class="form-control form-select mr-2">

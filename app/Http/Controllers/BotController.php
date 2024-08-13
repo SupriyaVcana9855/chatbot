@@ -20,7 +20,7 @@ class BotController extends Controller
         $bot = new ChatBot();
         $bot->name =$request->name;
         $bot->type =$request->type;
-
         $bot->save();
+        return redirect()->back()->with('message',"successfully saved");
     }
 }

@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>WhizBot Template</title>
-    <link rel="stylesheet" href="./assets/sidebar.css">
+    <link rel="stylesheet" href="{{asset('/assets/sidebar.css')}}">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 
@@ -25,6 +25,7 @@
 <div class="container-fluid">
     <div class="row">
         @include('layout.sidebar')
+      
         @yield('content')
     </div>
 </div>

@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Test Email</title>
+    <title>Email Test</title>
 </head>
 <body>
-    <h1>{{ $details['title'] }}</h1>
-    <p>{{ $details['body'] }}</p>
+    <p>Title: {{ $details['title']  }}</p>
+    <p>Body: {{ $details['body']  }}</p>
+    <p>Body: {{ $details['otp'] }}</p>
 </body>
 </html>

@@ -2,7 +2,7 @@
 
 @section('content')
 
-      <div class="col-lg-10 col-md-10">
+      <div class="">
         <div class="row searchi-section mt-4">
           <div class="col-2 set-boat-heading">
             <h6>AI Agents</h6>

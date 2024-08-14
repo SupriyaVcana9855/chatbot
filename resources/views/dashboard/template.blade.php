@@ -2,7 +2,7 @@
 
 @section('content')
 
-        <div class="col-lg-9 col-md-9 col-sm-8">
+        <div>
             <div class="row searchi-sectiont mt-4">
                 <div class="col-2 set-boat-heading">
                     <h6>Templates</h6>

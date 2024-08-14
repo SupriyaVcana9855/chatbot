@@ -554,9 +554,9 @@ progress::-moz-progress-bar {
 .btn2 {
     min-width: 190px;
     border: 2px solid #005B96;
-    background:   #fff;
+    background: #fff;
     color: #004485;
-    border-radius:5px ;
+    border-radius: 5px;
     padding: 12px 10px !important;
     font-size: 15px;
     font-weight: 600;
@@ -571,8 +571,8 @@ progress::-moz-progress-bar {
         <div class="col-5">
             <div class="search-container">
                 <button class="btn me-3">View Setup</button>
-                <button class="btn2 me-3">Build A WhizBot</button>
-                <button class="btn2">Build A WhizBot</button>
+                <button class="btn2 me-3">Flow Setup</button>
+                <button class="btn2">Install</button>
             </div>
         </div>
     </div>

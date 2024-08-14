@@ -2,7 +2,7 @@
 
 @section('content')
 
-<div class="col-lg-9 bashboard">
+<div class="bashboard">
         <div class="row">
           <div class="col-lg-12 set-das-heading">
             <h2>Dashboard</h2>

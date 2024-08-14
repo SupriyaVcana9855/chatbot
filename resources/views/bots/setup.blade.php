@@ -545,28 +545,34 @@ progress::-moz-progress-bar {
 .activein {
     background: #005B96 !important;
 }
+
+
+.search-container .btn {
+    min-width: 190px;
+}
+
+.btn2 {
+    min-width: 190px;
+    border: 2px solid #005B96;
+    background: #fff;
+    color: #004485;
+    border-radius: 5px;
+    padding: 12px 10px !important;
+    font-size: 15px;
+    font-weight: 600;
+}
 </style>
 
 <div class="boxpadding">
     <div class="row searchi-section mt-4">
-        <div class="col-6 set-boat-heading">
-            <h6>AI Agents</h6>
+        <div class="col-7 set-boat-heading">
+            <h6>Setup</h6>
         </div>
-        <div class="col-6">
+        <div class="col-5">
             <div class="search-container">
-                <select class="form-control form-select mr-2">
-                    <option>All</option>
-                    <option>Lead Generation Bot</option>
-                    <option>Customer Support Bot</option>
-                    <!-- Add more options as needed -->
-                </select>
-                <div class="input-group set-select mr-2">
-                    <input type="text" class="form-control" placeholder="Search Here For Bot">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-search"></i></span>
-                    </div>
-                </div>
-                <button class="btn">Build A WhizBot</button>
+                <button class="btn me-3">View Setup</button>
+                <button class="btn2 me-3">Flow Setup</button>
+                <button class="btn2">Install</button>
             </div>
         </div>
     </div>

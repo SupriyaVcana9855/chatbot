@@ -170,107 +170,101 @@ class ChatBotController extends Controller
 
      
     public function getChatbotScript($id)
-{
-    $chatbot = ChatBot::find($id);
-    if (!$chatbot) {
-        return response('Chatbot not found', 404);
-    }
+    {
+        $chatbot = ChatBot::find($id);
+        if (!$chatbot) {
+            return response('Chatbot not found', 404);
+        }
+        // Generate the full URL for the logo
+        $logoUrl = asset('storage/' . $chatbot->logo);
+        $script = "
+            var chatbot_id={$id};
+            !function(){
+                var t,e,a=document,s='botman-chatbot';
+                a.getElementById(s)||(t=a.createElement('script'),
+                t.id=s,t.type='text/javascript',
+                t.src='https://cdn.jsdelivr.net/npm/botman-web-widget@0/build/js/widget.js',
 
-    // Generate the full URL for the logo
-    $logoUrl = asset('storage/' . $chatbot->logo);
+                t.onload=function(){
+                    window.botmanWidget = {
+                        frameEndpoint: '/botman/chat',
+                        introMessage: '{$chatbot->intro_message}',
+                        chatServer: '/botman',
+                        title: '{$chatbot->name}',
+                        mainColor: '{$chatbot->main_color}',
+                        bubbleBackground: '{$chatbot->bubble_background}',
+                        bubbleAvatarUrl: '{$logoUrl}', // Use the full URL for the logo
+                        userId: 'user',
+                        placeholderText: 'Type a message...',
+                        font: '{$chatbot->font}',
+                        fontSize: '{$chatbot->font_size}',
+                        botPosition: '{$chatbot->bot_position}',
+                        messageBubble: '{$chatbot->message_bubble}',
+                        radius: '{$chatbot->radius}',
+                        textAlignment: '{$chatbot->text_alignment}',
+                        questionColor: '{$chatbot->question_color}',
+                        answerColor: '{$chatbot->answer_color}',
+                        autoOpen: true,
+                        autoOpenDelay: 1000,
+                    };
 
-    $script = "
-    var chatbot_id={$id};
-    !function(){
-        var t,e,a=document,s='botman-chatbot';
-        a.getElementById(s)||(t=a.createElement('script'),
-        t.id=s,t.type='text/javascript',
-        t.src='https://cdn.jsdelivr.net/npm/botman-web-widget@0/build/js/widget.js',
+                    const elementFound = (ele) => {
+                        ele.addEventListener('click', function(){
+                            const header = document.querySelector('#botmanWidgetRoot > div:first-child > div:first-child');
+                            console.log('headera', header);
+                            if (header) {
+                                const img = document.createElement('img');
+                                img.src = 'https://custpostimages.s3.ap-south-1.amazonaws.com/11/1707999308430.jpg';
+                                img.alt = 'Chatbot Logo';
+                                img.className = 'ChatbotLogo';
 
-        t.onload=function(){
-            window.botmanWidget = {
-                frameEndpoint: '/botman/chat',
-                introMessage: '{$chatbot->intro_message}',
-                chatServer: '/botman',
-                title: '{$chatbot->name}',
-                mainColor: '{$chatbot->main_color}',
-                bubbleBackground: '{$chatbot->bubble_background}',
-                bubbleAvatarUrl: '{$logoUrl}', // Use the full URL for the logo
-                userId: 'user',
-                placeholderText: 'Type a message...',
-                font: '{$chatbot->font}',
-                fontSize: '{$chatbot->font_size}',
-                botPosition: '{$chatbot->bot_position}',
-                messageBubble: '{$chatbot->message_bubble}',
-                radius: '{$chatbot->radius}',
-                textAlignment: '{$chatbot->text_alignment}',
-                questionColor: '{$chatbot->question_color}',
-                answerColor: '{$chatbot->answer_color}',
-                autoOpen: true,
-                autoOpenDelay: 1000,
-            };
+                                img.style.height = '30px'; // Adjust as needed
+                                img.style.marginRight = '10px'; // Adjust as needed
+                                header.insertBefore(img, header.firstChild);
+                                
+                                $('.desktop-closed-message-avatar').remove(img);
 
-            const elementFound = (ele) => {
-                ele.addEventListener('click', function(){
-                    const header = document.querySelector('#botmanWidgetRoot > div:first-child > div:first-child');
-                    console.log('headera', header);
-                    if (header) {
-                        const img = document.createElement('img');
-                        img.src = 'https://custpostimages.s3.ap-south-1.amazonaws.com/11/1707999308430.jpg';
-                        img.alt = 'Chatbot Logo';
-                        img.className = 'ChatbotLogo';
-
-                        img.style.height = '30px'; // Adjust as needed
-                        img.style.marginRight = '10px'; // Adjust as needed
-                        header.insertBefore(img, header.firstChild);
-
-                        // Add an event listener to the logo to remove it on click
-                        img.addEventListener('click', function() {
-                        console.log('remove child',img);
-                            header.removeChild(img);
-                    const header1 = document.querySelector('#botmanWidgetRoot > div:first-child > div:first-child');
+                                // Add an event listener to the logo to remove it on click
+                                // img.addEventListener('click', function() {
+                                //          console.log('remove child',img);
+                                //     header.removeChild(img);
+                                //     const header1 = document.querySelector('#botmanWidgetRoot > div:first-child > div:first-child');
 
 
-                            console.log('header2',header1);
-                        });
-                    }
-                            console.log('headerssssss',header1);
-
-                });
-            }
-
-            const observer = new MutationObserver(function(mutationsList, observer) {
-                for (let mutation of mutationsList) {
-                    if (mutation.type === 'childList') {
-                        mutation.addedNodes.forEach(function(node) {
-                            console.log('enter-node', node);
-                            if (node.nodeType === 1 && node.matches('#botmanWidgetRoot')) {
-                                elementFound(node);
-                                observer.disconnect(); // Stop observing once the element is found
+                                //     console.log('header2',header1);
+                                // });
                             }
+                                    // console.log('headerssssss',header1);
+
                         });
                     }
-                }
-            });
 
-            // Start observing the DOM for changes
-            observer.observe(document.body, { childList: true, subtree: true });
+                    const observer = new MutationObserver(function(mutationsList, observer) {
+                        for (let mutation of mutationsList) {
+                            if (mutation.type === 'childList') {
+                                mutation.addedNodes.forEach(function(node) {
+                                    console.log('enter-node', node);
+                                    if (node.nodeType === 1 && node.matches('#botmanWidgetRoot')) {
+                                        elementFound(node);
+                                        observer.disconnect(); // Stop observing once the element is found
+                                    }
+                                });
+                            }
+                        }
+                    });
 
-        },
-        t.onerror=function(){
-            console.error('Failed to load the BotMan web widget script.');
-        },
-        e=a.getElementsByTagName('script')[0],e.parentNode.insertBefore(t,e))
-    }();
-";
+                    // Start observing the DOM for changes
+                    observer.observe(document.body, { childList: true, subtree: true });
 
-
-
-
-    
-
-    return response($script)->header('Content-Type', 'application/javascript');
-}
+                },
+                t.onerror=function(){
+                    console.error('Failed to load the BotMan web widget script.');
+                },
+                e=a.getElementsByTagName('script')[0],e.parentNode.insertBefore(t,e))
+            }();
+        ";
+        return response($script)->header('Content-Type', 'application/javascript');
+    }
 
 
     

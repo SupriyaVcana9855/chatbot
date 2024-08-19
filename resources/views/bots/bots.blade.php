@@ -59,7 +59,8 @@
                             <img src="./assets/images/boat/Analytics.png">
                         </button></td>
                         <td><button class="btn btn-outline-secondary">
-                            <img src="./assets/images/boat/Settings.png">
+                        <a href="{{ route('setup', $bot->id) }}">
+                        <img src="./assets/images/boat/Settings.png"></a>
                         </button></td>
                         <td>
                             <div class="custom-control custom-switch">

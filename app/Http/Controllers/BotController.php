@@ -6,6 +6,10 @@ use Illuminate\Http\Request;
 
 class BotController extends Controller
 {
+    public function setup($id)
+    {
+        return view('bots.setup',compact('id'));
+    }
     public function bots()
     {
         $bots = ChatBot::all();

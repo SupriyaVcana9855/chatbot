@@ -41,9 +41,10 @@ body {
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: #555;
-}
+}body {margin: 0; height: 100%; overflow: hidden}
+
 .container-fluid {
-  overflow: hidden !important;
+  /* overflow: hidden !important; */
   max-height: 100vh !important;
   padding: 0px ;
 }

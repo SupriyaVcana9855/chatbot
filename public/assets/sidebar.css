@@ -18,7 +18,15 @@ body {
   width: 100%;
   min-height: 100vh;
 } */
-
+.boxpadding {
+    position: relative;
+    top: 100px;
+    height: 90vh;
+    margin-top: 30px;
+    overflow-x: scroll;
+    margin-right: 20px;
+    padding-right: 25px !important;
+}
 
 /* width */
 ::-webkit-scrollbar {

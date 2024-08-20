@@ -1,7 +1,7 @@
 @extends('layout.app')
 @section('content')
 
-<div>
+<div class="boxpadding">
     <div class="row searchi-section mt-4">
         <div class="col-2 set-boat-heading main-set">
             <h6>Bots</h6>

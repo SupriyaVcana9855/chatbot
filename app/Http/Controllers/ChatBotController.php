@@ -176,7 +176,7 @@ class ChatBotController extends Controller
             return response('Chatbot not found', 404);
         }
         // Generate the full URL for the logo
-        $logoUrl = asset('storage/' . $chatbot->logo);
+        // $logoUrl = asset('storage/' . $chatbot->logo);
         $script = "
             var chatbot_id={$id};
             !function(){
@@ -193,7 +193,7 @@ class ChatBotController extends Controller
                         title: '{$chatbot->name}',
                         mainColor: '{$chatbot->main_color}',
                         bubbleBackground: '{$chatbot->bubble_background}',
-                        bubbleAvatarUrl: '{$logoUrl}', // Use the full URL for the logo
+                        bubbleAvatarUrl: '{$chatbot->logo}', // Use the full URL for the logo
                         userId: 'user',
                         placeholderText: 'Type a message...',
                         font: '{$chatbot->font}',
@@ -214,7 +214,7 @@ class ChatBotController extends Controller
                             console.log('headera', header);
                             if (header) {
                                 const img = document.createElement('img');
-                                img.src = 'https://custpostimages.s3.ap-south-1.amazonaws.com/11/1707999308430.jpg';
+                                img.src = '{$chatbot->logo}';
                                 img.alt = 'Chatbot Logo';
                                 img.className = 'ChatbotLogo';
 

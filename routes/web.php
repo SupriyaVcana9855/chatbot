@@ -50,9 +50,11 @@ Route::middleware(['guest'])->group(function () {
 
 /// Admin Routes
 Route::middleware(['auth', 'role:1'])->group(function () {
-    Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+    Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
     Route::get('/bots', [BotController::class, 'bots'])->name('bots');
     Route::post('/savebot', [BotController::class, 'savebot'])->name('savebot');
+    Route::post('/updateBot', [BotController::class, 'updateBot'])->name('updateBot');
+
     Route::get('/agent', [BotController::class, 'agent'])->name('agent');
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
 });

@@ -17,7 +17,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    public const ADMIN = '/admin/dashboard';
+    public const ADMIN = '/';
     public const USER = '/user/dashboard';
 
     public const OTP = '/otpverify';

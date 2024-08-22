@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Providers;
-
+use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
 use BotMan\BotMan\BotManFactory;
 use BotMan\BotMan\Drivers\DriverManager;
@@ -30,5 +30,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton('botman', function ($app) use ($config) {
             return BotManFactory::create($config, new LaravelCache());
         });
+        $scriptId = 1; // Fetch or set your scriptId here
+        View::share('scriptId', $scriptId); 
     }
 }

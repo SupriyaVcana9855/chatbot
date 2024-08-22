@@ -90,7 +90,7 @@ switch($switchc) {
 					// We need to know if we stop the chat without feedback
 					$feedbackform = "yes";
 				} else {
-					// That's it finish the chat and reload
+					// That's it finish the chat and reload                                                                                                                                                                                                             
 			        $jakdb->insert("transcript", [ 
 			          "name" => $cudetails[3],
 			          "message" => sprintf($jkl['g16'], $cudetails[3]),

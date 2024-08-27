@@ -60,4 +60,6 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
     {{-- <script src="http://localhost:8000/chatbot-script/1"></script> --}}
-      {{-- <script src="http://localhost:8000/scriptchatbot/1"></script> --}}
+      <script src="http://localhost:8000/scriptchatbot/1"></script>
+          {{-- <script src="path/to/chatbot.js"></script> --}}
+

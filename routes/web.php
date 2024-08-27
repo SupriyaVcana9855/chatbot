@@ -29,14 +29,14 @@ Route::get('/sendTestEmail', function () {
     return view('emailverify');
 });
 
-
+  
 Route::get('/otpverify', function () {
     return view('otpverify');
 });
 
-// Route::get('/welcome', function () {
-//     return view('welcome');
-// });
+Route::get('/welcome', function () {
+    return view('welcome');
+});
 
 Route::get('/setup/{id}', [BotController::class, 'setup'])->name('setup');
 Route::middleware(['guest'])->group(function () {

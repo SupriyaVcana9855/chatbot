@@ -11,15 +11,10 @@ class ChatBotController extends Controller
     
     public function botQuestion($id)
     {
-        return view('bots/bot-question');
+        return view('bots/bot-question',compact('id'));
     }
     public function addQuestion(Request $request)
     {
-        dd($request);
-        $request->validate([
-            'question' => 'required|string',
-            'answer' => 'required|string',
-        ]);
         $type = $request->type;
         $user = new BotQuestion();
         if($type == 'option')
@@ -28,10 +23,10 @@ class ChatBotController extends Controller
             $user->option2  = $request->option2;
         }else
         {
-            $user->bot_id  = $request->bot_id;
-            $user->question  = $request->question;
             $user->answer  = $request->answer;
         }
+        $user->bot_id  = $request->bot_id;
+        $user->question  = $request->question;
         $user->save();
     }
 
@@ -281,265 +276,24 @@ class ChatBotController extends Controller
         return view('bots.website-bot');
     }
 
-    // public function scriptchatbot($id)
-    // {
-    //     $chatbot = ChatBot::find($id);
-    //     if (!$chatbot) {
-    //         return response('Chatbot not found', 404);
-    //     }
-
-    //     // Generate the full URL for the logo
-    //     $logoUrl = asset('storage/' . $chatbot->logo);
-
-    //     // Fetch the CSRF token
-    //     $csrfToken = csrf_token();
-
-    //     // Generate the script with dynamic values
-    //     $script = "(function() {
-
-    //     // Function to inject the chatbot HTML and CSS into the page
-    //     function injectChatbot() {
-    //         const chatbotContainer = document.createElement('div');
-    //         chatbotContainer.id = 'chatbotContainer';
-    //         chatbotContainer.innerHTML = `
-    //             <div id='chatMessages'></div>
-    //             <div class='message bot'>{$chatbot->intro_message}</div>
-    //             <textarea id='userMessage' placeholder='Type a message...'></textarea>
-    //             <button id='sendButton'>Send</button>
-    //         `;
-    
-    //         const style = document.createElement('style');
-    //         style.innerHTML = `
-    //             /* Add your styles here */
-
-    //             #sendButton{
-    //             background:{$chatbot->main_color};
-    //             }
-    //             #chatbotContainer { 
-    //                 position: fixed; 
-    //                 bottom: 0; 
-    //                 right: 0; 
-    //                 width: 300px; 
-    //                 border: 1px solid #ccc; 
-    //                 // background: {$chatbot->main_color}; /* Dynamically set background color */
-    //                 display: flex;
-    //                 flex-direction: column;
-    //             }
-    //             #chatMessages { 
-    //                 height: 300px; /* Default height */
-    //                 overflow-y: auto;
-    //             }
-    //             .message {
-    //                 padding: 10px; /* Default padding */
-    //             }
-    //             .bot {
-    //                 background: #e0e0e0;
-    //             }
-    //             .user {
-    //                 background: #d1ffd1;
-    //             }
-    //         `;
-    //         document.head.appendChild(style);
-    //         document.body.appendChild(chatbotContainer);
-    
-    //         // Attach event listener to the send button
-    //         const chatMessages = document.getElementById('chatMessages');
-    //         const userMessageInput = document.getElementById('userMessage');
-    //         const sendButton = document.getElementById('sendButton');
-    //         const botId = '{$chatbot->id}'; // Set your bot ID here dynamically
-    //         const csrfToken = '{$csrfToken}'; // Set CSRF token dynamically
-    
-    //         sendButton.addEventListener('click', () => {
-    //             const message = userMessageInput.value.trim();
-    //             if (message) {
-    //                 userMessageInput.value = '';
-                  
-    //                 fetch('/chatbot/message', {
-    //                     method: 'POST',
-    //                     headers: {
-    //                         'Content-Type': 'application/json',
-    //                         'X-CSRF-TOKEN': csrfToken
-    //                     },
-    //                     body: JSON.stringify({ message: message, bot_id: botId })
-    //                 })
-    //                 .then(response => response.json())
-    //                 .then(data => {
-    //                     // Ensure data.reply is properly displayed
-    //                 const reply = data.reply ? data.reply : 'No reply received';
-    //                 console.log(reply);
-
-    //                 //   var datas = document.querySelector('.message').innerHTML =reply
-    //                 // console.log(datas);
-    //                var html1 = `<div class='message bot'>`;
-    //                 var html3 = `</div>`;
-    //                 var final = html1 + reply + html3;
-    //                 chatMessages.innerHTML += final;
-
-    //                 chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to bottom
-
-    //                 chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to bottom
-    //                 })
-    //                 .catch(error => console.error('Error:', error));
-    //             }
-                    
-    //         });
-    //     }
-     
-    //     // Inject the chatbot when the document is ready
-    //     document.addEventListener('DOMContentLoaded', injectChatbot);
-    // })();
-    // ";
-    //     return response($script)->header('Content-Type', 'application/javascript');
-    // }
-
     public function scriptchatbot($id)
     {
         $chatbot = ChatBot::find($id);
+        // dd($chatbot->botQuestions->first());
         if (!$chatbot) {
             return response('Chatbot not found', 404);
         }
-
+    
         // Generate the full URL for the logo
         $logoUrl = asset('storage/' . $chatbot->logo);
-        
+    
         // Fetch the CSRF token
         $csrfToken = csrf_token();
-
-        // Generate the script with dynamic values
-        $script = "(function() {
-
-            // Function to inject the chatbot HTML and CSS into the page
-            function injectChatbot() {
-                const chatbotContainer = document.createElement('div');
-                chatbotContainer.id = 'chatbotContainer';
-                chatbotContainer.innerHTML = `
-                    <div id='chatMessages'></div>
-                    <div class='message bot'>{$chatbot->intro_message}</div>
-                    <textarea id='userMessage' placeholder='Type a message...'></textarea>
-                    <button id='sendButton'>Send</button>
-                `;
-        
-                const style = document.createElement('style');
-                style.innerHTML = `
-                    /* Add your styles here */
-                    #sendButton {
-                        background: {$chatbot->main_color};
-                    }
-                    #chatbotContainer { 
-                        position: fixed; 
-                        bottom: 0; 
-                        right: 0; 
-                        width: 300px; 
-                        border: 1px solid #ccc; 
-                        display: flex;
-                        flex-direction: column;
-                    }
-                    #chatMessages { 
-                        height: 300px;
-                        overflow-y: auto;
-                    }
-                    .message {
-                        padding: 10px;
-                    }
-                    .bot {
-                        background: #e0e0e0;
-                    }
-                    .user {
-                        background: #d1ffd1;
-                    }
-                    .options button {
-                        margin: 5px;
-                        padding: 5px 10px;
-                        border: none;
-                        background: #007bff;
-                        color: #fff;
-                        cursor: pointer;
-                    }
-                    .options button:hover {
-                        background: #0056b3;
-                    }
-                `;
-                document.head.appendChild(style);
-                document.body.appendChild(chatbotContainer);
-                const chatMessages = document.getElementById('chatMessages');
-                const userMessageInput = document.getElementById('userMessage');
-                const sendButton = document.getElementById('sendButton');
-                const botId = '{$chatbot->id}';
-                const csrfToken = '{$csrfToken}';
-        
-                sendButton.addEventListener('click', () => {
-                    const message = userMessageInput.value.trim();
-                    if (message) {
-                        userMessageInput.value = '';
-                        handleUserMessage(message);
-                    }
-                });
-
-                // Function to handle user messages and fetch the bot's response
-                function handleUserMessage(message) {
-                    appendUserMessage(message);
-                    
-                    fetch('/chatbot/message', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': csrfToken
-                        },
-                        body: JSON.stringify({ message: message, bot_id: botId })
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        const reply = data.reply ? data.reply : 'No reply received';
-                        const options = data.options ? data.options : [];
-                        appendBotMessage(reply, options);
-                    })
-                    .catch(error => console.error('Error:', error));
-                }
-
-                // Function to append user message to the chat
-                function appendUserMessage(message) {
-                    const userMessageDiv = document.createElement('div');
-                    userMessageDiv.className = 'message user';
-                    userMessageDiv.textContent = message;
-                    chatMessages.appendChild(userMessageDiv);
-                    chatMessages.scrollTop = chatMessages.scrollHeight;
-                }
-
-                // Function to append bot message and options to the chat
-                function appendBotMessage(reply, options) {
-                    const botMessageDiv = document.createElement('div');
-                    botMessageDiv.className = 'message bot';
-                    botMessageDiv.innerHTML = reply;
-
-                    if (options.length > 0) {
-                        const optionsContainer = document.createElement('div');
-                        optionsContainer.className = 'options';
-                        options.forEach(option => {
-                            const button = document.createElement('button');
-                            button.innerText = option.text;
-                            button.onclick = () => handleOptionSelect(option.value);
-                            optionsContainer.appendChild(button);
-                        });
-                        botMessageDiv.appendChild(optionsContainer);
-                    }
-
-                    chatMessages.appendChild(botMessageDiv);
-                    chatMessages.scrollTop = chatMessages.scrollHeight;
-                }
-
-                // Function to handle option selection
-                function handleOptionSelect(optionValue) {
-                    appendUserMessage(optionValue);
-                    handleUserMessage(optionValue);
-                }
-            }
-        
-            // Inject the chatbot when the document is ready
-            document.addEventListener('DOMContentLoaded', injectChatbot);
-        })();
-        ";
-
-        return response($script)->header('Content-Type', 'application/javascript');
+    
+        return view('bots.chatbot', compact('chatbot', 'logoUrl', 'csrfToken'));
     }
+    
+
+  
 
 }

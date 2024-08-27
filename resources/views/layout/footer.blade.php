@@ -59,5 +59,5 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-    <script src="http://localhost:8000/chatbot-script/{{ $scriptId}}"></script>
-            
+    {{-- <script src="http://localhost:8000/chatbot-script/1"></script> --}}
+      {{-- <script src="http://localhost:8000/scriptchatbot/1"></script> --}}

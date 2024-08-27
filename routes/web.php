@@ -1,13 +1,13 @@
 <?php
 
+use App\Http\Controllers\TwilioController;
 use Illuminate\Support\Facades\Route;
 use  App\Http\Controllers\BotmanController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ChatBotController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\BotController;
-
-
+use App\Http\Controllers\TemplateController;
 
 /*
 |--------------------------------------------------------------------------
@@ -97,4 +97,6 @@ Route::get('/chatbot-script/{id}',[ChatBotController::class, 'getChatbotScript']
 Route::get('/test-chatbot-script', [ChatBotController::class, 'testChatbotScript']);
 
 Route::get('/website-bot', [ChatBotController::class, 'websiteChat'])->name('website.bot');
+
+Route::get('templates',[TemplateController::class,'templates'])->name('templates');
 

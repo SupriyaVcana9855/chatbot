@@ -20,6 +20,7 @@ class UserSeeder extends Seeder
             'email' => 'admin@gmail.com',
             'password' => Hash::make('Admin@admin'), // Replace 'password' with your desired password
             'role' => 1, // Assuming '1' denotes admin role
+            'status' => 'active',
         ]);
     }
 }

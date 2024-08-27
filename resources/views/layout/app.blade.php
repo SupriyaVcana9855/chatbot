@@ -17,7 +17,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
         <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
-  
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 </head>
 <style>
      
@@ -25,7 +26,15 @@
         #side {
             padding:0px !important;
         }
-       
+       .boxpadding {
+    position: relative;
+    top: 100px;
+    height: 90vh;
+    margin-top: 30px;
+    overflow-x: scroll;
+    margin-right: 20px;
+    padding-right: 25px !important;
+}
 
          
 </style>

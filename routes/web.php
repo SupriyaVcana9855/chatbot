@@ -19,6 +19,12 @@ use App\Http\Controllers\BotController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/scriptchatbot/{id}',[ChatBotController::class, 'scriptchatbot'])->name('scriptchatbot');
+
+Route::get('/chatbot/{id}', [ChatBotController::class, 'show']);
+Route::post('/chatbot/message', [ChatBotController::class, 'handleMessage']);
+
 Route::get('/sendTestEmail', function () {
     return view('emailverify');
 });
@@ -28,8 +34,8 @@ Route::get('/otpverify', function () {
     return view('otpverify');
 });
 
-// Route::get('/setup', function () {
-//     return view('bots.setup');
+// Route::get('/welcome', function () {
+//     return view('welcome');
 // });
 
 Route::get('/setup/{id}', [BotController::class, 'setup'])->name('setup');
@@ -50,12 +56,20 @@ Route::middleware(['guest'])->group(function () {
 
 /// Admin Routes
 Route::middleware(['auth', 'role:1'])->group(function () {
-    Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+    Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
     Route::get('/bots', [BotController::class, 'bots'])->name('bots');
     Route::post('/savebot', [BotController::class, 'savebot'])->name('savebot');
+    Route::post('/updateBot', [BotController::class, 'updateBot'])->name('updateBot');
+
     Route::get('/agent', [BotController::class, 'agent'])->name('agent');
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
+
+    Route::get('/get-questions',[ChatBotController::class, 'getQuestion'])->name('questions');
+    Route::post('/add-questions',[ChatBotController::class, 'addQuestion'])->name('addQuestion');
+    Route::get('/add-questions/{id}',[ChatBotController::class, 'botQuestion'])->name('botQuestion');
+
 });
+
 
 // Subadmin Routes
 Route::middleware(['auth', 'role:3'])->group(function () {

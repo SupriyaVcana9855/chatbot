@@ -9,6 +9,29 @@
     background: none !important;
 }
 
+:focus {
+    border-radius: 0;
+    outline: none;
+}
+
+::-webkit-color-swatch-wrapper {
+    padding: 0;
+}
+
+::-webkit-color-swatch {
+    border: 0;
+    border-radius: 0;
+}
+
+::-moz-color-swatch,
+::-moz-focus-inner {
+    border: 0;
+}
+
+::-moz-focus-inner {
+    padding: 0;
+}
+
 .boxinner span#addon-wrapping:hover .hideshowbox {
     display: block !important;
 }
@@ -545,28 +568,34 @@ progress::-moz-progress-bar {
 .activein {
     background: #005B96 !important;
 }
+
+
+.search-container .btn {
+    min-width: 190px;
+}
+
+.btn2 {
+    min-width: 190px;
+    border: 2px solid #005B96;
+    background: #fff;
+    color: #004485;
+    border-radius: 5px;
+    padding: 12px 10px !important;
+    font-size: 15px;
+    font-weight: 600;
+}
 </style>
 
 <div class="boxpadding">
     <div class="row searchi-section mt-4">
-        <div class="col-6 set-boat-heading">
-            <h6>AI Agents</h6>
+        <div class="col-7 set-boat-heading">
+            <h6>Setup</h6>
         </div>
-        <div class="col-6">
+        <div class="col-5">
             <div class="search-container">
-                <select class="form-control form-select mr-2">
-                    <option>All</option>
-                    <option>Lead Generation Bot</option>
-                    <option>Customer Support Bot</option>
-                    <!-- Add more options as needed -->
-                </select>
-                <div class="input-group set-select mr-2">
-                    <input type="text" class="form-control" placeholder="Search Here For Bot">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text"><i class="fas fa-search"></i></span>
-                    </div>
-                </div>
-                <button class="btn">Build A WhizBot</button>
+                <button class="btn me-3">View Setup</button>
+                <button class="btn2 me-3">Flow Setup</button>
+                <button class="btn2">Install</button>
             </div>
         </div>
     </div>
@@ -584,295 +613,329 @@ progress::-moz-progress-bar {
                     <div class="row">
                         <div class="col-xl-6">
                             <div class="boxinner">
-                                <div class="textbox">
-                                    <h6>Text</h6>
-                                    <div class="imgboxhead">
-                                        <h5>Save <img src="{{asset('assets/images/setup/saveicon.png')}}" alt=""
-                                                class="ms-3"></h5>
+                                <form action="#">
+                                    <div class="textbox">
+                                        <h6>Text</h6>
+                                        <div class="imgboxhead">
+                                            <h5>Save <img src="{{asset('assets/images/setup/saveicon.png')}}" alt=""
+                                                    class="ms-3"></h5>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="input-group flex-nowrap mt-3">
-                                    <input type="text" class="form-control" placeholder="Bot Name" aria-label="Bot Name"
-                                        aria-describedby="addon-wrapping">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="addon-wrapping"><i
-                                                class="bi bi-info-circle-fill"></i>
-                                            <div class="hideshowbox">
-                                                <p>Here is a dummy content</p>
-                                            </div>
-                                        </span>
+                                    <div class="input-group flex-nowrap mt-3">
+                                        <input type="text" class="form-control" placeholder="Bot Name"
+                                            aria-label="Bot Name" aria-describedby="addon-wrapping">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="addon-wrapping"><i
+                                                    class="bi bi-info-circle-fill"></i>
+                                                <div class="hideshowbox">
+                                                    <p>Here is a dummy content</p>
+                                                </div>
+                                            </span>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="input-group flex-nowrap mt-3">
-                                    <input type="text" class="form-control" placeholder="Welcome Text"
-                                        aria-label="Welcome Text" aria-describedby="addon-wrapping">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="addon-wrapping"><i
-                                                class="bi bi-info-circle-fill"></i>
-                                            <div class="hideshowbox">
-                                                <p>Here is a dummy content</p>
-                                            </div>
-                                        </span>
+                                    <div class="input-group flex-nowrap mt-3">
+                                        <input type="text" class="form-control" placeholder="Welcome Text"
+                                            aria-label="Welcome Text" aria-describedby="addon-wrapping">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="addon-wrapping"><i
+                                                    class="bi bi-info-circle-fill"></i>
+                                                <div class="hideshowbox">
+                                                    <p>Here is a dummy content</p>
+                                                </div>
+                                            </span>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="input-group flex-nowrap mt-3">
-                                    <input type="text" class="form-control" placeholder="Bot Description"
-                                        aria-label="Bot Description" aria-describedby="addon-wrapping">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="addon-wrapping"><i
-                                                class="bi bi-info-circle-fill"></i>
-                                            <div class="hideshowbox">
-                                                <p>Here is a dummy content</p>
-                                            </div>
-                                        </span>
+                                    <div class="input-group flex-nowrap mt-3">
+                                        <input type="text" class="form-control" placeholder="Bot Description"
+                                            aria-label="Bot Description" aria-describedby="addon-wrapping">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text" id="addon-wrapping"><i
+                                                    class="bi bi-info-circle-fill"></i>
+                                                <div class="hideshowbox">
+                                                    <p>Here is a dummy content</p>
+                                                </div>
+                                            </span>
+                                        </div>
                                     </div>
-                                </div>
 
-                                <select class="form-select mt-3" aria-label="Choose A Font">
-                                    <option selected>Choose A Font</option>
-                                    <option value="1">Font 1</option>
-                                    <option value="2">Font 2</option>
-                                    <option value="3">Font 3</option>
-                                </select>
-                                <select class="form-select mt-3" aria-label="Font Size">
-                                    <option selected>Font Size</option>
-                                    <option value="1">Size 1</option>
-                                    <option value="2">Size 2</option>
-                                    <option value="3">Size 3</option>
-                                </select>
+                                    <select class="form-select mt-3" aria-label="Choose A Font">
+                                        <option selected>Choose A Font</option>
+                                        <option value="1">Font 1</option>
+                                        <option value="2">Font 2</option>
+                                        <option value="3">Font 3</option>
+                                    </select>
+                                    <select class="form-select mt-3" aria-label="Font Size">
+                                        <option selected>Font Size</option>
+                                        <option value="1">Size 1</option>
+                                        <option value="2">Size 2</option>
+                                        <option value="3">Size 3</option>
+                                    </select>
+
+                                </form>
                             </div>
                         </div>
 
                         <div class="col-xl-6">
                             <div class="boxinner">
-                                <div class="textbox">
-                                    <h6>Logo</h6>
-                                    <div class="imgboxhead">
-                                        <h5>Save <img src="{{asset('assets/images/setup/saveicon.png')}}" alt=""
-                                                class="ms-3"></h5>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-xl-4 mt-3">
-                                        <div class="imglogobox">
-                                            <img src="{{asset('assets/images/setup/CompanyLogo.png')}}" alt="">
-                                            <h4>Company Logo</h4>
+
+                                <form action="#">
+                                    <div class="textbox">
+                                        <h6>Logo</h6>
+                                        <div class="imgboxhead">
+                                            <h5>Save <img src="{{asset('assets/images/setup/saveicon.png')}}" alt=""
+                                                    class="ms-3"></h5>
                                         </div>
                                     </div>
-                                    <div class="col-xl-8 mt-3">
-                                        <div class="logobox">
-                                            <h4>Avatar</h4>
-                                            <div class="imgarea mt-1">
-                                                <img src="{{asset('assets/images/setup/fistic.png')}}" alt="">
-                                                <img src="{{asset('assets/images/setup/admin.png')}}" alt="">
-                                                <img src="{{asset('assets/images/setup/admin.png')}}" alt="">
-                                                <img src="{{asset('assets/images/setup/admin.png')}}" alt="">
-                                                <img src="{{asset('assets/images/setup/admin.png')}}" alt="">
-                                                <img src="{{asset('assets/images/setup/admin.png')}}" alt="">
-                                                <img src="{{asset('assets/images/setup/admin.png')}}" alt="">
-                                                <img src="{{asset('assets/images/setup/admin.png')}}" alt="">
-                                                <img src="{{asset('assets/images/setup/admin.png')}}" alt="">
-                                                <img src="{{asset('assets/images/setup/admin.png')}}" alt="">
-                                                <img src="{{asset('assets/images/setup/admin.png')}}" alt="">
-                                                <img src="{{asset('assets/images/setup/admin.png')}}" alt="">
-                                                <img src="{{asset('assets/images/setup/admin.png')}}" alt="">
-                                                <img src="{{asset('assets/images/setup/admin.png')}}" alt="">
-                                                <img src="{{asset('assets/images/setup/admin.png')}}" alt="">
-                                                <img src="{{asset('assets/images/setup/admin.png')}}" alt="">
-                                                <img src="{{asset('assets/images/setup/admin.png')}}" alt="">
-                                                <img src="{{asset('assets/images/setup/admin.png')}}" alt="">
-                                                <!-- Add more images as needed -->
+                                    <div class="row">
+                                        <div class="col-xl-4 mt-3">
+                                            <div class="imglogobox">
+                                                <img src="{{asset('assets/images/setup/CompanyLogo.png')}}" alt="">
+                                                <h4>Company Logo</h4>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-8 mt-3">
+                                            <div class="logobox">
+                                                <h4>Avatar</h4>
+                                                <div class="imgarea mt-1">
+                                                    <img src="{{asset('assets/images/setup/fistic.png')}}" alt="">
+                                                    <img src="{{asset('assets/images/setup/admin.png')}}" alt="">
+                                                    <img src="{{asset('assets/images/setup/admin.png')}}" alt="">
+                                                    <img src="{{asset('assets/images/setup/admin.png')}}" alt="">
+                                                    <img src="{{asset('assets/images/setup/admin.png')}}" alt="">
+                                                    <img src="{{asset('assets/images/setup/admin.png')}}" alt="">
+                                                    <img src="{{asset('assets/images/setup/admin.png')}}" alt="">
+                                                    <img src="{{asset('assets/images/setup/admin.png')}}" alt="">
+                                                    <img src="{{asset('assets/images/setup/admin.png')}}" alt="">
+                                                    <img src="{{asset('assets/images/setup/admin.png')}}" alt="">
+                                                    <img src="{{asset('assets/images/setup/admin.png')}}" alt="">
+                                                    <img src="{{asset('assets/images/setup/admin.png')}}" alt="">
+                                                    <img src="{{asset('assets/images/setup/admin.png')}}" alt="">
+                                                    <img src="{{asset('assets/images/setup/admin.png')}}" alt="">
+                                                    <img src="{{asset('assets/images/setup/admin.png')}}" alt="">
+                                                    <img src="{{asset('assets/images/setup/admin.png')}}" alt="">
+                                                    <img src="{{asset('assets/images/setup/admin.png')}}" alt="">
+                                                    <img src="{{asset('assets/images/setup/admin.png')}}" alt="">
+                                                    <!-- Add more images as needed -->
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </form>
                             </div>
                         </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col-xl-6">
                             <div class="boxinner">
-                                <div class="textbox">
-                                    <h6>Themes</h6>
-                                    <div class="imgboxhead">
-                                        <h5>Save <img src="{{asset('assets/images/setup/saveicon.png')}}" alt=""
-                                                class="ms-3"></h5>
-                                    </div>
-                                </div>
-                                <div class="border-r mt-3 mb-3">
-                                    <h6 class="mb-3">Bot Position <i class="bi bi-info-circle-fill iconhide ms-4">
-
-                                            <div class="boxhede">
-                                                <p>here is the main content</p>
-                                            </div>
-                                        </i></h6>
-                                    <div class="row">
-                                        <div class="col-xl-4">
-
-                                            <form method="POST" class="bottonbg">
-                                                <table>
-                                                    <tr>
-                                                        <td><input name="position" value=" "></td>
-                                                        <td><input name="position" value=" "></td>
-                                                        <td><input name="position" value=" "></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><input class="activein" name="position" value=" "></td>
-                                                        <td><input name="position" value=" "></td>
-                                                        <td><input name="position" value=" "></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><input name="position" value=" "></td>
-                                                        <td><input name="position" value=" "></td>
-                                                        <td><input name="position" value=" "></td>
-                                                    </tr>
-                                                </table>
-                                                <!-- <button type="submit">Set Position</button> -->
-                                            </form>
-
-                                        </div>
-                                        <div class="col-xl-4">
-
-                                            <form method="POST" class="bottonbg">
-                                                <table>
-                                                    <tr>
-                                                        <td><input class="activein" name="position" value=" "></td>
-                                                        <td><input name="position" value=" "></td>
-                                                        <td><input name="position" value=" "></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><input name="position" value=" "></td>
-                                                        <td><input name="position" value=" "></td>
-                                                        <td><input name="position" value=" "></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><input name="position" value=" "></td>
-                                                        <td><input name="position" value=" "></td>
-                                                        <td><input name="position" value=" "></td>
-                                                    </tr>
-                                                </table>
-                                                <!-- <button type="submit">Set Position</button> -->
-                                            </form>
-
-                                        </div>
-                                        <div class="col-xl-4">
-
-                                            <form method="POST" class="bottonbg">
-                                                <table>
-                                                    <tr>
-                                                        <td><input name="position" value=" "></td>
-                                                        <td><input name="position" value=" "></td>
-                                                        <td><input name="position" value=" "></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><input name="position" value=" "></td>
-                                                        <td><input name="position" value=" "></td>
-                                                        <td><input name="position" value=" "></td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td><input name="position" value=" "></td>
-                                                        <td><input name="position" value=" "></td>
-                                                        <td><input class="activein" name="position" value=" "></td>
-                                                    </tr>
-                                                </table>
-                                                <!-- <button type="submit">Set Position</button> -->
-                                            </form>
-
+                                <form action="#">
+                                    <div class="textbox">
+                                        <h6>Themes</h6>
+                                        <div class="imgboxhead">
+                                            <h5>Save <img src="{{asset('assets/images/setup/saveicon.png')}}" alt=""
+                                                    class="ms-3"></h5>
                                         </div>
                                     </div>
-                                </div>
+                                    <div class="border-r mt-3 mb-3">
+                                        <h6 class="mb-3">Bot Position <i class="bi bi-info-circle-fill iconhide ms-4">
 
+                                                <div class="boxhede">
+                                                    <p>here is the main content</p>
+                                                </div>
+                                            </i></h6>
+                                        <div class="row">
+                                            <div class="col-xl-4 d-none">
 
-                                <div class="border-r mt-3 mb-3">
-                                    <h6 class="mb-3">Message Bubbles <i class="bi bi-info-circle-fill iconhide ms-4">
+                                                <form method="POST" class="bottonbg">
+                                                    <table>
+                                                        <tr>
+                                                            <td><input  name="position" value=" "></td>
+                                                            <td><input class="activein" name="position" value=" "></td>
+                                                            <td><input name="position" value=" "></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><input name="position" value=" "></td>
+                                                            <td><input name="position" value=" "></td>
+                                                            <td><input name="position" value=" "></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><input name="position" value=" "></td>
+                                                            <td><input name="position" value=" "></td>
+                                                            <td><input name="position" value=" "></td>
+                                                        </tr>
+                                                    </table>
+                                                    <!-- <button type="submit">Set Position</button> -->
+                                                </form>
 
-                                            <div class="boxhede">
-                                                <p>here is the main content</p>
                                             </div>
-                                        </i></h6>
-                                    <div class="row">
-                                        <div class="col-xl-4">
-                                            <div class="butoonbox">
-                                                <button>
-                                                    Hello !
-                                                </button>
+
+                                            <div class="col-xl-4">
+
+                                                <form method="POST" class="bottonbg">
+                                                    <table>
+                                                        <tr>
+                                                            <td><input  name="position" value=" "></td>
+                                                            <td><input  name="position" value=" "></td>
+                                                            <td><input name="position" value=" "></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><input class="activein" name="position" value=" "></td>
+                                                            <td><input name="position" value=" "></td>
+                                                            <td><input name="position" value=" "></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><input name="position" value=" "></td>
+                                                            <td><input name="position" value=" "></td>
+                                                            <td><input name="position" value=" "></td>
+                                                        </tr>
+                                                    </table>
+                                                    <!-- <button type="submit">Set Position</button> -->
+                                                </form>
+
                                             </div>
-                                        </div>
-                                        <div class="col-xl-4">
-                                            <div class="butoonboxes">
-                                                <button>
-                                                    Hello !
-                                                </button>
+                                            <div class="col-xl-4">
+
+                                                <form method="POST" class="bottonbg">
+                                                    <table>
+                                                        <tr>
+                                                            <td><input class="activein" name="position" value=" "></td>
+                                                            <td><input name="position" value=" "></td>
+                                                            <td><input name="position" value=" "></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><input name="position" value=" "></td>
+                                                            <td><input name="position" value=" "></td>
+                                                            <td><input name="position" value=" "></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><input name="position" value=" "></td>
+                                                            <td><input name="position" value=" "></td>
+                                                            <td><input name="position" value=" "></td>
+                                                        </tr>
+                                                    </table>
+                                                    <!-- <button type="submit">Set Position</button> -->
+                                                </form>
+
                                             </div>
-                                        </div>
-                                        <div class="col-xl-4">
-                                            <div class="butoonbox3">
-                                                <button>
-                                                    Hello !
-                                                </button>
+                                            <div class="col-xl-4">
+
+                                                <form method="POST" class="bottonbg">
+                                                    <table>
+                                                        <tr>
+                                                            <td><input name="position" value=" "></td>
+                                                            <td><input name="position" value=" "></td>
+                                                            <td><input name="position" value=" "></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><input name="position" value=" "></td>
+                                                            <td><input name="position" value=" "></td>
+                                                            <td><input name="position" value=" "></td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><input name="position" value=" "></td>
+                                                            <td><input name="position" value=" "></td>
+                                                            <td><input class="activein" name="position" value=" "></td>
+                                                        </tr>
+                                                    </table>
+                                                    <!-- <button type="submit">Set Position</button> -->
+                                                </form>
+
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="border-r  mt-5 mb-3">
-                                    <h6>Option Border Radius <i class="bi bi-info-circle-fill iconhide ms-4">
 
-                                            <div class="boxhede">
-                                                <p>here is the main content</p>
+
+                                    <div class="border-r mt-3 mb-3">
+                                        <h6 class="mb-3">Message Bubbles <i
+                                                class="bi bi-info-circle-fill iconhide ms-4">
+
+                                                <div class="boxhede">
+                                                    <p>here is the main content</p>
+                                                </div>
+                                            </i></h6>
+                                        <div class="row">
+                                            <div class="col-xl-4">
+                                                <div class="butoonbox">
+                                                    <button>
+                                                        Hello !
+                                                    </button>
+                                                </div>
                                             </div>
-                                        </i></h6>
-                                    <div class="progress-bar-container">
-                                        <input type="range" id="progressBar" value="0" max="100">
-                                        <div class="button-container">
-                                            <button id="dynamicButton">Click Me!</button>
+                                            <div class="col-xl-4">
+                                                <div class="butoonboxes">
+                                                    <button>
+                                                        Hello !
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-4">
+                                                <div class="butoonbox3">
+                                                    <button>
+                                                        Hello !
+                                                    </button>
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
+                                    <div class="border-r  mt-5 mb-3">
+                                        <h6>Option Border Radius <i class="bi bi-info-circle-fill iconhide ms-4">
 
-                                <div class="border-r mt-3 mb-3">
-                                    <h6 class="mb-3">Button Text Alignment<i
-                                            class="bi bi-info-circle-fill iconhide ms-4">
-
-                                            <div class="boxhede">
-                                                <p>here is the main content</p>
+                                                <div class="boxhede">
+                                                    <p>here is the main content</p>
+                                                </div>
+                                            </i></h6>
+                                        <div class="progress-bar-container">
+                                            <input type="range" id="progressBar" value="0" max="100">
+                                            <div class="button-container">
+                                                <button id="dynamicButton">Click Me!</button>
                                             </div>
-                                        </i>
-
-                                    </h6>
-                                    <div class="row">
-                                        <div class="col-xl-4">
-                                            <div class="butoonbox1">
-                                                <button>
-                                                    Hello !
-                                                </button>
-                                            </div>
-                                        </div>
-                                        <div class="col-xl-4">
-                                            <div class="butoonbox2"><button>
-                                                    Hello !
-                                                </button></div>
-                                        </div>
-                                        <div class="col-xl-4">
-                                            <div class="butoonbox3"><button>
-                                                    Hello !
-                                                </button></div>
                                         </div>
                                     </div>
-                                </div>
+
+                                    <div class="border-r mt-3 mb-3">
+                                        <h6 class="mb-3">Button Text Alignment<i
+                                                class="bi bi-info-circle-fill iconhide ms-4">
+
+                                                <div class="boxhede">
+                                                    <p>here is the main content</p>
+                                                </div>
+                                            </i>
+
+                                        </h6>
+                                        <div class="row">
+                                            <div class="col-xl-4">
+                                                <div class="butoonbox1">
+                                                    <button>
+                                                        Hello !
+                                                    </button>
+                                                </div>
+                                            </div>
+                                            <div class="col-xl-4">
+                                                <div class="butoonbox2"><button>
+                                                        Hello !
+                                                    </button></div>
+                                            </div>
+                                            <div class="col-xl-4">
+                                                <div class="butoonbox3"><button>
+                                                        Hello !
+                                                    </button></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
                             </div>
                         </div>
 
                         <div class="col-xl-6">
                             <div class="boxinner">
-                                <div class="textbox">
-                                    <h6>Themes</h6>
-                                    <div class="imgboxhead">
-                                        <h5>Save <img src="{{asset('assets/images/setup/saveicon.png')}}" alt=""
-                                                class="ms-3"></h5>
+                                <form action="">
+                                    <div class="textbox">
+                                        <h6>Themes</h6>
+                                        <div class="imgboxhead">
+                                            <h5>Save <img src="{{asset('assets/images/setup/saveicon.png')}}" alt=""
+                                                    class="ms-3"></h5>
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="row mt-3">
-                                    <div class="col-xl-6 colorbox">
+                                    <div class="mt-3 colorbox">
                                         <div class="textbox details">
                                             <h2>Choose a theme <i class="bi bi-info-circle-fill iconhide ms-4">
                                                     <div class="boxhede">
@@ -919,15 +982,14 @@ progress::-moz-progress-bar {
                                         </div>
                                     </div>
 
-                                    <div class="col-xl-6">
+                                    <!-- <div class="col-xl-6">
                                         <div class="color-picker-container">
                                             <div class="tab-container">
                                                 <button class="active" id="colorTab">Color</button>
                                                 <button id="gradientTab">Gradient</button>
                                             </div>
 
-                                            <div class="color-grid">
-                                                <!-- Replace these with actual colors -->
+                                            <div class="color-grid"> 
                                                 <input type="color" value="#FF0000">
                                                 <input type="color" value="#FF7F00">
                                                 <input type="color" value="#FFFF00">
@@ -1172,15 +1234,18 @@ progress::-moz-progress-bar {
                                                 <span id="opacityValue">100%</span>
                                             </div>
                                         </div>
-                                    </div>
-                                </div>
+                                    </div> -->
+
+                                </form>
                             </div>
                         </div>
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </div>
 
 
@@ -1188,9 +1253,9 @@ progress::-moz-progress-bar {
 <script>
 // JavaScript to populate the color grid and handle events
 
-const colorGrid = document.getElementById('colorGrid');
-const opacityRange = document.getElementById('opacityRange');
-const opacityValue = document.getElementById('opacityValue');
+// //const colorGrid = document.getElementById('colorGrid');
+// //const opacityRange = document.getElementById('opacityRange');
+// //const opacityValue = document.getElementById('opacityValue');
 
 // // Populate color grid
 // colors.forEach(color => {

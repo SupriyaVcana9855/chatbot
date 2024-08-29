@@ -46,7 +46,7 @@
                         <div class="">
                             <div class="template-card">
                                 <h3>Digital Marketing</h3>
-                                <a href="">Use This</a>
+                                <a href="{{route('templateview')}}">Use This</a>
                             </div>
                             <p>Easily collect product or service reviews from customers, then convert the feedback into actionable insights to improve quality.</p>
                         </div>

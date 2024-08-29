@@ -68,6 +68,9 @@ Route::middleware(['auth', 'role:1'])->group(function () {
     Route::post('/add-questions',[ChatBotController::class, 'addQuestion'])->name('addQuestion');
     Route::get('/add-questions/{id}',[ChatBotController::class, 'botQuestion'])->name('botQuestion');
 
+    Route::get('templates', [DashboardController::class, 'templates'])->name('templates');
+    Route::get('template-view', [DashboardController::class, 'templateView'])->name('templateview');
+
 });
 
 

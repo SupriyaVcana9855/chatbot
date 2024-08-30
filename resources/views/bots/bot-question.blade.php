@@ -25,10 +25,10 @@
                                     <option value="single">Single</option>
                                 </select>
                             </div>
-
+                            <input type="hidden" name="bot_id" value="{{ $id }}">
                             <div class="mb-3">
                                 <label for="question-input" class="form-label">Question</label>
-                                <input type="text" class="form-control " id="question-input" placeholder="Enter Question?" aria-label="Enter Question?" name="name">
+                                <input type="text" class="form-control " id="question-input" placeholder="Enter Question?" aria-label="Enter Question?" name="question">
                             </div>
                             <div class="optionClass" style="display:none">
                                 <div class="mb-3">
@@ -42,9 +42,9 @@
                                 
                                 </div>
                             </div>
-                           <div class="mb-3">
+                           <div class="mb-3 answer">
                                     <label for="bot-description" class="form-label">Answer</label>
-                                    <input type="text" class="form-control answer" id="bot-description" placeholder="Bot Description" aria-label="Bot Description" name="answer">
+                                    <input type="text" class="form-control " id="bot-description" placeholder="Bot Description" aria-label="Bot Description" name="answer">
                                 
                                 </div>
 
@@ -55,28 +55,17 @@
         </div>
     </div>
     <script>
-    $('.selctQuestion').on('change',function(){
-        var val = $(this).val();
-        if(val == 'option')
-        {
-            $('.optionClass').css('display','block');
-        }
-      
-
-    });
-
-    $('.answer').on('change',function(){
-        var opt1 = $('.option1').val();
-        var opt2 = $('.option2').val();
-        var ans = $(this).val();
-        if(ans == opt1 || ans == opt2)
-        {
-
-        }else
-        {
-            alert("answer should match with the given options");
-        }
-
-    });
+        $('.selctQuestion').on('change',function(){
+            var val = $(this).val();
+            if(val == 'option')
+            {
+                $('.optionClass').css('display','block');
+                $('.answer').css('display','none');
+            }else
+            {
+                 $('.optionClass').css('display','none');
+                $('.answer').css('display','block');
+            }
+        });
     </script>
 @endsection

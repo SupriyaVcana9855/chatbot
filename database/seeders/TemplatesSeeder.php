@@ -17,6 +17,7 @@ class TemplatesSeeder extends Seeder
     {
         Template::create([
             'name' => 'Digital Marketing',
+            'chat_bots_id' => '1',
             'main_color' => '#0054F5', 
             'bubble_background' => '#f5f5f5', 
             'font' => 'Arial, sans-serif', 

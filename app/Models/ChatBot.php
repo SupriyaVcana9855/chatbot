@@ -12,4 +12,8 @@ class ChatBot extends Model
     {
          return $this->hasMany(BotQuestion::class);
     }
+
+    public function templates(){
+        return $this->hasMany(Template::class,'chat_bots_id','id');
+    }
 }

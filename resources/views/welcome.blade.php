@@ -3,72 +3,172 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ChatBot</title>
-        <meta name="csrf-token" content="{{ csrf_token() }}"> <!-- Ensure CSRF token meta tag is present -->
+    <title>Chatbot Template</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
 
-  <style>
-    /* Add your styles here */
-    #chatbotContainer { 
-        position: fixed; 
-        bottom: 0; 
-        right: 0; 
-        width: 300px; 
-        border: 1px solid #ccc; 
-        background: {{ $bot->main_color }}; 
-    }
-    #chatMessages { 
-        height: {{ $bot->font_size }}; 
-        overflow-y: auto; 
-    }
-    .message { 
-        padding: {{ $bot->radius }}; 
-    }
-    .bot { 
-        background: #e0e0e0; 
-    }
-    .user { 
-        background: #d1ffd1; 
-    }
-</style>
+        .chatbot-container {
+            width: 375px;
+            margin: 50px auto;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
 
+        .chatbot-header {
+            background-color: #0054F5;
+            padding: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            color: #fff;
+        }
+
+        .chatbot-header .avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            background-color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #0054F5;
+        }
+
+        .chatbot-header .title {
+            flex-grow: 1;
+            margin-left: 10px;
+            font-weight: bold;
+        }
+
+        .chatbot-header .options {
+            display: flex;
+            align-items: center;
+        }
+
+        .chatbot-header .options i {
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .chatbot-body {
+            padding: 15px;
+            height: 300px;
+            overflow-y: auto;
+        }
+
+        .message {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .message.bot .avatar {
+            margin-right: 10px;
+        }
+
+        .message.bot .text {
+            background-color: #E1F1FF;
+            color: #000;
+        }
+
+        .message .text {
+            max-width: 75%;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 14px;
+        }
+
+        .message img {
+            max-width: 100%;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+
+        .message .options {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 10px;
+        }
+
+        .message .options button {
+            background-color: #0054F5;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .chatbot-footer {
+            padding: 10px;
+            border-top: 1px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+        }
+
+        .chatbot-footer input {
+            flex-grow: 1;
+            padding: 10px;
+            border-radius: 20px;
+            border: 1px solid #f0f0f0;
+            margin-right: 10px;
+        }
+
+        .chatbot-footer button {
+            background-color: #0054F5;
+            color: #fff;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        .chatbot-container .powered-by {
+            text-align: center;
+            padding: 10px;
+            font-size: 12px;
+            color: #aaa;
+        }
+    </style>
 </head>
 <body>
-    <div id="chatbotContainer">
-        <div id="chatMessages"></div>
-        <textarea id="userMessage" placeholder="Type a message..."></textarea>
-        <button id="sendButton">Send</button>
+    <div class="chatbot-container">
+        <div class="chatbot-header">
+            <div class="avatar"><i class="fa-solid fa-user"></i></div>
+            <div class="title">Survey Bot</div>
+            <div class="options">
+                <i class="fa-solid fa-sync-alt"></i>
+                <i class="fa-solid fa-ellipsis-v"></i>
+            </div>
+        </div>
+        <div class="chatbot-body">
+            <div class="message bot">
+                <div class="avatar"><i class="fa-solid fa-user"></i></div>
+                <div class="text">Can I have two minutes? A Small survey on smartbot.</div>
+            </div>
+            <div class="message bot">
+                <img src="https://via.placeholder.com/300x150" alt="Survey Image">
+                <div class="options">
+                    <button>Yes</button>
+                    <button>No</button>
+                </div>
+            </div>
+        </div>
+        <div class="chatbot-footer">
+            <input type="text" placeholder="Enter your message...">
+            <button><i class="fa-solid fa-paper-plane"></i></button>
+        </div>
+        <div class="powered-by">
+            Powered by <a href="#">SmartBot</a>
+        </div>
     </div>
-
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const chatMessages = document.getElementById('chatMessages');
-            const userMessageInput = document.getElementById('userMessage');
-            const sendButton = document.getElementById('sendButton');
-            const botId = '{{ $bot->id }}'; // Pass bot ID to JavaScript
-
-            sendButton.addEventListener('click', () => {
-                const message = userMessageInput.value.trim();
-                if (message) {
-                    chatMessages.innerHTML += `<div class="message user">${message}</div>`;
-                    userMessageInput.value = '';
-
-                    fetch('/chatbot/message', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-                        },
-                        body: JSON.stringify({ message: message, bot_id: botId })
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        chatMessages.innerHTML += `<div class="message bot">${data.reply}</div>`;
-                        chatMessages.scrollTop = chatMessages.scrollHeight; // Scroll to bottom
-                    })
-                    .catch(error => console.error('Error:', error));
-                }
-            });
-        });
-    </script>
 </body>
 </html>

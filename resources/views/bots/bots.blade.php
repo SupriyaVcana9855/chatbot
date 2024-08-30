@@ -53,7 +53,8 @@
                             <img src="./assets/images/boat/Bot Chats.png">
                         </button></td>
                         <td><button class="btn btn-outline-secondary">
-                            <img src="./assets/images/boat/Live Chat.png">
+                        <a href="{{ route('botQuestion', $bot->id) }}">
+                            <img src="./assets/images/boat/Live Chat.png"></a>
                         </button></td>
                         <td><button class="btn btn-outline-secondary">
                             <img src="./assets/images/boat/Analytics.png">

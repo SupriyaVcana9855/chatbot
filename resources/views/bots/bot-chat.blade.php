@@ -66,11 +66,10 @@
 input.gsearch::placeholder {
     color: #C6C6C6;
 }
-.user-sidebar{
+.siderbar-border{
     border-right:3px solid;
     border-color:#ECECEC;
-    height: 75vh;
-    /* overflow-y:visible; */
+   
 }
 .user-data h4{
     font-size:18px;
@@ -100,8 +99,21 @@ input.gsearch::placeholder {
 .user-data{
     cursor:pointer;
 }
-
-
+.shared h5{
+    font-size:25px;
+    font-weight:600;
+    color:#005B96;
+}
+.shared{
+    margin-top:40px;
+    margin-bottom:20px;
+}
+.shared img{
+   width:45%!important;
+   height:auto!important;
+   margin-bottom:20px;
+   margin-right:10px;
+}
 /* chat section css  */
 .user-hearder h4{
       color:#005B96;
@@ -183,8 +195,8 @@ input.gsearch::placeholder {
             gap: 10px;
         }
         .chat-footer .icons img {
-            width: 20px;
-            height: 20px;
+            /* width: 20px;
+            height: 20px; */
             cursor: pointer;
         }
         .chat-footer input[type="text"] {
@@ -203,6 +215,34 @@ input.gsearch::placeholder {
             outline: none;
             margin-left: 10px;
             background-color:#00000000;
+        }
+        .chat-footer input {
+          border: 2px solid #C6C6C6;
+          border-radius: 6px;
+        }
+        .info-section img{
+           width: 100px;
+           height:100px;
+        }
+        .boat-info {
+        font-family: 'Inter';
+        font-weight: 500;
+        font-size: 17px;
+        color: #8b8b8b;
+        line-height: 15px;
+        }
+        .info-section h5{
+            font-family:Inter;
+            font-size:18px;
+            font-weight:700;
+            color:#005B96;
+            padding:0px;
+            margin-top:18px;
+        }
+        .info-section p{
+            font-size:12px;
+            color:#777777;
+            padding:0px;
         }
 /* chat section css  */
 </style>
@@ -233,7 +273,7 @@ input.gsearch::placeholder {
         <div class="tab-content" id="pills-tabContent">
             <div class="tab-pane fade show active" id="pills-home" role="tabpanel"                 aria-labelledby="pills-home-tab">
              <div class="row">
-                <div class="col-3 user-sidebar">
+                <div class="col-3 user-sidebar siderbar-border">
                   <div class="set-recent-heading">
                   <h3>Recent Chats</h3>
                   <img src="{{asset('assets/images/editicon.png')}}">
@@ -261,7 +301,7 @@ input.gsearch::placeholder {
                   </div>
 
                 </div>
-                <div class="col-5"  id="user-chat-section">
+                <div class="col-6 siderbar-border"  id="user-chat-section">
                    <div class="set-chat-section">
                       <div class="set-user-imgSection d-flex justify-content-between">
                            <div class="user-hearder  d-flex">
@@ -331,10 +371,29 @@ input.gsearch::placeholder {
                             <button> <img src="{{asset('assets/images/send.png')}}"></button>
                         </div>
                     </div>
-                   </div>
                 </div>
-                <div class="col-2"  id="user-details-section">
-                        <h2>user detials section</h2>
+                <div class="col-3 siderbar-border"  id="user-details-section">
+                       <div class="info-section">
+                        <div  class=" mr-5 text-center mt-5">
+                        <img src="{{asset('assets/images/imgchat.png')}}" alt="Bot Image"> 
+                        <h5>Kapil Kapoor</h5>
+                        <p>kapil@vcanaglobal.com</p>
+                        </div>
+                       <div class="boat-info mt-5 ml-4 mt-3">
+                         <p> <i class="fa-solid fa-bell mr-2" style="color: #606060;"></i>Turn Off Notifications</p>
+                         <p><i class="fa-solid fa-user mr-2" style="color: #606060;"></i> View Profile</p>
+                         <p> <i class="fa-solid fa-trash mr-2" style="color: #606060; "></i>Delete Chat</p>
+                       </div>
+                       <div class="shared">
+                        <h5>Shared File</h5>
+                       <img src="{{asset('assets/images/imgchat.png')}}" alt="Bot Image"> 
+                       <img src="{{asset('assets/images/imgchat.png')}}" alt="Bot Image"> 
+                       <img src="{{asset('assets/images/imgchat.png')}}" alt="Bot Image"> 
+                       <img src="{{asset('assets/images/imgchat.png')}}" alt="Bot Image"> 
+                       
+                       
+                       </div>
+                       </div>
                 </div>
              </div>
 

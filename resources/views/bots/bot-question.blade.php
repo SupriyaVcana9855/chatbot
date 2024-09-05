@@ -25,6 +25,15 @@
                                     <option value="single">Single</option>
                                 </select>
                             </div>
+                             {{-- <div class="mb-3">
+                                <label for="question-type" class="form-label">Answer Type</label>
+                                <select class="form-select selctQuestion" id="question-type" name="answerType" aria-label="Choose A Question Type">
+                                    <option selected>Choose A Answer Type</option>
+                                    <option value="email">Email</option>
+                                    <option value="string">String</option>
+                                    <option value="number">Number</option>
+                                </select>
+                            </div> --}}
                             <input type="hidden" name="bot_id" value="{{ $id }}">
                             <div class="mb-3">
                                 <label for="question-input" class="form-label">Question</label>

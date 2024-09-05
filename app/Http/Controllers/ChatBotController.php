@@ -3,31 +3,89 @@
 namespace App\Http\Controllers;
 
 use App\Models\BotQuestion;
+use App\Models\BotQuestionFlow;
 use Illuminate\Http\Request;
 use App\Models\ChatBot;
+use Illuminate\Support\Facades\Validator;
 
 class ChatBotController extends Controller
 {
     
+    public function editPrefrence(Request $request)
+    {
+       return 1;
+    }    
+    public function singleBotListing($id)
+    {
+        $bots=BotQuestion::where('chat_bot_id',$id)->get();
+        $sequence = BotQuestion::select('sequence')->where('chat_bot_id',$id)->get();
+
+        $questionFlowIds = BotQuestionFlow::pluck('bot_question_id2')->toArray();
+        $questionsNotInFlow = BotQuestion::where('chat_bot_id', $id)
+            ->whereNotIn('id', $questionFlowIds)
+            ->get();
+
+        return view('bots.single-bot-listing',compact('bots','id','questionsNotInFlow'));
+    }    
+    public function addQuestionFlow(Request $request)
+    {
+        $addFlow = new BotQuestionFlow();
+        $addFlow->bot_question_id = $request->question_1;
+        $addFlow->bot_question_id2 = $request->question_2;
+        $addFlow->save();
+        return 1;
+    }
+    public function botFlow($id)
+    {
+        $questionFlowIds = BotQuestionFlow::pluck('bot_question_id2')->toArray();
+        $questionsNotInFlow = BotQuestion::where('chat_bot_id', $id)
+            ->whereNotIn('id', $questionFlowIds)
+            ->get();
+        return view('bots/botflow',compact('id','questionsNotInFlow'));
+    }
+    public function getAnswer(Request $request)
+    {
+        $questions = BotQuestion::find($request->id);
+        return response()->json($questions);
+    }
+
     public function botQuestion($id)
     {
         return view('bots/bot-question',compact('id'));
     }
     public function addQuestion(Request $request)
     {
-        $type = $request->type;
+        $question = strtolower($request->question);
         $user = new BotQuestion();
+        $question_type = '';
+        if (strpos($question, 'email') !== false) {
+            $validator = Validator::make($request->all(), [
+                'email' => 'required|email',
+            ]);
+        } elseif (strpos($question, 'contact') !== false) {
+            $validator = Validator::make($request->all(), [
+                'contact' => 'required|regex:/^(\+\d{1,3}[- ]?)?\d{10}$/', // Example regex for phone numbers
+            ]);
+        } elseif (strpos($question, 'name') !== false) {
+            $validator = Validator::make($request->all(), [
+                'name' => 'required|string|min:2',
+            ]);
+        }
+
+        $type = $request->type;
         if($type == 'option')
         {
             $user->option1  = $request->option1;
             $user->option2  = $request->option2;
         }else
         {
-            $user->answer  = $request->answer;
+            $user->answer  = $request->answer; 
         }
-        $user->bot_id  = $request->bot_id;
+        $user->answerType = $question_type;
+        $user->chat_bot_id  = $request->bot_id;
         $user->question  = $request->question;
         $user->save();
+        return redirect()->back();
     }
 
 
@@ -62,14 +120,13 @@ class ChatBotController extends Controller
         return response()->json(['reply' => $reply]);
     }
 
+    
     private function generateReply($message, $bot)
     {
-        // Simple echo reply for demonstration
         if ($message == "hello") {
         return "Hello !!!.";
         }
          else {
-
             return "I'm not sure how to respond to that. Please wait while I connect you to a customer service representative.";
         }
     }

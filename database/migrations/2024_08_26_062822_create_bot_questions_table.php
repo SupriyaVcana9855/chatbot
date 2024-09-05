@@ -21,6 +21,9 @@ return new class extends Migration
             $table->text('option1')->nullable(); 
             $table->text('option2')->nullable(); 
             $table->text('answer')->nullable(); 
+            $table->string('question_type')->nullable(); 
+            $table->string('sequence')->nullable(); 
+
             $table->timestamps();
         });
     }

@@ -7,14 +7,31 @@
     <meta name="csrf-token" content="{{ $csrfToken }}">
     <title>Chatbot</title>
     <style>
-    .chat-boat-position{
-    bottom: 20px;
-    right: 20px;
-    {{-- left:20px;
-    bottom:20px; --}}
-    {{-- top:40%;
-    right:20px; --}}
-  }
+
+.chat-boat-position {
+    position: fixed;
+    /* Default positioning */
+    bottom: var(--bottom, 0);
+    top: var(--top, auto);
+    left: var(--left, auto);
+    right: var(--right, auto);
+}
+
+/* Define positioning variables for different cases */
+.chat-boat-position-right {
+    --bottom: 20px;
+    --right: 20px;
+}
+
+.chat-boat-position-left {
+    --bottom: 20px;
+    --left: 20px;
+}
+
+.chat-boat-position-center {
+    --top: 37%;
+    --right: 20px;
+}
 
 
 .chat-toggle {
@@ -53,7 +70,7 @@
 }
 
 .chat-header {
-    background: linear-gradient(90deg, #001A2B 0%, #005791 100%);
+    background: {{ $chatbot->main_color }};
     color: white;
     padding: 10px;
     border-top-left-radius: 10px;
@@ -106,7 +123,7 @@
 }
 
 .message .text {
-    max-width: 70%;
+    max-width: 70% !important;
     padding: 10px;
     background-color:{{ $chatbot->question_color }};
     border-radius: 15px;
@@ -115,6 +132,7 @@
     color: #606060;
     font-weight: 400;
     line-height: 25px;
+   word-wrap: break-word;
 }
 
 .message.user .text {
@@ -161,13 +179,20 @@
 .chat-btn button:hover{
   opacity: 0.8;
 }
+.chat-img img{
+    width:57px;
+    height:52px;
+    border-radius: 26px;
+}
+img#chat-toggle-btn {
+    border-radius: 26px;
+}
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
-    <div class='chat-toggle chat-boat-position' id='chatMessages'>
-
+    <div class='chat-toggle chat-boat-position {{ 'chat-boat-position-' . $chatbot->bot_position }}' id='chatMessages'>
    @if(str_starts_with($chatbot->logo, 'public/'))
         <img src='{{ Storage::url($chatbot->logo) }}' alt='Chat Icon' id='chat-toggle-btn'>
     @else
@@ -177,14 +202,18 @@
 
         {{-- <img src='{{ Storage::url($chatbot->logo) }}' alt='Chat Icon' id='chat-toggle-btn'> --}}
     </div>
-    <div class='chat-container chat-boat-position' id='chat-container'>
+    <div class='chat-container chat-boat-position {{ 'chat-boat-position-' . $chatbot->bot_position }}' id='chat-container'>
         <div class='chat-header'>
             <div class='chat-img'>
-                <img src='{{ asset('assets/images/clientimg.png') }}' />
+              @if(str_starts_with($chatbot->logo, 'public/'))
+                    <img src='{{ Storage::url($chatbot->logo) }}' alt='Chat Icon' id='chat-toggle-btn'>
+                @else
+                    <img src='{{ asset($chatbot->logo) }}' alt='Chat Icon' id='chat-toggle-btn'>
+                @endif   
             </div>
             <div>
-                <div class='chat-title'>Lorem Ipsum</div>
-                <div class='chat-subtitle'>Support</div>
+                <div class='chat-title'>{{ $chatbot->name }}</div>
+                <div class='chat-subtitle'>{{ $chatbot->type }}</div>
             </div>
             <div class='icon-head'>
                 <div>
@@ -197,22 +226,20 @@
         </div>
         <div class='chat-body'>
             <div class='message bot'>
-                <div class='text'>{{ $chatbot->intro_message }}</div>
+                <div class='text'><h4>{{ $chatbot->intro_message }}</h4></div>
                     
             </div>
-            <div class='message bot'>
-                <div class='text'>{{ $chatbot->botQuestions->first()->question }}</div>
-                    
-            </div>
-            <div class="chat-btn">
-                    <button class = "option1Select" value = "{{ $chatbot->botQuestions->first()->option1 }}">{{ $chatbot->botQuestions->first()->option1 }}</button>
-                    <button class = "option2Select" value = "{{ $chatbot->botQuestions->first()->option2 }}">{{ $chatbot->botQuestions->first()->option2 }}</button>
-    </div>
-           
-
-
-            
-
+            @if($chatbot->botQuestions->first())
+                <div class='message bot'>
+                    <div class='text'>{{ $chatbot->botQuestions->first()->question }}</div>
+                </div>
+                @if($chatbot->botQuestions->first()->option1)
+                    <div class="chat-btn">
+                        <button class = "option1Select" value = "{{ $chatbot->botQuestions->first()->option1 }}">{{ $chatbot->botQuestions->first()->option1 }}</button>
+                        <button class = "option2Select" value = "{{ $chatbot->botQuestions->first()->option2 }}">{{ $chatbot->botQuestions->first()->option2 }}</button>
+                    </div>
+                @endif
+                @endif
         </div>
         <div class='chat-footer'>
             <input type='text' id='userMessage' placeholder='Enter your message...'>

@@ -101,3 +101,7 @@ Route::get('/test-chatbot-script', [ChatBotController::class, 'testChatbotScript
 
 Route::get('/website-bot', [ChatBotController::class, 'websiteChat'])->name('website.bot');
 
+
+Route::get('/bot-chat', function () {
+    return view('bots.bot-chat');
+});

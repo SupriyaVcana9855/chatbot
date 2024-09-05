@@ -90,13 +90,17 @@
                                 
                                 <div class='chat-container chat-boat-position' id='chat-container'>
                                     <div class='chat-header'>
-                                        <div class='chat-img'>
-                                            <img src="{{asset('assets/images/clientimg.png')}}" />
+                                        
+                                        <div class="d-flex head-name">
+                                            <div class='chat-img'>
+                                              <img src="{{asset('assets/images/clientimg.png')}}" />
+                                            </div>
+                                               <div class='chat-title'><h3>Lorem Ipsum</h3>
+                                                 <p>Support</p>
+                                               </div>
+                                           
                                         </div>
-                                        <div>
-                                            <div class='chat-title'>Lorem Ipsum</div>
-                                            <div class='chat-subtitle'>Support</div>
-                                        </div>
+                                         
                                         <div class='icon-head'>  
                                             <div >
                                                 <img src="{{asset('assets/images/reload.png')}}">

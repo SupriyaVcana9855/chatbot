@@ -12,4 +12,9 @@ class BotQuestion extends Model
     {
          return $this->belongsTo(ChatBot::class);
     }
+
+    public function questionFlow()
+    {
+        return $this->hasMany(BotQuestionFlow::class);
+    }
 }

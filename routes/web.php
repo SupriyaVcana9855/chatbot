@@ -53,6 +53,7 @@ Route::middleware(['guest'])->group(function () {
   
 });
     // Route::get('/admin/dashboard', [DashboardController::class, 'index'])->name('admin.dashboard');
+    Route::get('/get-answer',[ChatBotController::class, 'getAnswer'])->name('getAnswer');
 
 /// Admin Routes
 Route::middleware(['auth', 'role:1'])->group(function () {
@@ -60,14 +61,15 @@ Route::middleware(['auth', 'role:1'])->group(function () {
     Route::get('/bots', [BotController::class, 'bots'])->name('bots');
     Route::post('/savebot', [BotController::class, 'savebot'])->name('savebot');
     Route::post('/updateBot', [BotController::class, 'updateBot'])->name('updateBot');
-
     Route::get('/agent', [BotController::class, 'agent'])->name('agent');
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
-
     Route::get('/get-questions',[ChatBotController::class, 'getQuestion'])->name('questions');
     Route::post('/add-questions',[ChatBotController::class, 'addQuestion'])->name('addQuestion');
     Route::get('/add-questions/{id}',[ChatBotController::class, 'botQuestion'])->name('botQuestion');
-
+    Route::get('/bot-flow/{id}',[ChatBotController::class, 'botFlow'])->name('botFlow');
+    Route::get('/get-answer',[ChatBotController::class, 'getAnswer'])->name('getAnswer');
+    Route::post('/addQuestionFlow',[ChatBotController::class, 'addQuestionFlow'])->name('addQuestionFlow');
+    Route::get('/bot-questions-listing/{id}',[ChatBotController::class, 'singleBotListing'])->name('singleBotListing');
 });
 
 
@@ -98,3 +100,5 @@ Route::get('/test-chatbot-script', [ChatBotController::class, 'testChatbotScript
 
 Route::get('/website-bot', [ChatBotController::class, 'websiteChat'])->name('website.bot');
 
+
+Route::get('/editPrefrence', [ChatBotController::class, 'editPrefrence'])->name('editPrefrence');

@@ -53,7 +53,7 @@
                             <img src="./assets/images/boat/Bot Chats.png">
                         </button></td>
                         <td><button class="btn btn-outline-secondary">
-                        <a href="{{ route('botQuestion', $bot->id) }}">
+                        <a href="{{ route('singleBotListing', $bot->id) }}">
                             <img src="./assets/images/boat/Live Chat.png"></a>
                         </button></td>
                         <td><button class="btn btn-outline-secondary">

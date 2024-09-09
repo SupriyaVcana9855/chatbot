@@ -66,6 +66,10 @@ Route::middleware(['auth', 'role:1'])->group(function () {
     Route::get('/get-questions',[ChatBotController::class, 'getQuestion'])->name('questions');
     Route::post('/add-questions',[ChatBotController::class, 'addQuestion'])->name('addQuestion');
     Route::get('/add-questions/{id}',[ChatBotController::class, 'botQuestion'])->name('botQuestion');
+
+    Route::get('templates', [DashboardController::class, 'templates'])->name('templates');
+    Route::get('template-view', [DashboardController::class, 'templateView'])->name('templateview');
+
     Route::get('/bot-flow/{id}',[ChatBotController::class, 'botFlow'])->name('botFlow');
     Route::get('/get-answer',[ChatBotController::class, 'getAnswer'])->name('getAnswer');
     Route::post('/addQuestionFlow',[ChatBotController::class, 'addQuestionFlow'])->name('addQuestionFlow');
@@ -101,4 +105,7 @@ Route::get('/test-chatbot-script', [ChatBotController::class, 'testChatbotScript
 Route::get('/website-bot', [ChatBotController::class, 'websiteChat'])->name('website.bot');
 
 
+Route::get('/bot-chat', function () {
+    return view('bots.bot-chat');
+});
 Route::get('/editPrefrence', [ChatBotController::class, 'editPrefrence'])->name('editPrefrence');

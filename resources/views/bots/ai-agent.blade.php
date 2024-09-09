@@ -1,4 +1,25 @@
-@extends('layout.app')
+<?php 
+for ($off = 1; $off <= 4; $off++) {
+    for ($off1 = 1; $off1 <= $off+1; $off1++) {
+      if($off1 % 2 == 0)
+      {
+        echo "_";
+      }
+      else
+      {
+        echo "*";
+      }
+
+    }
+    echo "<br>"; // Use \n for CLI environments
+}
+
+
+?>
+
+
+
+{{-- @extends('layout.app')
 
 @section('content')
 
@@ -354,4 +375,4 @@
         </div>
       </div>
     </div>
- @endsection
+ @endsection --}}

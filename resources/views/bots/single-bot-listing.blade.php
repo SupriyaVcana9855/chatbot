@@ -6,6 +6,7 @@
         <div class="col-2 set-boat-heading">
             <h6 style="    margin-top: 40px;">Bot Questions</h6>
         </div>
+      
           <div class="col-4 set-boat-heading">
             <button class="btn btn-primary" style="margin-top: 40px; margin-left : 950px"><a style="color: black;" href="{{ route('botQuestion', ['id' => $id]) }}">+Add</a></button>
         </div>
@@ -15,7 +16,7 @@
             </div>
         @endif
         <div class="col-10">
-           
+ 
     </div>
     <div class="row bottable">
         <div class="col-12 bot-table mb-3">
@@ -24,7 +25,7 @@
                     <tr>
                         <th>Question</th>
                         <th>Answer</th>
-                        <th>Prefrence</th>
+                        {{-- <th>Prefrence</th> --}}
                         <th>Action</th>
                     </tr>
                 </thead>
@@ -37,17 +38,19 @@
                             <td  style="color: black;">
                                 {{ $bot->answer ? $bot->answer : ($bot->option1 ? $bot->option1 . ', ' . $bot->option2 : 'N/A') }}
                             </td>   
-                            <td  style="color: black;">
-                            <input type ="hidden" id="question1" name="question1" value="{{ $bot->id }}">
-                                <select class="form-select selctQuestion" id="question2" name="question2"   aria-label="Choose A Question Type">
+                            {{-- <td  style="color: black;"> --}}
+                            {{-- <input type ="hidden" class="question1" name="question1" value="{{ $bot->id }}"> --}}
+                                {{-- <input type ="hidden" id="bot_id" name="bot_id" value="{{ $id }}">
+
+                                <select class="form-select selctQuestion" name="question2"   aria-label="Choose A Question Type" data-question1-id="{{ $bot->id }}">
                                         <option selected>Choose A Question</option>
                                         @foreach($questionsNotInFlow as $prefrence)
                                         @if($prefrence->id != $bot->id)
                                             <option value="{{ $prefrence->id }}">{{ $prefrence->question }}</option>
                                         @endif
                                         @endforeach
-                                </select>
-                            </td>       
+                                </select> --}}
+                            {{-- </td>        --}}
                             <td  style="color: black;">
                                 <a href="{{ route('editPrefrence') }}">Edit</a>
                             </td>   
@@ -57,7 +60,9 @@
             </table>
         </div>
     </div>
+    
 </div>
+
 
 
 
@@ -104,25 +109,38 @@
     $(document).ready( function () {
         $('#myTable').DataTable();
     } );
-    $('#question2').on('change',function(){
-        var question1 = $('#question1').val();
-        var question2 = $(this).val();
-         $.ajax({
-            url: "{{ route('addQuestionFlow') }}"
-            method: 'POST',
-            data: {
-                _token: "{{ csrf_token() }}",  // Add CSRF token for security
-                question_1: question1,
-                question_2:question2,
-            },
-            success: function(data) {
-              alert(data);
-            },
-            error: function(error) {
-                console.error('Error:', error);
-            }
-        });
-    })
+   $('.selctQuestion').on('change', function () {
+    var question1 = $(this).attr('data-question1-id');
+    var question2 = $(this).val();
+    var bot_id = $('#bot_id').val();
+    $.ajax({
+        url: "{{ route('addQuestionFlow') }}",
+        method: 'POST',
+        data: {
+            _token: "{{ csrf_token() }}",  // CSRF token for security
+            question_1: question1,
+            question_2: question2,
+            bot_id: bot_id,
+        },
+        success: function (data) {
+            alert("Sequence Saved successfully.");
+
+            // Clear existing options in select (except the first default option)
+            $('.selctQuestion').empty().append('<option selected>Choose A Question</option>');
+
+            // Loop through the data and append new options
+            data.forEach(function (item) {
+                $('.selctQuestion').append('<option value="' + item.id + '">' + item.question + '</option>');
+            });
+        },
+        error: function (error) {
+alert("sscs");
+
+            console.error('Error:', error);
+        }
+    });
+});
+
 
        function dataType(data)
       {
@@ -131,3 +149,4 @@
      
     </script>
 @endsection
+

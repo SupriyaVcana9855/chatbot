@@ -13,19 +13,25 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('bot_question_flows', function (Blueprint $table) {
+        Schema::create('question_answers', function (Blueprint $table) {
             $table->id();
+            
+            // Correct table name for the foreign key
             $table->unsignedBigInteger('bot_question_id'); 
             $table->foreign('bot_question_id')->references('id')->on('bot_questions')->onDelete('cascade');
+            
             $table->text('answer')->nullable(); 
-            $table->unsignedBigInteger('bot_question_id2'); 
-            $table->foreign('bot_question_id2')->references('id')->on('bot_questions')->onDelete('cascade');
+            
+            $table->unsignedBigInteger('user_id'); 
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             
             $table->unsignedBigInteger('chat_bot_id'); 
             $table->foreign('chat_bot_id')->references('id')->on('chat_bots')->onDelete('cascade');
             
             $table->timestamps();
         });
+        
+        
     }
 
     /**
@@ -35,6 +41,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('bot_question_flows');
+        Schema::dropIfExists('question_answers');
     }
 };

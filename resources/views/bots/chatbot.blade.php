@@ -229,14 +229,15 @@ img#chat-toggle-btn {
                 <div class='text'><h4>{{ $chatbot->intro_message }}</h4></div>
                     
             </div>
-            @if($chatbot->botQuestions->first())
+            @if($questions)
                 <div class='message bot'>
-                    <div class='text'>{{ $chatbot->botQuestions->first()->question }}</div>
+                    <div class='text'>{{ $questions->question }}</div>
+                    <input type="hidden" name="question_id" value="{{ $questions->id }}" class ="question_id">
                 </div>
-                @if($chatbot->botQuestions->first()->option1)
+                @if($questions->option1)
                     <div class="chat-btn">
-                        <button class = "option1Select" value = "{{ $chatbot->botQuestions->first()->option1 }}">{{ $chatbot->botQuestions->first()->option1 }}</button>
-                        <button class = "option2Select" value = "{{ $chatbot->botQuestions->first()->option2 }}">{{ $chatbot->botQuestions->first()->option2 }}</button>
+                        <button class = "option1Select" value = "{{ $questions->option1 }}">{{ $questions->option1 }}</button>
+                        <button class = "option2Select" value = "{{ $questions->option2 }}">{{ $questions->option2 }}</button>
                     </div>
                 @endif
                 @endif
@@ -253,9 +254,8 @@ img#chat-toggle-btn {
             const $chatMessages = $('#chatMessages');
             const $userMessageInput = $('#userMessage');
             const $sendButton = $('#sendButton');
-            const $botId = $('#chatbotContainer');
+            const $botId = $('.question_id').val();
              const $chatBody = $('.chat-body');
-           
             const csrfToken = $('meta[name="csrf-token"]').attr('content');
             $('.option1Select,.option2Select').on('click',function(){
                 var data  = $(this).val();
@@ -279,11 +279,14 @@ img#chat-toggle-btn {
                     },
                     data: JSON.stringify({
                         message: message,
-                        bot_id: $botId.data('bot-id')
+                        bot_id: $botId
                     }),
                     success: function(data) {
-                        const reply = data.reply ? data.reply : 'No reply received';
-                        const options = data.options ? data.options : [];
+                        //will work on monday as i have to set the next question id .....
+                    var cc = $('.question_id').val(data.reply.question_id);
+                    alert(data.reply.question_id);
+                        const reply = data.reply.message ? data.reply.message : 'No reply received';
+                        const options = data.reply.options ?data.reply.options : [];
                         appendBotMessage(reply, options);
                     },
                     error: function(error) {
@@ -294,7 +297,7 @@ img#chat-toggle-btn {
 
             function appendUserMessage(message) {
                 console.log(message);
-
+                
 
                 const userMessageDiv = $('<div>', { class: 'message user' });
                 const messageTextDiv = $('<div>', { class: 'text', text: message });
@@ -305,6 +308,7 @@ img#chat-toggle-btn {
             }
 
             function appendBotMessage(reply, options) {
+
                 const botMessageDiv = $('<div>', { class: 'message bot' })
                     .append($('<div>', { class: 'text', text: reply }));
                 $chatBody.append(botMessageDiv);

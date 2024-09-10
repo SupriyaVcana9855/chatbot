@@ -19,6 +19,8 @@ use App\Http\Controllers\BotController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+// Route::get('/scriptchatbots/{id}', 'ChatBotController@scriptchatbot');
+Route::get('/scriptchatbots/{id}',[ChatBotController::class, 'scriptchatbots'])->name('scriptchatbots');
 
 Route::get('/scriptchatbot/{id}',[ChatBotController::class, 'scriptchatbot'])->name('scriptchatbot');
 

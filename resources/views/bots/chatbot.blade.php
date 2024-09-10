@@ -2,9 +2,9 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="csrf-token" content="{{ $csrfToken }}">
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta name='csrf-token' content='{{ $csrfToken }}'>
     <title>Chatbot</title>
     <style>
 
@@ -254,7 +254,6 @@ img#chat-toggle-btn {
             const $chatMessages = $('#chatMessages');
             const $userMessageInput = $('#userMessage');
             const $sendButton = $('#sendButton');
-            const $botId = $('.question_id').val();
              const $chatBody = $('.chat-body');
             const csrfToken = $('meta[name="csrf-token"]').attr('content');
             $('.option1Select,.option2Select').on('click',function(){
@@ -262,13 +261,15 @@ img#chat-toggle-btn {
                 $userMessageInput.val(data);
             })
             $sendButton.on('click', function() {
+           
+            var botId = $('.question_id').val();
                 const message = $userMessageInput.val().trim();
                 if (message) {
                     $userMessageInput.val('');
-                    handleUserMessage(message);
+                    handleUserMessage(message,botId);
                 }
             });
-            function handleUserMessage(message) {
+            function handleUserMessage(message,botId) {
                 appendUserMessage(message);
                 $.ajax({
                     url: '/chatbot/message',
@@ -279,7 +280,7 @@ img#chat-toggle-btn {
                     },
                     data: JSON.stringify({
                         message: message,
-                        bot_id: $botId
+                        bot_id: botId
                     }),
                     success: function(data) {
                         //will work on monday as i have to set the next question id .....

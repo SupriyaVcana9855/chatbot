@@ -35,7 +35,7 @@
 
 
 .chat-toggle {
-    position:absolute;
+    position: fixed;
     width: 50px;
     height: 50px;
     cursor: pointer;

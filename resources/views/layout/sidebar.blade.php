@@ -16,6 +16,8 @@
                             <li><a href="{{route('agent')}}"><img src="{{asset('/assets/images/aiagents.png')}}"><span class="text">AI AGENTS</span></a></li>
                             <li><a href="{{route('templates')}}"><img src="{{asset('/assets/images/template.png')}}"><span class="text">TEMPLATES</span></a></li>                          
                         </ul>
+
+                  
                     </div>
                 </div>
             </div>

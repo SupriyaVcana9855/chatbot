@@ -46,7 +46,7 @@ body {
 .container-fluid {
   /* overflow: hidden !important; */
   max-height: 100vh !important;
-  padding: 0px ;
+  padding: 0px;
 }
 .sidebar {
   position: fixed;
@@ -60,6 +60,7 @@ body {
     padding: 24px;
     border-radius: 0px;
     transition: all 0.3s;
+    overflow: scroll;
 }
 
 

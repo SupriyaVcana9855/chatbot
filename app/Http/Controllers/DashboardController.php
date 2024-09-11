@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Template;
 use Illuminate\Http\Request;
 use Auth;
 class DashboardController extends Controller
@@ -17,7 +18,8 @@ class DashboardController extends Controller
 
     
     public function templateView(){
-        return view('dashboard.viewtemplate');
+        $templates = Template::get();
+        return view('dashboard.viewtemplate',compact('templates'));
     }
 
 }

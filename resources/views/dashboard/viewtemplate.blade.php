@@ -71,11 +71,12 @@
                     <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
 
                     <h5>Click Below to replicate & edit the bot.</h5>
-                    <form class="content-search">
-                        <input type="search" class="" name="" placeholder="Enter Your Bot Name">
+                    <form class="content-search" id="add-bot-template" method="post" action="{{route('addbottemplate')}}">
+                        <input type="search" name="bot_name" id="bot_name" placeholder="Enter Your Bot Name">
+                        <p class="error" style="color:red"></p>
                         <div class="form-btn">
-                            <button class="form-frist-btn" type="submit">Use This Template</button>
-                            <button class="form-second-btn" type="submit">Back</button>
+                            <button class="form-frist-btn" type="submit">Submit</button>
+                            <button class="form-second-btn" type="button">Back</button>
                         </div>
                     </form>
                 </div>
@@ -129,7 +130,7 @@
                             </div>
                         </div>
                         <div class='chat-footer'>
-                            <input type='text' placeholder='Enter your message...'>
+                            <input type='text' placeholder='Enter your message...' readonly>
                             <button><img src="{{asset('assets/images/fileupload.png')}}"></button>
                             <button id='sendButton'><img src="{{asset('assets/images/Vector.png')}}"></button>
                         </div>
@@ -140,40 +141,80 @@
     </div>
 </div>
 @endsection
+
 @section('java_scripts')
 <script>
-$(document).ready(function(){
-    const temp = <?php echo json_encode($templates); ?>;
+    $(document).ready(function() {
+        const temp = <?php echo json_encode($templates); ?>;
+        console.log(temp);
 
-    console.log(temp.button_type);
+        // Apply the font, font size, and alignment to the chat container
+        $('.chat-container-temp').css({
+            'font-family': temp.font,
+            'font-size': temp.font_size,
+            'text-align': temp.text_alignment,
+            'background-color': temp.bubble_background,
+            'color': '#fff',
+        });
 
-    // Apply the font, font size, and alignment to the chat container
-    $('#chat-container').css({
-        'font-family': temp.font,
-        'font-size': temp.font_size,
-        'text-align': temp.text_alignment,
-        'background-color': temp.bubble_background
+        // Apply the styles for bot messages (question_color)
+        $('.message.bot .text').css({
+            'background-color': temp.question_color,
+            'border-radius': temp.question_radius,
+            'color': temp.text_color,
+        });
+
+        // Apply the styles for user messages (answer_color)
+        $('.message.user .text').css({
+            'background-color': temp.answer_color,
+            'border-radius': temp.answer_radius,
+            'color': temp.text_color,
+        });
+
+        // Apply border-radius to buttons
+        $('.chat-btn button').css({
+            'padding': '11px 21px',
+            'border-radius': temp.button_type,
+            'border': '0px',
+            'background': 'linear-gradient(90deg, #001A2B 0%, #005791 100%)',
+            'color': temp.text_color,
+        });
+
+
+        $('#add-bot-template').on('submit', function(e) {
+            e.preventDefault();
+
+            var bot_name = $('#bot_name').val();
+            if (bot_name === '') {
+                $('.error').html('Bot name field can not be empty.');
+            } else {
+                $('.error').html('');
+            }
+
+            const formData = new FormData();
+            formData.append('bot_name', bot_name);
+            formData.append('tempData', JSON.stringify(temp));
+
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $.ajax({
+                url: "{{route('addbottemplate')}}",
+                type: 'post',
+                data: formData,
+                contentType: false,
+                processData: false,
+            }).done(function(response) {
+                if(response.success == true){
+                    window.location.reload();
+                }
+            });
+        });
+
     });
-
-    // Apply the styles for bot messages (question_color)
-    $('.message.bot .text').css({
-        'background-color': temp.question_color,
-        'border-radius': temp.radius
-    });
-
-    // Apply the styles for user messages (answer_color)
-    $('.message.user .text').css({
-         'background-color': temp.answer_color,
-        'border-radius': temp.radius
-    });
-
-   // Apply border-radius to buttons
-    $('.chat-btn button').css({
-        'border-radius': temp.button_type // Apply the extracted value
-    });
- 
-});
-
-
 </script>
 @endsection

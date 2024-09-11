@@ -15,6 +15,18 @@ return new class extends Migration
     {
         Schema::create('templates', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->nullable();
+            $table->string('main_color')->nullable();
+            $table->string('bubble_background')->nullable();
+            $table->string('font')->nullable();
+            $table->string('font_size')->nullable();
+            $table->string('button_type')->nullable();
+            $table->string('question_radius')->nullable();
+            $table->string('answer_radius')->nullable();
+            $table->string('text_alignment')->nullable();
+            $table->string('text_color')->nullable();
+            $table->string('question_color')->nullable();
+            $table->string('answer_color')->nullable();
             $table->timestamps();
         });
     }

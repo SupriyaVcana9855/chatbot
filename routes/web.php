@@ -70,7 +70,8 @@ Route::middleware(['auth', 'role:1'])->group(function () {
     Route::get('/add-questions/{id}',[ChatBotController::class, 'botQuestion'])->name('botQuestion');
 
     Route::get('templates', [DashboardController::class, 'templates'])->name('templates');
-    Route::get('template-view', [DashboardController::class, 'templateView'])->name('templateview');
+    Route::get('template-view/{id?}', [DashboardController::class, 'templateView'])->name('templateview');
+    Route::post('add-bot-template', [DashboardController::class, 'addBotTemplate'])->name('addbottemplate');
 
     Route::get('/bot-flow/{id}',[ChatBotController::class, 'botFlow'])->name('botFlow');
     Route::get('/get-answer',[ChatBotController::class, 'getAnswer'])->name('getAnswer');

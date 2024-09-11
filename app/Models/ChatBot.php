@@ -10,7 +10,7 @@ class ChatBot extends Model
     use HasFactory;
     public function botQuestions()
     {
-         return $this->hasMany(BotQuestion::class);
+         return $this->hasMany(BotQuestion::class,'chat_bot_id');
     }
 
     public function templates(){

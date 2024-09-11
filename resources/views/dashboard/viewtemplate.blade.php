@@ -151,16 +151,14 @@
                             <button class="form-frist-btn" type="submit">Use This Template</button>
                             <button class="form-second-btn" type="submit">Back</button>
                         </div>
-                    </form>
-                    <div>
-
-                    </div>
-                </div>
-
-                <div class="col-5 chat-section">
-                    <div class='chat-container chat-boat-position' id='chat-container'>
-                       
-                           <div class='chat-header'>
+             
+                        <div class="col-5 chat-section">
+                        <!-- <div class='chat-toggle chat-boat-position' id='chatMessages'>
+                                    <img src="{{asset('assets/images/chaticon.png')}}" alt='Chat Icon' id='chat-toggle-btn'>
+                                </div> -->
+                                
+                                <div class='chat-container chat-boat-position' id='chat-container'>
+                                    <div class='chat-header'>
                                         
                                         <div class="d-flex head-name">
                                             <div class='chat-img'>

@@ -136,7 +136,10 @@
 }
 
 .chat-container {
-    width: 350px; /* chat boat width */
+    /* width: 350px; */
+} 
+.chat-container {
+    width: 500px;
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
@@ -146,10 +149,16 @@
     position:absolute;
 
 }
+.head-name{
+    flex-shrink:1;
+}
+.icon-head{
+    flex-shrink: 2;
+}
 .icon-head {
     display: flex;
     justify-content: flex-end;
-    /* width: 61%; */
+    padding-right: 10px;
 }
 .closeicon {
     margin-left: 10px;
@@ -165,7 +174,9 @@
     text-align: left;
     display: flex;
     align-items: center;
+    justify-content: space-between;
 }
+
 .chat-img {
     margin-right: 15px;
 }
@@ -175,7 +186,7 @@
 }
 
 .chat-title p {
-    font-size:0.8em;
+    font-size: 0.8em;
 }
 
 .chat-body {

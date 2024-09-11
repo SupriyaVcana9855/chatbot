@@ -10,6 +10,11 @@ class BotQuestion extends Model
     use HasFactory;
     public function bot()
     {
-         return $this->belongsTo(ChatBot::class);
+         return $this->belongsTo(ChatBot::class,'chat_bot_id');
+    }
+
+    public function questionFlow()
+    {
+        return $this->hasMany(BotQuestionFlow::class);
     }
 }

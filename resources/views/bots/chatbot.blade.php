@@ -2,19 +2,36 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="csrf-token" content="{{ $csrfToken }}">
+    <meta charset='UTF-8'>
+    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+    <meta name='csrf-token' content='{{ $csrfToken }}'>
     <title>Chatbot</title>
     <style>
-    .chat-boat-position{
-    bottom: 20px;
-    right: 20px;
-    {{-- left:20px;
-    bottom:20px; --}}
-    {{-- top:40%;
-    right:20px; --}}
-  }
+
+.chat-boat-position {
+    position: fixed;
+    /* Default positioning */
+    bottom: var(--bottom, 0);
+    top: var(--top, auto);
+    left: var(--left, auto);
+    right: var(--right, auto);
+}
+
+/* Define positioning variables for different cases */
+.chat-boat-position-right {
+    --bottom: 20px;
+    --right: 20px;
+}
+
+.chat-boat-position-left {
+    --bottom: 20px;
+    --left: 20px;
+}
+
+.chat-boat-position-center {
+    --top: 37%;
+    --right: 20px;
+}
 
 
 .chat-toggle {
@@ -53,7 +70,7 @@
 }
 
 .chat-header {
-    background: linear-gradient(90deg, #001A2B 0%, #005791 100%);
+    background: {{ $chatbot->main_color }};
     color: white;
     padding: 10px;
     border-top-left-radius: 10px;
@@ -106,7 +123,7 @@
 }
 
 .message .text {
-    max-width: 70%;
+    max-width: 70% !important;
     padding: 10px;
     background-color:{{ $chatbot->question_color }};
     border-radius: 15px;
@@ -115,6 +132,7 @@
     color: #606060;
     font-weight: 400;
     line-height: 25px;
+   word-wrap: break-word;
 }
 
 .message.user .text {
@@ -161,13 +179,20 @@
 .chat-btn button:hover{
   opacity: 0.8;
 }
+.chat-img img{
+    width:57px;
+    height:52px;
+    border-radius: 26px;
+}
+img#chat-toggle-btn {
+    border-radius: 26px;
+}
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
-    <div class='chat-toggle chat-boat-position' id='chatMessages'>
-
+    <div class='chat-toggle chat-boat-position {{ 'chat-boat-position-' . $chatbot->bot_position }}' id='chatMessages'>
    @if(str_starts_with($chatbot->logo, 'public/'))
         <img src='{{ Storage::url($chatbot->logo) }}' alt='Chat Icon' id='chat-toggle-btn'>
     @else
@@ -177,14 +202,18 @@
 
         {{-- <img src='{{ Storage::url($chatbot->logo) }}' alt='Chat Icon' id='chat-toggle-btn'> --}}
     </div>
-    <div class='chat-container chat-boat-position' id='chat-container'>
+    <div class='chat-container chat-boat-position {{ 'chat-boat-position-' . $chatbot->bot_position }}' id='chat-container'>
         <div class='chat-header'>
             <div class='chat-img'>
-                <img src='{{ asset('assets/images/clientimg.png') }}' />
+              @if(str_starts_with($chatbot->logo, 'public/'))
+                    <img src='{{ Storage::url($chatbot->logo) }}' alt='Chat Icon' id='chat-toggle-btn'>
+                @else
+                    <img src='{{ asset($chatbot->logo) }}' alt='Chat Icon' id='chat-toggle-btn'>
+                @endif   
             </div>
             <div>
-                <div class='chat-title'>Lorem Ipsum</div>
-                <div class='chat-subtitle'>Support</div>
+                <div class='chat-title'>{{ $chatbot->name }}</div>
+                <div class='chat-subtitle'>{{ $chatbot->type }}</div>
             </div>
             <div class='icon-head'>
                 <div>
@@ -197,22 +226,21 @@
         </div>
         <div class='chat-body'>
             <div class='message bot'>
-                <div class='text'>{{ $chatbot->intro_message }}</div>
+                <div class='text'><h4>{{ $chatbot->intro_message }}</h4></div>
                     
             </div>
-            <div class='message bot'>
-                <div class='text'>{{ $chatbot->botQuestions->first()->question }}</div>
-                    
-            </div>
-            <div class="chat-btn">
-                    <button class = "option1Select" value = "{{ $chatbot->botQuestions->first()->option1 }}">{{ $chatbot->botQuestions->first()->option1 }}</button>
-                    <button class = "option2Select" value = "{{ $chatbot->botQuestions->first()->option2 }}">{{ $chatbot->botQuestions->first()->option2 }}</button>
-    </div>
-           
-
-
-            
-
+            @if($questions)
+                <div class='message bot'>
+                    <div class='text'>{{ $questions->question }}</div>
+                    <input type="hidden" name="question_id" value="{{ $questions->id }}" class ="question_id">
+                </div>
+                @if($questions->option1)
+                    <div class="chat-btn">
+                        <button class = "option1Select" value = "{{ $questions->option1 }}">{{ $questions->option1 }}</button>
+                        <button class = "option2Select" value = "{{ $questions->option2 }}">{{ $questions->option2 }}</button>
+                    </div>
+                @endif
+                @endif
         </div>
         <div class='chat-footer'>
             <input type='text' id='userMessage' placeholder='Enter your message...'>
@@ -226,22 +254,22 @@
             const $chatMessages = $('#chatMessages');
             const $userMessageInput = $('#userMessage');
             const $sendButton = $('#sendButton');
-            const $botId = $('#chatbotContainer');
              const $chatBody = $('.chat-body');
-           
             const csrfToken = $('meta[name="csrf-token"]').attr('content');
             $('.option1Select,.option2Select').on('click',function(){
                 var data  = $(this).val();
                 $userMessageInput.val(data);
             })
             $sendButton.on('click', function() {
+           
+            var botId = $('.question_id').val();
                 const message = $userMessageInput.val().trim();
                 if (message) {
                     $userMessageInput.val('');
-                    handleUserMessage(message);
+                    handleUserMessage(message,botId);
                 }
             });
-            function handleUserMessage(message) {
+            function handleUserMessage(message,botId) {
                 appendUserMessage(message);
                 $.ajax({
                     url: '/chatbot/message',
@@ -252,11 +280,14 @@
                     },
                     data: JSON.stringify({
                         message: message,
-                        bot_id: $botId.data('bot-id')
+                        bot_id: botId
                     }),
                     success: function(data) {
-                        const reply = data.reply ? data.reply : 'No reply received';
-                        const options = data.options ? data.options : [];
+                        //will work on monday as i have to set the next question id .....
+                    var cc = $('.question_id').val(data.reply.question_id);
+                    alert(data.reply.question_id);
+                        const reply = data.reply.message ? data.reply.message : 'No reply received';
+                        const options = data.reply.options ?data.reply.options : [];
                         appendBotMessage(reply, options);
                     },
                     error: function(error) {
@@ -267,7 +298,7 @@
 
             function appendUserMessage(message) {
                 console.log(message);
-
+                
 
                 const userMessageDiv = $('<div>', { class: 'message user' });
                 const messageTextDiv = $('<div>', { class: 'text', text: message });
@@ -278,6 +309,7 @@
             }
 
             function appendBotMessage(reply, options) {
+
                 const botMessageDiv = $('<div>', { class: 'message bot' })
                     .append($('<div>', { class: 'text', text: reply }));
                 $chatBody.append(botMessageDiv);

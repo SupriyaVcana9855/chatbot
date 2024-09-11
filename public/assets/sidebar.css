@@ -52,7 +52,7 @@ body {
   position: fixed;
     width: 265px;
     top: 100px;
-    height: 100vh !important;
+    height: 90vh !important;
     display: flex; 
     flex-direction: column;
     gap: 20px;

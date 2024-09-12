@@ -153,8 +153,9 @@
             'font-family': temp.font,
             'font-size': temp.font_size,
             'text-align': temp.text_alignment,
-            'background-color': temp.bubble_background,
-            'color': '#fff',
+            'background-color': temp.text_color,
+            'color': temp.text_color,
+            'width': temp.box_width,
         });
 
         // Apply the styles for bot messages (question_color)

@@ -18,6 +18,7 @@ return new class extends Migration
             $table->string('name')->nullable();
             $table->string('main_color')->nullable();
             $table->string('bubble_background')->nullable();
+            $table->string('box_width')->nullable();
             $table->string('font')->nullable();
             $table->string('font_size')->nullable();
             $table->string('button_type')->nullable();

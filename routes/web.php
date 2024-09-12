@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TwilioController;
 use Illuminate\Support\Facades\Route;
 use  App\Http\Controllers\BotmanController;
 use App\Http\Controllers\AuthController;
@@ -73,6 +74,8 @@ Route::middleware(['auth', 'role:1'])->group(function () {
     Route::get('template-view/{id?}', [DashboardController::class, 'templateView'])->name('templateview');
     Route::post('add-bot-template', [DashboardController::class, 'addBotTemplate'])->name('addbottemplate');
 
+    Route::get('chatanalytics', [DashboardController::class, 'chatanalytics'])->name('chatanalytics');
+
     Route::get('/bot-flow/{id}',[ChatBotController::class, 'botFlow'])->name('botFlow');
     Route::get('/get-answer',[ChatBotController::class, 'getAnswer'])->name('getAnswer');
     Route::post('/addQuestionFlow',[ChatBotController::class, 'addQuestionFlow'])->name('addQuestionFlow');
@@ -108,7 +111,8 @@ Route::get('/test-chatbot-script', [ChatBotController::class, 'testChatbotScript
 Route::get('/website-bot', [ChatBotController::class, 'websiteChat'])->name('website.bot');
 
 
-Route::get('/bot-chat', function () {
-    return view('bots.bot-chat');
-});
+// Route::get('/bot-chat', function () {
+//     return view('bots.bot-chat');
+// });
+Route::get('/bot-chat', [ChatBotController::class, 'botChat'])->name('botChat');
 Route::get('/editPrefrence', [ChatBotController::class, 'editPrefrence'])->name('editPrefrence');

@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 class ChatBotController extends Controller
 {
+
+    public function botChat(){
+        
+        return view('bots.bot-chat');
+    }
     
     // public function editPrefrence(Request $request)
     // {

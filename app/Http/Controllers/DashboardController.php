@@ -60,4 +60,11 @@ class DashboardController extends Controller
             return response()->json(['error' => 'Invalid data format'], 400);
         }
     }
+
+    
+    public function chatanalytics(){
+        return view('dashboard.chatanalytics');
+    }
+
+    
 }

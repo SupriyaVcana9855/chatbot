@@ -21,7 +21,8 @@ return new class extends Migration
             $table->foreign('bot_question_id')->references('id')->on('bot_questions')->onDelete('cascade');
             
             $table->text('answer')->nullable(); 
-            
+            $table->string('status')->nullable(); 
+
             $table->unsignedBigInteger('user_id'); 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             

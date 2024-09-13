@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 use App\Models\ChatBot;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Storage;
 
 class BotController extends Controller
@@ -26,6 +27,7 @@ class BotController extends Controller
         $bot = new ChatBot();
         $bot->name =$request->name;
         $bot->type =$request->type;
+        $bot->user_id = Auth::user()->id;
         $bot->save();
         return redirect()->back()->with('message',"successfully saved");
     }

@@ -16,6 +16,7 @@ class DashboardController extends Controller
     }
 
     
+    
     public function templateView(){
         return view('dashboard.viewtemplate');
     }

@@ -27,6 +27,9 @@ Route::get('/scriptchatbot/{id}',[ChatBotController::class, 'scriptchatbot'])->n
 Route::get('/chatbot/{id}', [ChatBotController::class, 'show']);
 Route::post('/chatbot/message', [ChatBotController::class, 'handleMessage']);
 
+Route::get('/change/status', [ChatBotController::class, 'changeStatus']);
+
+
 Route::get('/sendTestEmail', function () {
     return view('emailverify');
 });

@@ -296,7 +296,7 @@ class ChatBotController extends Controller
                 chatbotContainer.innerHTML = `
                     <meta charset='UTF-8'>
                             <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-                            <meta id='meta-tag' name='csrf-token' content='" . $csrfToken . "'>
+                        <meta name='csrf-token' content='{{ csrf_token() }}'>
                             <title>Chatbot</title>
                             <script src='https://code.jquery.com/jquery-3.6.0.min.js'></script>
 
@@ -569,7 +569,6 @@ class ChatBotController extends Controller
                     const sendButton = $('#sendButton');
                     const chatBody = $('.chat-body');
                     console.log(chatMessages.val());
-                    const csrfToken = $('#meta-tag').attr('content');
                     $('.option1Select,.option2Select').on('click',function(){
                         var data  = $(this).val();
                         userMessageInput.val(data);
@@ -594,7 +593,7 @@ class ChatBotController extends Controller
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
-                                'X-CSRF-TOKEN': csrfToken
+                                'X-CSRF-TOKEN': $('meta[name=\"csrf-token\"]').attr('content')
                             },
                             data: JSON.stringify({
                                 message: message,

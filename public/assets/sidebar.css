@@ -753,9 +753,14 @@ button.btn {
     vertical-align: middle;
     border-top: 0px;
 }
+
+/* .table-striped {
+    border-right: 1px solid #cdcdcd;
+} */
 .set-boat-heading-icon {
     border-right: 1px solid #cdcdcd;
     padding-right: 38px;
+    width:100%;
 }
 
 .first-td {

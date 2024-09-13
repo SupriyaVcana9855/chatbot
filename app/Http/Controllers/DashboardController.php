@@ -49,8 +49,8 @@ class DashboardController extends Controller
                 'background_color'  => $tempData['background_color'] ?? null, 
                 'option_color'      => $tempData['option_color'] ?? null, 
                 'option_border_color'=> $tempData['option_border_color'] ?? null, 
-                'button_design'     => $tempData['button_design'] ?? null, 
-                'button_type'       => $tempData['button_type'] ?? null,
+                'button_design'     => $tempData['button_type'] ?? null, 
+                // 'button_type'       => $tempData['button_type'] ?? null,
             ]);
     
             // Return success or redirect

@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('box_width')->nullable();
             $table->string('font')->nullable();
             $table->string('font_size')->nullable();
-            $table->string('button_type')->nullable();
+            $table->string('button_design')->nullable();
             $table->string('question_radius')->nullable();
             $table->string('answer_radius')->nullable();
             $table->string('text_alignment')->nullable();

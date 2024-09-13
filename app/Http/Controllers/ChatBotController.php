@@ -14,6 +14,11 @@ use App\Models\BotUser;
 
 class ChatBotController extends Controller
 {
+
+    public function botChat(){
+        
+        return view('bots.bot-chat');
+    }
     
     // public function editPrefrence(Request $request)
     // {

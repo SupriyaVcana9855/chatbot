@@ -72,53 +72,92 @@ class ChatBotController extends Controller
 
 
 
+    // public function addQuestion(Request $request)
+    // {
+    //     // Loop through each question in the "questions" array
+    //     dd($request->all());
+    //     foreach ($request->questions as $questionData) {
+            
+    //         $questionText = strtolower($questionData['question']);
+    //         $questionType = '';
+            
+    //         // Determine the type of question based on the content
+    //         if (strpos($questionText, 'email') !== false) {
+    //             $questionType = "email";
+    //         } elseif (strpos($questionText, 'contact') !== false) {
+    //             $questionType = "contact";
+    //         } elseif (strpos($questionText, 'name') !== false) {
+    //             $questionType = "name";
+    //         }
+
+    //         // Create a new BotQuestion instance
+    //         $botQuestion = new BotQuestion();
+            
+    //         // Set the common fields
+    //         $botQuestion->chat_bot_id = $questionData['bot_id'];
+    //         $botQuestion->question = $questionData['question'];
+    //         $botQuestion->question_type = $questionType;
+    //         $botQuestion->type = 'bot';
+
+    //         // Handle question based on its type
+    //         if ($questionData['type'] == 'option') {
+    //             // For MCQ (multiple choice questions), store the options
+    //             $botQuestion->option1 = $questionData['options'][0] ?? null;
+    //             $botQuestion->option2 = $questionData['options'][1] ?? null;
+    //         } else {
+    //             // For single-answer questions, store the answer
+    //             $botQuestion->answer = $questionData['answer'] ?? null;
+    //         }
+
+    //         // Save each question
+    //         $botQuestion->save();
+    //     }
+
+    //     // Redirect back with success message
+    //     return redirect()->back()->with('success', 'Questions added successfully!');
+    // }
+
+
     public function addQuestion(Request $request)
     {
+        // dd($request->all());
+        // Initialize an array to hold questions
+        $questions = [];
+    
         // Loop through each question in the "questions" array
-        dd($request->all());
-        foreach ($request->questions as $questionData) {
-            
-            $questionText = strtolower($questionData['question']);
-            $questionType = '';
-            
-            // Determine the type of question based on the content
-            if (strpos($questionText, 'email') !== false) {
-                $questionType = "email";
-            } elseif (strpos($questionText, 'contact') !== false) {
-                $questionType = "contact";
-            } elseif (strpos($questionText, 'name') !== false) {
-                $questionType = "name";
+        foreach ($request->questions as $index => $questionData) {
+            // Skip undefined or malformed entries
+            if ($index === 'undefined' || !is_array($questionData)) {
+                continue;
             }
-
-            // Create a new BotQuestion instance
+    
+            // Ensure bot_id is set and valid
+            $botId = $questionData['bot_id'] ?? null;
+            if (!$botId || !isset($questionData['question'])) {
+                continue;
+            }
+    
+            // Prepare the question data
+            $questions[] = [
+                'bot_id' => $botId,
+                'question' => $questionData['question'],
+                'options' => $questionData['options'] ?? []
+            ];
+        }
+    
+        // Process each question and store in the database
+        foreach ($questions as $questionData) {
             $botQuestion = new BotQuestion();
-            
-            // Set the common fields
             $botQuestion->chat_bot_id = $questionData['bot_id'];
+            $botQuestion->question_type = 'Question';
             $botQuestion->question = $questionData['question'];
-            $botQuestion->question_type = $questionType;
-            $botQuestion->type = 'bot';
-
-            // Handle question based on its type
-            if ($questionData['type'] == 'option') {
-                // For MCQ (multiple choice questions), store the options
-                $botQuestion->option1 = $questionData['options'][0] ?? null;
-                $botQuestion->option2 = $questionData['options'][1] ?? null;
-            } else {
-                // For single-answer questions, store the answer
-                $botQuestion->answer = $questionData['answer'] ?? null;
-            }
-
-            // Save each question
+            $botQuestion->options = json_encode($questionData['options']); // Assuming options are stored as JSON
             $botQuestion->save();
         }
-
-        // Redirect back with success message
+    
         return redirect()->back()->with('success', 'Questions added successfully!');
     }
-
-
-
+    
     public function getQuestion($botId)
     {
         $question = BotQuestion::where('bot_id', $botId)->first();

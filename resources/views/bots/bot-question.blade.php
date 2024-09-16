@@ -19,6 +19,7 @@
                                     <h6>Text</h6>
                                 </div>
                                 <input type="hidden" name="questions[0][bot_id]" value="{{ $id }}">
+                                <!-- <input type="hidden" name="questions[0][bot_id]" value="Question"> -->
                                 <div class="mb-3">
                                     <label for="question-input" class="form-label">Question 1</label>
                                     <input type="text" class="form-control" placeholder="Enter Question?" name="questions[0][question]">
@@ -31,7 +32,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-2">
-                                    <button type="button" class="btn btn-success add-more-options">Add More</button>
+                                    <button type="button" class="btn btn-success add-more-options">Add Option</button>
                                 </div>
                                 <hr> 
                             </div>
@@ -47,7 +48,7 @@
     </div>
 </div>
 <script>
-    $(document).ready(function() {
+   $(document).ready(function() {
     let questionIndex = 1; // Start questionIndex at 1
     let optionIndexes = {}; // Track option indexes for each question
 
@@ -65,7 +66,7 @@
         let newOptionsBlock = `
             <div class="row option-row">
                 <div class="col-md-8">
-                    <label for="question-input" class="form-label">Option ${optionIndexes[currentQuestionIndex]}</label>
+                    <label for="option-input" class="form-label">Option ${optionIndexes[currentQuestionIndex]}</label>
                     <input type="text" class="form-control" placeholder="Enter option ${optionIndexes[currentQuestionIndex]}" name="questions[${currentQuestionIndex}][options][${optionIndexes[currentQuestionIndex] - 1}]">
                 </div>
                 <div class="col-md-2">
@@ -85,6 +86,7 @@
                 <div class="textbox">
                     <h6>Text</h6>
                 </div>
+                <input type="hidden" name="questions[${questionIndex}][bot_id]" value="{{ $id }}">
                 <div class="col-md-2 mt-2">
                     <button type="button" class="btn btn-danger remove-question" onclick="removeQuestion(this)">Remove Question ${questionIndex + 1}</button>
                 </div>

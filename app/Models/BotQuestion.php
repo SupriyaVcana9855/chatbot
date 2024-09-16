@@ -17,4 +17,9 @@ class BotQuestion extends Model
     {
         return $this->hasMany(BotQuestionFlow::class);
     }
+
+    public function questionAnswers()
+    {
+        return $this->hasMany(QuestionAnswer::class,'bot_question_id');
+    }
 }

@@ -15,4 +15,13 @@ class QuestionAnswer extends Model
          return $this->belongsTo(BotUser::class,'bot_user_id');
     }
 
+    public function botQuestion()
+    {
+         return $this->belongsTo(BotQuestion::class,'bot_question_id');
+    }
+    public function chatBots()
+    {
+         return $this->belongsTo(ChatBot::class,'chat_bot_id');
+    }
+
 }

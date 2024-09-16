@@ -117,5 +117,5 @@ Route::get('/website-bot', [ChatBotController::class, 'websiteChat'])->name('web
 // Route::get('/bot-chat', function () {
 //     return view('bots.bot-chat');
 // });
-Route::get('/bot-chat', [ChatBotController::class, 'botChat'])->name('botChat');
+Route::get('/bot-chat/{id?}', [ChatBotController::class, 'botChat'])->name('botChat');
 Route::get('/editPrefrence', [ChatBotController::class, 'editPrefrence'])->name('editPrefrence');

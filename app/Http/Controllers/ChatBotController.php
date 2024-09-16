@@ -15,9 +15,11 @@ use App\Models\BotUser;
 class ChatBotController extends Controller
 {
 
-    public function botChat(){
-        
-        return view('bots.bot-chat');
+    public function botChat($id){
+        // $botChats = ChatBot::with('botQuestions','botQuestions.questionAnswers')->where('id',$id)->get();
+        $botChats = BotUser::with('questionAnswer','questionAnswer.botQuestion','questionAnswer.chatBots')->where('id',$id)->get();
+        // dd($botChats);
+        return view('bots.bot-chat',compact('botChats'));
     }
     
     // public function editPrefrence(Request $request)

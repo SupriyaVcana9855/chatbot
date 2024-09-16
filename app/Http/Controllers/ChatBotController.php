@@ -96,6 +96,7 @@ class ChatBotController extends Controller
             $botQuestion->chat_bot_id = $questionData['bot_id'];
             $botQuestion->question = $questionData['question'];
             $botQuestion->question_type = $questionType;
+            $botQuestion->type = 'bot';
 
             // Handle question based on its type
             if ($questionData['type'] == 'option') {
@@ -157,6 +158,7 @@ class ChatBotController extends Controller
     
     private function generateReply($message, $bot,$question,$request)
     {
+        $coloum = '';
         if ($question->question_type == 'email')  {
             if (!preg_match('/^[\w._%+-]+@[\w.-]+\.[a-zA-Z]{2,}$/', $message)) {
                 $data = [
@@ -165,6 +167,7 @@ class ChatBotController extends Controller
                 ];
                 return $data;
             }
+            $coloum = 'email';
         } else if ($question->question_type == 'contact') {
             if (!preg_match('/^\+?[0-9]{10,15}$/', $message)) {
                 $data = [
@@ -173,6 +176,8 @@ class ChatBotController extends Controller
                 ];
                 return $data;
             }
+            $coloum = 'contact';
+
         } else if ($question->question_type == 'name') {
             if (!preg_match('/^[\p{L} ]+$/u', $message)) {
 
@@ -182,6 +187,8 @@ class ChatBotController extends Controller
                 ];
                 return $data;
             }
+            $coloum = 'name';
+
         } else {
             if (!preg_match('/./', $message)) { // Simple check for non-empty string
                 $data = [
@@ -200,6 +207,14 @@ class ChatBotController extends Controller
                 $botUserData = new BotUser;
                 $botUserData->chat_bot_id = $bot->id;
                 $botUserData->save();
+            }
+            else
+            {
+                if($coloum != '')
+                {
+                    $botUserData->$coloum = $message;
+                    $botUserData->save();
+                }
             }
            
         $saveanswer = new QuestionAnswer;

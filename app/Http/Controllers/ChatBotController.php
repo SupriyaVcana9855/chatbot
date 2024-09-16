@@ -75,6 +75,7 @@ class ChatBotController extends Controller
     public function addQuestion(Request $request)
     {
         // Loop through each question in the "questions" array
+        dd($request->all());
         foreach ($request->questions as $questionData) {
             
             $questionText = strtolower($questionData['question']);

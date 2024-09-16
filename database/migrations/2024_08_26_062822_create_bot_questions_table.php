@@ -23,6 +23,7 @@ return new class extends Migration
             $table->text('answer')->nullable(); 
             $table->string('question_type')->nullable(); 
             $table->string('sequence')->nullable(); 
+            $table->integer('type')->nullable(); 
 
             $table->timestamps();
         });

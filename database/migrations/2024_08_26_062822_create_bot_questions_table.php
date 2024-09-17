@@ -22,9 +22,9 @@ return new class extends Migration
             $table->text('answer')->nullable(); 
 
             // Changing question_type enum
-            $table->enum('question_type', ['General', 'FAQ', 'Question'])
+            $table->enum('question_type', ['general', 'faq', 'question'])
                   ->default('General')
-                  ->comment('1 = General, 2 = FAQ, 3 = Question');
+                  ->comment('1 = general, 2 = faq, 3 = question');
             $table->string('sequence')->nullable(); 
             $table->integer('type')->nullable(); 
 

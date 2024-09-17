@@ -1,4 +1,42 @@
-<!DOCTYPE html>
+<?php
+$count =0;
+for($off =0;$off<4;$off++)
+{
+    if($count ==0)
+    {
+        $count = $off+1;
+    }else
+    {
+        $count=$off+2;
+    }
+    for($off1 =0;$off1<$count;$off1++)
+    {
+        echo "*";
+    }
+    echo "<br>";
+}
+
+
+for($off =1;$off<=4;$off++)
+{
+    for($off1 =1;$off1<=$off+1;$off1++)
+    {
+        if($off1%2 == 0)
+        {
+            echo "_";
+        }else
+        {
+            echo "*";
+        }
+    }
+    echo "<br>";
+}
+?>
+
+
+
+
+{{-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -171,4 +209,4 @@
         </div>
     </div>
 </body>
-</html>
+</html> --}}

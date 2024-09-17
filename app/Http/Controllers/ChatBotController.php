@@ -14,12 +14,6 @@ use App\Models\BotUser;
 
 class ChatBotController extends Controller
 {
-    
-    // public function editPrefrence(Request $request)
-    // {
-    //    return 1;
-    // }    
-
     //single bot question listing
     public function singleBotListing($id)
     {
@@ -144,11 +138,10 @@ class ChatBotController extends Controller
         $question = BotQuestion::find($botId);
         $bot = ChatBot::find($question->bot->id);
         $reply = $this->generateReply($message, $bot,$question,$request);
-
         return response()->json(['reply' => $reply]);
     }
 
-    
+        
     private function generateReply($message, $bot,$question,$request)
     {
         $coloum = '';
@@ -247,7 +240,7 @@ class ChatBotController extends Controller
     public function scriptchatbot($id)
     {
         $chatbot = ChatBot::find($id);
-        $questionsIds = QuestionAnswer::pluck('bot_question_id')->where('chat_bot_id ',$id)->toArray();
+        $questionsIds = QuestionAnswer::pluck('bot_question_id')->where('chat_bot_id ',$id)->toArray();    
         $questions = BotQuestion::where('chat_bot_id', $id)
             ->whereNotIn('id', $questionsIds)
             ->first();

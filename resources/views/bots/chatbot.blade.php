@@ -240,7 +240,7 @@ img#chat-toggle-btn {
                         <button class = "option2Select" value = "{{ $questions->option2 }}">{{ $questions->option2 }}</button>
                     </div>
                 @endif
-                @endif
+            @endif
         </div>
         <div class='chat-footer'>
             <input type='text' id='userMessage' placeholder='Enter your message...'>

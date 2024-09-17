@@ -52,6 +52,9 @@
                         <td><button class="btn btn-outline-secondary">
                            <a href="{{ route('botChat',$bot->id) }}"> <img src="./assets/images/boat/Bot Chats.png" title="Bot Chat">
                            </a></button></td>
+                           <td><button class="btn btn-outline-secondary">
+                           <a href="{{ route('faq',$bot->id) }}"> <img src="./assets/images/totalchat.png" title="Bot faq">
+                           </a></button></td>
                         <td><button class="btn btn-outline-secondary">
                         <a href="{{ route('singleBotListing', $bot->id) }}">
                             <img src="./assets/images/boat/Live Chat.png" title="Live Chat"></a>

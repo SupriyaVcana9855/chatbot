@@ -44,40 +44,43 @@
                             </div>
                         </td>
                         <td><button class="btn btn-outline-secondary">
-                            <img src="./assets/images/boat/Setup.png">
+                            <img src="./assets/images/boat/Setup.png" title="Setup Bot">
                         </button></td>
                         <td><button class="btn btn-outline-secondary">
-                            <img src="./assets/images/boat/Triggers.png">
+                            <img src="./assets/images/boat/Triggers.png" title="Bot Notifications">
                         </button></td>
                         <td><button class="btn btn-outline-secondary">
-                            <img src="./assets/images/boat/Bot Chats.png">
-                        </button></td>
+                           <a href="{{ route('botChat',$bot->id) }}"> <img src="./assets/images/boat/Bot Chats.png" title="Bot Chat">
+                           </a></button></td>
+                           <td><button class="btn btn-outline-secondary">
+                           <a href="{{ route('faq',$bot->id) }}"> <img src="./assets/images/totalchat.png" title="Bot faq">
+                           </a></button></td>
                         <td><button class="btn btn-outline-secondary">
                         <a href="{{ route('singleBotListing', $bot->id) }}">
-                            <img src="./assets/images/boat/Live Chat.png"></a>
+                            <img src="./assets/images/boat/Live Chat.png" title="Live Chat"></a>
                         </button></td>
                         <td><button class="btn btn-outline-secondary">
-                            <img src="./assets/images/boat/Analytics.png">
-                        </button></td>
+                        <a href="{{ route('chatanalytics') }}"><img src="./assets/images/boat/Analytics.png" title="Chat Analytics">
+                        </a></button></td>
                         <td><button class="btn btn-outline-secondary">
                         <a href="{{ route('setup', $bot->id) }}">
-                        <img src="./assets/images/boat/Settings.png"></a>
+                        <img src="./assets/images/boat/Settings.png" title="Bot Settings"></a>
                         </button></td>
                         <td>
                             <div class="custom-control custom-switch">
                                 <input type="checkbox" class="custom-control-input" id="customSwitch1">
-                                <label class="custom-control-label" for="customSwitch1"></label>
+                                <label class="custom-control-label" for="customSwitch1" title="Bot Enable/Disable"></label>
                             </div>
                         </td>
                         <td>
                             <div class="dropdown set-menu-btn">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <i class="fa-solid fa-ellipsis-vertical" style="color: #b4b4b4;"></i>
+                                    <i class="fa-solid fa-ellipsis-vertical" style="color: #b4b4b4;" ></i>
                                 </button>
                                 <ul class="dropdown-menu">
-                                    <li class="border-bottom"><a class="dropdown-item" href="#">Landing Page <span><img src="./assets/images/boat/web-traffic 1.png"></span></a></li>
-                                    <li class="border-bottom"><a class="dropdown-item" href="#">Duplicate <span><img src="./assets/images/boat/Group.png"></span></a></li>
-                                    <li><a class="dropdown-item" href="#">Delete <span><img src="./assets/images/boat/Vector (6).png"></span></a></li>
+                                    <li class="border-bottom" title="Bot Landing Page" ><a class="dropdown-item" href="#">Landing Page <span><img src="./assets/images/boat/web-traffic 1.png"></span></a></li>
+                                    <li class="border-bottom" title="Bot Duplicate"><a class="dropdown-item" href="#">Duplicate <span><img src="./assets/images/boat/Group.png"></span></a></li>
+                                    <li title="Bot Delete"><a class="dropdown-item" href="#">Delete <span><img src="./assets/images/boat/Vector (6).png"></span></a></li>
                                 </ul>
                             </div>
                         </td>

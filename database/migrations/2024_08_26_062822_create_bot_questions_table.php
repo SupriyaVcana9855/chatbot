@@ -15,13 +15,16 @@ return new class extends Migration
     {
         Schema::create('bot_questions', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('chat_bot_id'); // Use unsignedBigInteger to match the chat_bots table
-            $table->foreign('chat_bot_id')->references('id')->on('chat_bots')->onDelete('cascade');
+            $table->unsignedBigInteger('chat_bot_id');
+   
            $table->text('question'); 
-            $table->text('option1')->nullable(); 
-            $table->text('option2')->nullable(); 
+           $table->json('options')->nullable();
             $table->text('answer')->nullable(); 
-            $table->string('question_type')->nullable(); 
+
+            // Changing question_type enum
+            $table->enum('question_type', ['general', 'faq', 'question'])
+                  ->default('General')
+                  ->comment('1 = general, 2 = faq, 3 = question');
             $table->string('sequence')->nullable(); 
             $table->integer('type')->nullable(); 
 

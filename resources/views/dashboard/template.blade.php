@@ -46,7 +46,7 @@
                         <div class="">
                             <div class="template-card">
                                 <h3>Digital Marketing</h3>
-                                <a href="{{route('templateview')}}">Use This</a>
+                                <a href="{{route('templateview',1)}}">Use This</a>
                             </div>
                             <p>Easily collect product or service reviews from customers, then convert the feedback into actionable insights to improve quality.</p>
                         </div>
@@ -58,7 +58,7 @@
                         <div class="">
                             <div class="template-card">
                                 <h3>E-Commerce Website</h3>
-                                <a href="">Use This</a>
+                                <a href="{{route('templateview',2)}}">Use This</a>
                             </div>
                             <p>Help your customer solve their queries quickly and 24/7. Get their business requirements and suggest the respective themes and...</p>
                         </div>
@@ -70,7 +70,7 @@
                         <div class="">
                             <div class="template-card">
                                 <h3>Feedback Bot</h3>
-                                <a href="">Use This</a>
+                                <a href="{{route('templateview',3)}}">Use This</a>
                             </div>
                             <p>Help the start-up entrepreneurs to get details of their eligibility, areas they can improve, documentation required, and other...</p>
                         </div>
@@ -82,7 +82,7 @@
                         <div class="">
                             <div class="template-card">
                                 <h3>Lead Generation</h3>
-                                <a href="">Use This</a>
+                                <a href="{{route('templateview',4)}}">Use This</a>
                             </div>
                             <p>Our chatbot template captures leads and offers customer support. Discover activities available, book live/virtual tours, and find...</p>
                         </div>

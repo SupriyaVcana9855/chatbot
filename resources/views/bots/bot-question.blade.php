@@ -1,137 +1,146 @@
 @extends('layout.app')
 
 @section('content')
-    <link rel="stylesheet" href="{{ asset('css/setup.css') }}">
-    <div class="boxpadding">
-        <div class="accordion-body">
-            <div class="row">
-                <div class="col-xl-12">
-                    <div class="boxinner">
+<link rel="stylesheet" href="{{ asset('css/setup.css') }}">
+<div class="boxpadding">
+    <div class="accordion-body">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="boxinner">
 
                     <h1>Please add question sequence wise.</h1>
 
-                        <form action="{{ route('addQuestion') }}" method="post">
-                            @csrf
-                            <div id="questions-container">
-                                <!-- Question block -->
-                                <div class="question-block">
-                                    <div class="textbox">
-                                        <h6>Text</h6>
-                                    </div>
-
-                                    <div class="mb-3">
-                                        <label for="question-type" class="form-label">Question Type</label>
-                                        <select class="form-select selctQuestion" name="questions[0][type]" aria-label="Choose A Question Type">
-                                            <option selected>Choose A Question Type</option>
-                                            <option value="option">MCQ</option>
-                                            <option value="single">Single</option>
-                                        </select>
-                                    </div>
-
-                                    <input type="hidden" name="questions[0][bot_id]" value="{{ $id }}">
-
-                                    <div class="mb-3">
-                                        <label for="question-input" class="form-label">Question</label>
-                                        <input type="text" class="form-control" placeholder="Enter Question?" name="questions[0][question]">
-                                    </div>
-
-                                    <!-- Option fields for MCQ -->
-                                    <div class="optionClass" style="display:none">
-                                        <div class="mb-3 option-item">
-                                            <label for="option1" class="form-label">Option 1</label>
-                                            <input type="text" class="form-control" name="questions[0][options][]">
-                                        </div>
-                                        <div class="mb-3 option-item">
-                                            <label for="option2" class="form-label">Option 2</label>
-                                            <input type="text" class="form-control" name="questions[0][options][]">
-                                        </div>
-                                    </div>
-
-                                    <!-- Answer input for single questions -->
-                                    {{-- <div class="mb-3 answer" style="display:none">
-                                        <label for="answer" class="form-label">Answer</label>
-                                        <input type="text" class="form-control" placeholder="Answer" name="questions[0][answer]">
-                                    </div> --}}
-
-                                    <hr> <!-- Separator between questions -->
+                    <form action="{{ route('addQuestion') }}" method="post">
+                        @csrf
+                        <div id="questions-container">
+                            <!-- Question block -->
+                            <div class="question-block">
+                                <input type="hidden" name="questions[0][bot_id]" value="{{ $id }}">
+                                <!-- <input type="hidden" name="questions[0][bot_id]" value="Question"> -->
+                                <div class="mb-3">
+                                    <label for="question-input" class="form-label mb-3">Question 1</label>
+                                    <input type="text" class="form-control" placeholder="Enter Question?" name="questions[0][question]">
                                 </div>
-                            </div>
 
-                            <!-- Button to add more questions -->
-                            <button type="button" class="btn btn-success add-question">Add Another Question</button>
-                            <button type="submit" class="btn btn-primary" style="width: 86px;">Save All</button>
-                        </form>
-                    </div>
+                                <div class="row addMoreOptions ">
+                                    <div class="col-md-12 mb-3">
+                                        <label for="option-input" class="form-label mb-3">Option 1</label>
+                                        <input type="text" class="form-control" placeholder="Enter option1" name="questions[0][options][0]">
+                                    </div>
+                                </div>
+                                <div>
+                                    <div class="mt-4 ms-0 me-0 ps-0 pe-0">
+                                        <button type="button" class=" btn-success add-more-options">Add Option</button>
+                                    </div>
+                                </div>
+                                <hr>
+                            </div>
+                        </div>
+
+                        <!-- Button to add more questions -->
+                        <div class="">
+                            <button type="button" class="btn-success add-question">Add Another Question</button>
+                            <button type="submit" class="btn btn-primary ms-3" style="width: 130px;">Save All</button>
+                        </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+</div>
+<style>
+    .option-row {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+    }
 
-    <script>
-        $(document).ready(function() {
-            let questionIndex = 1;
+    .add-question,
+    .add-more-options {
+        background: #146c43 !important;
+        padding: 0.375rem 0.75rem;
+        border: none !important;
+        border-radius: 5px;
+    }
 
-            // Function to add more questions
-            $('.add-question').click(function() {
-                let newQuestionBlock = `
-                    <div class="question-block">
-                        <div class="textbox">
-                            <h6>Text</h6>
-                        </div>
+    .question-block input {
+        border-right: 1px solid #dee2e6 !important;
+    }
+</style>
+<script>
+    $(document).ready(function() {
+        let questionIndex = 1; // Start questionIndex at 1
+        let optionIndexes = {}; // Track option indexes for each question
 
-                        <div class="mb-3">
-                            <label for="question-type" class="form-label">Question Type</label>
-                            <select class="form-select selctQuestion" name="questions[${questionIndex}][type]" aria-label="Choose A Question Type">
-                                <option selected>Choose A Question Type</option>
-                                <option value="option">MCQ</option>
-                                <option value="single">Single</option>
-                            </select>
-                        </div>
+        // Event delegation for adding more options dynamically
+        $(document).on('click', '.add-more-options', function() {
+            let currentQuestionIndex = $(this).closest('.question-block').data('question-index'); // Get the current question index
 
-                        <input type="hidden" name="questions[${questionIndex}][bot_id]" value="{{ $id }}">
+            // Initialize optionIndexes for this question if it doesn't exist
+            if (typeof optionIndexes[currentQuestionIndex] === 'undefined') {
+                optionIndexes[currentQuestionIndex] = 1;
+            }
 
-                        <div class="mb-3">
-                            <label for="question-input" class="form-label">Question</label>
-                            <input type="text" class="form-control" placeholder="Enter Question?" name="questions[${questionIndex}][question]">
-                        </div>
+            optionIndexes[currentQuestionIndex]++; // Increment the option index for this question
 
-                        <!-- Option fields for MCQ -->
-                        <div class="optionClass" style="display:none">
-                            <div class="mb-3 option-item">
-                                <label for="option1" class="form-label">Option 1</label>
-                                <input type="text" class="form-control" name="questions[${questionIndex}][options][]">
-                            </div>
-                            <div class="mb-3 option-item">
-                                <label for="option2" class="form-label">Option 2</label>
-                                <input type="text" class="form-control" name="questions[${questionIndex}][options][]">
-                            </div>
-                        </div>
+            let newOptionsBlock = `
+            <div class="row option-row">
+                <div class="col-md-11 mt-2">
+                    <label for="option-input" class="form-label">Option ${optionIndexes[currentQuestionIndex]}</label>
+                    <input type="text" class="form-control" placeholder="Enter option ${optionIndexes[currentQuestionIndex]}" name="questions[${currentQuestionIndex}][options][${optionIndexes[currentQuestionIndex] - 1}]">
+                </div>
+                <div class="col-md-1 mt-2 mb-1 d-flex justify-content-end">
+                    <button type="button" class="btn btn-danger" onclick="removeRow(this) ">x</button>
+                </div>
+            </div>`;
 
-                        <!-- Answer input for single questions -->
-                        <div class="mb-3 answer" style="display:none">
-                            <label for="answer" class="form-label">Answer</label>
-                            
-                        </div>
-
-                        <hr> <!-- Separator between questions -->
-                    </div>
-                `;
-                $('#questions-container').append(newQuestionBlock);
-                questionIndex++;
-            });
-
-            // Handle change of question type dynamically for each block
-            $(document).on('change', '.selctQuestion', function() {
-                var val = $(this).val();
-                var parentBlock = $(this).closest('.question-block');
-                if (val === 'option') {
-                    parentBlock.find('.optionClass').show();
-                    parentBlock.find('.answer').hide();
-                } else {
-                    parentBlock.find('.optionClass').hide();
-                    parentBlock.find('.answer').show();
-                }
-            });
+            $(this).closest('.question-block').find('.addMoreOptions').append(newOptionsBlock);
         });
-    </script>
+
+        // Function to add more questions dynamically
+        $('.add-question').click(function() {
+            optionIndexes[questionIndex] = 1; // Initialize the option index for the new question
+
+            let newQuestionBlock = `
+            <div class="question-block" data-question-index="${questionIndex}">
+               
+                <div class="row">                
+                <input type="hidden" name="questions[${questionIndex}][bot_id]" value="{{ $id }}">
+                <div class="col-md-11">
+                    <label for="question-input" class="form-label mb-3">Question ${questionIndex + 1}</label>
+                    <input type="text" class="form-control" placeholder="Enter Question?" name="questions[${questionIndex}][question]">
+                </div>
+                <div class="col-md-1 mt-2  mb-2 d-flex justify-content-end align-items-end">
+                    <button type="button" class="btn btn-danger remove-question" onclick="removeQuestion(this)">x</button>
+                </div></div>
+
+                <div class="row addMoreOptions">
+                    <div class="col-md-12">
+                        <label for="option-input" class="form-label mt-3 mb-3">Option 1</label>
+                        <input type="text" class="form-control" placeholder="Enter option1" name="questions[${questionIndex}][options][0]">
+                    </div>
+                </div>
+
+                <div class="  mt-2">
+                    <button type="button" class=" mt-4 btn-success add-more-options">Add Option</button>
+                </div>
+              
+                <hr> 
+            </div>`;
+
+            $('#questions-container').append(newQuestionBlock);
+            questionIndex++; // Increment the question index for the next question
+        });
+    });
+
+    // Function to remove a row (option)
+    function removeRow(element) {
+        $(element).closest('.row').remove();
+    }
+
+    // Function to remove a question block
+    function removeQuestion(element) {
+        $(element).closest('.question-block').remove();
+    }
+</script>
 @endsection

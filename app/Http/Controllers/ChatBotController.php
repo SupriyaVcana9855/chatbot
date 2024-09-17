@@ -151,7 +151,7 @@ class ChatBotController extends Controller
             $botQuestion->chat_bot_id = $questionData['bot_id'];
             $botQuestion->question_type = 'Question';
             $botQuestion->question = $questionData['question'];
-            $botQuestion->options = json_encode($questionData['options']); // Assuming options are stored as JSON
+            $botQuestion->options =  $questionData['options']; //json_encode($questionData['options']); // Assuming options are stored as JSON
             $botQuestion->save();
         }
     

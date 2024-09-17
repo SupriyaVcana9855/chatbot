@@ -122,7 +122,7 @@
                 </div>
 
                 <div class="  mt-2">
-                    <button type="button" class=" mt-4 btn-success add-more-options">Add More</button>
+                    <button type="button" class=" mt-4 btn-success add-more-options">Add Option</button>
                 </div>
               
                 <hr> 

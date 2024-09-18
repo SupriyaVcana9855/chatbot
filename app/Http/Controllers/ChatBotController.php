@@ -120,7 +120,7 @@ class ChatBotController extends Controller
 
     public function addQuestion(Request $request)
     {
-        // dd($request->all());
+        // dd($request);
         // Initialize an array to hold questions
         $questions = [];
     
@@ -186,10 +186,12 @@ class ChatBotController extends Controller
 
     public function handleMessage(Request $request)
     {
+
         $message = $request->input('message');
         $botId = $request->input('bot_id');
         $question = BotQuestion::find($botId);
-        $bot = ChatBot::find($question->bot->id);
+
+        $bot = ChatBot::find($request->chatbotId);
         $reply = $this->generateReply($message, $bot,$question,$request);
         return response()->json(['reply' => $reply]);
     }
@@ -198,7 +200,7 @@ class ChatBotController extends Controller
     private function generateReply($message, $bot,$question,$request)
     {
         $coloum = '';
-        if ($question->question_type == 'email')  {
+        if ($question->answer_type == 'email')  {
             if (!preg_match('/^[\w._%+-]+@[\w.-]+\.[a-zA-Z]{2,}$/', $message)) {
                 $data = [
                     'message'=>"Enter a valid email!",
@@ -207,7 +209,7 @@ class ChatBotController extends Controller
                 return $data;
             }
             $coloum = 'email';
-        } else if ($question->question_type == 'contact') {
+        } else if ($question->answer_type == 'contact') {
             if (!preg_match('/^\+?[0-9]{10,15}$/', $message)) {
                 $data = [
                     'message'=>"Enter a valid phone number!",
@@ -217,7 +219,7 @@ class ChatBotController extends Controller
             }
             $coloum = 'contact';
 
-        } else if ($question->question_type == 'name') {
+        } else if ($question->answer_type == 'name') {
             if (!preg_match('/^[\p{L} ]+$/u', $message)) {
 
                 $data = [
@@ -245,6 +247,7 @@ class ChatBotController extends Controller
             {
                 $botUserData = new BotUser;
                 $botUserData->chat_bot_id = $bot->id;
+                //$botUserData->$coloum = $message;
                 $botUserData->save();
             }
             else
@@ -269,6 +272,7 @@ class ChatBotController extends Controller
         ->pluck('bot_question_id')
         ->toArray();
         $questions = BotQuestion::where('chat_bot_id', $bot->id)
+            ->orWhere('chat_bot_id', 0)
             ->whereNotIn('id', $questionsIds)
             ->first();
             if($questions)
@@ -314,14 +318,16 @@ class ChatBotController extends Controller
 
     public function scriptchatbots($id)
     {
-        $chatbot = ChatBot::find($id);
+        $chatbot = ChatBot::find($id);       
+       //as for now there is 3 question  common for every bot so manage the chatbotid .
+       
         $questionsIds = QuestionAnswer::pluck('bot_question_id')->where('chat_bot_id ',$id)->where('status ','0')->toArray();
             $questions = BotQuestion::where('chat_bot_id', $id)
+            ->orWhere('chat_bot_id', 0)
         ->whereNotIn('id', $questionsIds)
             ->first();
         if (!$chatbot) {
-
-        return response('Chatbot not found', 404);
+            return response('Chatbot not found', 404);
         }
         // Generate the full URL for the logo
         if(str_starts_with($chatbot->logo, 'public/'))
@@ -395,7 +401,7 @@ class ChatBotController extends Controller
                                         " . ($questions ? "
                                         <div class='message bot'>
                                             <div class='text'>" . htmlspecialchars($questions->question) . "</div>
-                                            <input type='hidden' name='question_id' value='" . $questions->id . "' class='question_id'>
+                                                <input type='hidden' name='question_id' value='" . $questions->id . "' class='question_id'>
                                         </div>" : "") . "
                                         " . ($questions && $questions->option1 ? "
                                         <div class='chat-btn'>
@@ -608,17 +614,16 @@ class ChatBotController extends Controller
                 {
 
 
-                    var botId = $('.chat_bot_id').val();
-                    console.log('sdfsdf',botId);
+                    var chatbotId = $('.chat_bot_id').val();
+                  
                     $.ajax({
                         url: '/change/status',
                         method: 'get',
                         data: {
-                            bot_id: botId
+                            bot_id: chatbotId
                         },
                         success: function(data) {
                             
-                            console.log('dsfjsflsdf',data);
                         },
                         error: function(error) {
                             console.error('Error:', error);
@@ -638,7 +643,7 @@ class ChatBotController extends Controller
                                         var bot_user_id = $('.bot_user_id').val();
 
                     var botId = $('.question_id').val();
-
+                        console.log(botId);
                         const message = userMessageInput.val().trim();
                         if (message) {
                             userMessageInput.val('');
@@ -647,6 +652,7 @@ class ChatBotController extends Controller
                     });
 
                     function handleUserMessage(message,botId,bot_user_id) {
+                        console.log('asfsafsd',botId);
 
                         appendUserMessage(message);
                         $.ajax({
@@ -660,6 +666,7 @@ class ChatBotController extends Controller
                                 message: message,
                                 bot_id: botId,
                                 bot_user_id:bot_user_id,
+                                chatbotId:chatbotId
                             }),
                             success: function(data) {
                                 //will work on monday as i have to set the next question id .....

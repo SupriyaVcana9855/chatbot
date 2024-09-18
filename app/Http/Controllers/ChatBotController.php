@@ -120,38 +120,33 @@ class ChatBotController extends Controller
 
     public function addQuestion(Request $request)
     {
-        // dd($request->all());
+        // dd($request->all()); // Useful for debugging the request
+    
         // Initialize an array to hold questions
         $questions = [];
     
         // Loop through each question in the "questions" array
-        foreach ($request->questions as $index => $questionData) {
-            // Skip undefined or malformed entries
-            if ($index === 'undefined' || !is_array($questionData)) {
-                continue;
-            }
-    
-            // Ensure bot_id is set and valid
+        foreach ($request->questions as $questionData) {
+            // Ensure bot_id and question text are set and valid
             $botId = $questionData['bot_id'] ?? null;
-            if (!$botId || !isset($questionData['question'])) {
-                continue;
-            }
+            $questionText = $questionData['text'] ?? null;
     
-            // Prepare the question data
-            $questions[] = [
-                'bot_id' => $botId,
-                'question' => $questionData['question'],
-                'options' => $questionData['options'] ?? []
-            ];
+            if ($botId && $questionText) {
+                $questions[] = [
+                    'bot_id' => $botId,
+                    'question' => $questionText,
+                    'options' => $questionData['options'] ?? []
+                ];
+            }
         }
     
-        // Process each question and store in the database
+        // Store each question in the database
         foreach ($questions as $questionData) {
             $botQuestion = new BotQuestion();
             $botQuestion->chat_bot_id = $questionData['bot_id'];
             $botQuestion->question_type = 'Question';
             $botQuestion->question = $questionData['question'];
-            $botQuestion->options =  $questionData['options']; //json_encode($questionData['options']); // Assuming options are stored as JSON
+            $botQuestion->options = $questionData['options']; //json_encode($questionData['options']); // Store options as JSON
             $botQuestion->save();
         }
     

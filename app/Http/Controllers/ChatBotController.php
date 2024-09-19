@@ -307,9 +307,10 @@ class ChatBotController extends Controller
                 }
                 else if($message == 'chat with live agent')
                 { 
+
+                    // add twilio acount and end message to the livwe agent using agent function.
                     $data = [
-                        'message'=>"Let me check if any agent is available for you....please wait.
-                        ",
+                        'message'=>"Let me check if any agent is available for you....please wait.",               
                         'question_id' =>0,
                     ];
                     

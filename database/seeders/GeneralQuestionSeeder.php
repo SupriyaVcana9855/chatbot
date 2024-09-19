@@ -23,24 +23,30 @@ class GeneralQuestionSeeder extends Seeder
             [
                 'chat_bot_id' => 0,
                 'question' => 'What is your name?',
-                'options' => json_encode(value: ['name' => 'name', 'key2' => 'value2']),
+                'options' => null,
                 'answer' => '',
-                'question_type' => 'general'
+                'question_type' => 'general',
+                'answer_type' =>'name'
             ],
             [
                 'chat_bot_id' => 0,
                 'question' => 'What is your email ID?',
-               'options' => json_encode(['email' => 'admin@gmail.com', 'key2' => 'value2']),
+               'options' => null,
                 'answer' => '',
-                'question_type' => 'general'
+                'question_type' => 'general',
+                'answer_type' =>'email'
+
             ],
             [
                 'chat_bot_id' => 0,
                 'question' => 'What is your contact number?',
-                'options' => json_encode(['contact' => '987654322', 'key2' => 'value2']), // Convert array to JSON string
+                'options' => null, // Convert array to JSON string
                 'answer' => '',
-                'question_type' => 'general'
+                'question_type' => 'general',
+                'answer_type' =>'contact'
+
             ]
         ]);
+        
     }
 }

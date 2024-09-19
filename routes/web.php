@@ -26,12 +26,14 @@ use App\Http\Controllers\BotController;
 Route::get('/abc', [ChatBotController::class, 'abc'])->name('abc');
 Route::get('/scriptchatbots/{id}', [ChatBotController::class, 'scriptchatbots'])->name('scriptchatbots');
 
-Route::get('/scriptchatbot/{id}', [ChatBotController::class, 'scriptchatbot'])->name('scriptchatbot');
+Route::get('/scriptchatbot/{id}',[ChatBotController::class, 
+'scriptchatbot'])->name('scriptchatbot');
 
 Route::get('/chatbot/{id}', [ChatBotController::class, 'show']);
 Route::post('/chatbot/message', [ChatBotController::class, 'handleMessage']);
 
-Route::get('/change/status', [ChatBotController::class, 'changeStatus']);
+
+Route::get('/change/status', [ChatBotController::class, 'changestatus']);
 
 
 Route::get('/sendTestEmail', function () {

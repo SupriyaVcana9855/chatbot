@@ -164,8 +164,11 @@
             </div>
         </div>
         <div class="chatbot-footer">
-            <input type="text" placeholder="Enter your message...">
-            <button><i class="fa-solid fa-paper-plane"></i></button>
+            <form action="{{route('send.message')}}" method="post">
+                @csrf
+            <input type="text" name="message" placeholder="Enter your message...">
+            <button type="submit"><i class="fa-solid fa-paper-plane"></i></button>
+            </form>
         </div>
         <div class="powered-by">
             Powered by <a href="#">SmartBot</a>

@@ -208,6 +208,9 @@
     .btn-template {
         margin-bottom: 10px;
     }
+    .modal-dialog {
+    top: 151px;
+}
 </style>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 4

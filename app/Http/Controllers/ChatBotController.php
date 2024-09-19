@@ -125,33 +125,27 @@ class ChatBotController extends Controller
         $questions = [];
     
         // Loop through each question in the "questions" array
-        foreach ($request->questions as $index => $questionData) {
-            // Skip undefined or malformed entries
-            if ($index === 'undefined' || !is_array($questionData)) {
-                continue;
-            }
-    
-            // Ensure bot_id is set and valid
+        foreach ($request->questions as $questionData) {
+            // Ensure bot_id and question text are set and valid
             $botId = $questionData['bot_id'] ?? null;
-            if (!$botId || !isset($questionData['question'])) {
-                continue;
-            }
+            $questionText = $questionData['text'] ?? null;
     
-            // Prepare the question data
-            $questions[] = [
-                'bot_id' => $botId,
-                'question' => $questionData['question'],
-                'options' => $questionData['options'] ?? []
-            ];
+            if ($botId && $questionText) {
+                $questions[] = [
+                    'bot_id' => $botId,
+                    'question' => $questionText,
+                    'options' => $questionData['options'] ?? []
+                ];
+            }
         }
     
-        // Process each question and store in the database
+        // Store each question in the database
         foreach ($questions as $questionData) {
             $botQuestion = new BotQuestion();
             $botQuestion->chat_bot_id = $questionData['bot_id'];
             $botQuestion->question_type = 'Question';
             $botQuestion->question = $questionData['question'];
-            $botQuestion->options =  $questionData['options']; //json_encode($questionData['options']); // Assuming options are stored as JSON
+            $botQuestion->options = $questionData['options']; //json_encode($questionData['options']); // Store options as JSON
             $botQuestion->save();
         }
     
@@ -271,25 +265,62 @@ class ChatBotController extends Controller
         ->where('status', '1')
         ->pluck('bot_question_id')
         ->toArray();
-        $questions = BotQuestion::where('chat_bot_id', $bot->id)
-            ->orWhere('chat_bot_id', 0)
+        $questionsIds = array_unique($questionsIds);
+
+        if($bot->type == 'lead')
+        {
+            $questions = BotQuestion::where(function ($query) use ($bot) {
+                $query->where('chat_bot_id', $bot->id)
+                      ->orWhere('chat_bot_id', 0);
+            })
             ->whereNotIn('id', $questionsIds)
             ->first();
+            
+        }else{
+            $questions = BotQuestion::where(function ($query) use ($bot) {
+                $query->where('chat_bot_id', $bot->id)
+                      ->orWhere('chat_bot_id', 0);
+            })
+            ->whereNotIn('id', $questionsIds)
+            ->first();
+            
+        }
             if($questions)
             {
                 $data = [
                     'message'=>$questions->question,
                     'question_id' =>$questions->id,
                     'bot_user_id' =>$botUserData->id,
-                    'option1'=>($questions->option1)?$questions->option1:null,
-                    'option2'=>($questions->option2)?$questions->option2:null,
+                    'options'=>($questions->options)?$questions->options:null,
+                   
+
                 ];
             }else
             {
-                $data = [
-                    'message'=>"Thanx for the information we will contact you soon...",
-                    'question_id' =>0,
-                ];
+                if($message == 'schedule a meeting')
+                {
+                    $url ="https://calendly.com/anshul_seo/30min?month=2024-09";
+                    $data = [
+                        'message'=>$url,
+                        'question_id' =>0,
+                    ];
+                }
+                else if($message == 'chat with live agent')
+                { 
+                    $data = [
+                        'message'=>"Let me check if any agent is available for you....please wait.
+                        ",
+                        'question_id' =>0,
+                    ];
+                    
+                }else
+                {
+                    $data = [
+                        'message'=>"Thanx for the information we will contact you soon...",
+                        'question_id' =>0,
+                    ];
+                }
+               
             }
             return $data;
         
@@ -339,7 +370,6 @@ class ChatBotController extends Controller
             $logoUrl = $chatbot->logo;
         }
 
-
         // Fetch the CSRF token
         $csrfToken = csrf_token();
         $chatbot = ChatBot::find($id);
@@ -381,6 +411,7 @@ class ChatBotController extends Controller
                                             <img src='" . $logoUrl . "' alt='Chat Icon' id='chat-toggle-btn'>
                                         </div>
                                         <div>
+
                                             <div class='chat-title'>" . htmlspecialchars($chatbot->name) . "</div>
                                             <div class='chat-subtitle'>" . htmlspecialchars($chatbot->type) . "</div>
                                         </div>
@@ -403,10 +434,9 @@ class ChatBotController extends Controller
                                             <div class='text'>" . htmlspecialchars($questions->question) . "</div>
                                                 <input type='hidden' name='question_id' value='" . $questions->id . "' class='question_id'>
                                         </div>" : "") . "
-                                        " . ($questions && $questions->option1 ? "
+                                         " . ($questions && $questions->options ? "
                                         <div class='chat-btn'>
-                                            <button class='option1Select' value='" . htmlspecialchars($questions->option1) . "'>" . htmlspecialchars($questions->option1) . "</button>
-                                            <button class='option2Select' value='" . htmlspecialchars($questions->option2) . "'>" . htmlspecialchars($questions->option2) . "</button>
+                                            <button class='option1Select' value='" . htmlspecialchars($questions->options) . "'>" . htmlspecialchars($questions->options) . "</button>
                                         </div>" : "") . "
                                     </div>
                                     <div class='chat-footer'>
@@ -605,6 +635,13 @@ class ChatBotController extends Controller
                                 img#chat-toggle-btn {
                                     border-radius: 26px;
                                 }
+                                .chat-btn {
+                                    display: inline;
+                                }
+                                .option1Select {
+                                    margin-left: 10px;
+                                    margin-bottom: 10px;
+                                }
                 `;
                 document.head.appendChild(style);
                 document.body.appendChild(chatbotContainer);
@@ -635,14 +672,16 @@ class ChatBotController extends Controller
                     const sendButton = $('#sendButton');
                     const chatBody = $('.chat-body');
                     console.log(chatMessages.val());
-                    $('.option1Select,.option2Select').on('click',function(){
-                        var data  = $(this).val();
-                        userMessageInput.val(data);
-                    })
-                    sendButton.on('click', function() {
-                                        var bot_user_id = $('.bot_user_id').val();
 
-                    var botId = $('.question_id').val();
+                 $(document).on('click', '.option1Select', function() {
+                        var data = $(this).val();
+                        console.log(data);
+
+                        userMessageInput.val(data); // Assuming userMessageInput is defined elsewhere in your code
+                    });
+                    sendButton.on('click', function() {
+                        var bot_user_id = $('.bot_user_id').val();
+                        var botId = $('.question_id').val();
                         console.log(botId);
                         const message = userMessageInput.val().trim();
                         if (message) {
@@ -696,13 +735,44 @@ class ChatBotController extends Controller
                     }
 
 
-                    function appendBotMessage(reply, options) {
+                    // function appendBotMessage(reply, options) {
 
-                        const botMessageDiv = $('<div>', { class: 'message bot' })
-                            .append($('<div>', { class: 'text', text: reply }));
+                    //     const botMessageDiv = $('<div>', { class: 'message bot' })
+                    //         .append($('<div>', { class: 'text', text: reply }));
+                    //     chatBody.append(botMessageDiv);
+                    //     chatMessages.scrollTop(chatMessages.prop('scrollHeight'));
+                    // }
+
+
+                    function appendBotMessage(reply, options) {
+                        // Create the bot message div
+                        const botMessageDiv = $('<div>', { class: 'message bot' });
+
+                        // Append the bot's message text inside the bot div
+                        botMessageDiv.append($('<div>', { class: 'text', text: reply }));
+
+                        // Append the message to the chat body first
                         chatBody.append(botMessageDiv);
+
+                        // Now check if options exist and append them separately after the message bot div
+                        if (options && options.length > 0) {
+                            options.forEach(option => {
+                                const button = $('<button>', {
+                                    class: 'option1Select',
+                                    value: option,
+                                    text: option
+                                });
+                                const buttonWrapper = $('<div>', { class: 'chat-btn' }).append(button);
+
+                                // Append the buttons outside the message bot div, directly into the chat body
+                                chatBody.append(buttonWrapper);
+                            });
+                        }
+
+                        // Scroll to the bottom to ensure new messages are visible
                         chatMessages.scrollTop(chatMessages.prop('scrollHeight'));
                     }
+
 
                     function handleOptionSelect(optionValue) {
                         appendUserMessage(optionValue);

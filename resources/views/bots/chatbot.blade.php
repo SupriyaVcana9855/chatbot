@@ -187,6 +187,14 @@
 img#chat-toggle-btn {
     border-radius: 26px;
 }
+.chat-btn {
+    display: inline;
+}
+button.option1Select {
+    display: inline-block !important;
+    width: auto;
+    margin-bottom: 10px;
+}
     </style>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
@@ -234,11 +242,12 @@ img#chat-toggle-btn {
                     <div class='text'>{{ $questions->question }}</div>
                     <input type="hidden" name="question_id" value="{{ $questions->id }}" class ="question_id">
                 </div>
-                @if($questions->option1)
-                    <div class="chat-btn">
-                        <button class = "option1Select" value = "{{ $questions->option1 }}">{{ $questions->option1 }}</button>
-                        <button class = "option2Select" value = "{{ $questions->option2 }}">{{ $questions->option2 }}</button>
-                    </div>
+                @if($questions->options)
+                        @foreach($questions->options as $options)
+                            <div class="chat-btn">
+                                <button class = "option1Select" value = "{{ $options }}">{{ $options }}</button>
+                            </div>
+                        @endforeach
                 @endif
             @endif
         </div>

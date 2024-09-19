@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AiAgentBotController;
+use App\Http\Controllers\AiAgentController;
 use App\Http\Controllers\FaqController;
 use App\Http\Controllers\TwilioController;
 use Illuminate\Support\Facades\Route;
@@ -21,7 +23,7 @@ use App\Http\Controllers\BotController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-// Route::get('/scriptchatbots/{id}', 'ChatBotController@scriptchatbot');
+Route::get('/abc', [ChatBotController::class, 'abc'])->name('abc');
 Route::get('/scriptchatbots/{id}', [ChatBotController::class, 'scriptchatbots'])->name('scriptchatbots');
 
 Route::get('/scriptchatbot/{id}', [ChatBotController::class, 'scriptchatbot'])->name('scriptchatbot');
@@ -41,9 +43,10 @@ Route::get('/otpverify', function () {
     return view('otpverify');
 });
 
-Route::get('/welcome', function () {
-    return view('welcome');
-});
+Route::get('/welcome', [DashboardController::class, 'welcome'])->name('welcome');
+Route::post('/send', [DashboardController::class, 'sendMessage'])->name('send.message');
+    
+
 
 Route::get('/setup/{id}', [BotController::class, 'setup'])->name('setup');
 Route::middleware(['guest'])->group(function () {
@@ -67,7 +70,7 @@ Route::middleware(['auth', 'role:1'])->group(function () {
     Route::get('/bots', [BotController::class, 'bots'])->name('bots');
     Route::post('/savebot', [BotController::class, 'savebot'])->name('savebot');
     Route::post('/updateBot', [BotController::class, 'updateBot'])->name('updateBot');
-    Route::get('/agent', [BotController::class, 'agent'])->name('agent');
+  
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/get-questions', [ChatBotController::class, 'getQuestion'])->name('questions');
     Route::post('/add-questions', [ChatBotController::class, 'addQuestion'])->name('addQuestion');
@@ -87,6 +90,11 @@ Route::middleware(['auth', 'role:1'])->group(function () {
 
     Route::get('/faq/{id?}', [FaqController::class, 'faq'])->name('faq');
     Route::post('/addFaq', [FaqController::class, 'addFaq'])->name('addFaq');
+
+    Route::get('/agent',[AiAgentBotController::class,'agents'])->name('agent');
+    Route::get('/add-agent/{id?}',[AiAgentBotController::class,'addAgentform'])->name('addagentform');
+    Route::post('/save-agent',[AiAgentBotController::class,'saveAgent'])->name('saveAgent');
+    Route::get('/delete-agent/{id?}',[AiAgentBotController::class,'deleteAgent'])->name('deleteagent');
 });
 
 

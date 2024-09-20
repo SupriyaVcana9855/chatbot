@@ -300,7 +300,7 @@ class ChatBotController extends Controller
                 if($message == 'schedule a meeting')
                 {
                     //add anchor tag linkis not working
-                    $url ="https://calendly.com/anshul_seo/30min?month=2024-09";
+                    $url ='<a href="https://calendly.com/anshul_seo/30min?month=2024-09"></a>';
                     $data = [
                         'message'=>$url,
                         'question_id' =>0,
@@ -566,23 +566,22 @@ class ChatBotController extends Controller
                                 }
                                 
                                 .message.bot .text {
-                                    max-width: 70% !important;
+                                    width: $chatbot->width;
                                     padding: 10px;
-                                    background-color:$chatbot->question_color ;
-                                    border-radius: 15px;
+                                    background-color:$chatbot->question_color;
+                                    border-radius: $chatbot->radius;
                                     position: relative;
-                                    border-radius: 0px 5px 5px 0px;
-                                    color: #606060;
+                                    color: white;
                                     font-weight: 400;
                                     line-height: 25px;
                                     word-wrap: break-word;
                                 }
                                 
                                 .message.user .text {
-                                    background-color: $chatbot->answer_color ;
+                                    background-color: $chatbot->answer_color;
                                     color: white;
-                                    border-radius: 5px 0px 0px 5px !important;
-                                    max-width: 70% !important;
+                                    border-radius: $chatbot->radius;
+                                    width: 70% !important;
                                     padding: 10px;
                                     border-radius: 15px;
                                     position: relative;
@@ -621,10 +620,10 @@ class ChatBotController extends Controller
                                 }
                                 .chat-btn button {
                                     padding: 11px 21px;
-                                    border-radius: 30px;
+                                    border-radius: $chatbot->button_design;
                                     border: 0px;
-                                    background: linear-gradient(90deg, #001A2B 0%, #005791 100%);
-                                    color: #fff;
+                                    background: $chatbot->button_color;
+                                    color: $chatbot->button_text_color;
                                 }
                                 .chat-btn button:hover{
                                      opacity: 0.8;

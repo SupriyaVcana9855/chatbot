@@ -213,7 +213,6 @@
 }
 </style>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-4
 <script>
     function dataType(data) {
         $('#bottype').val(data);

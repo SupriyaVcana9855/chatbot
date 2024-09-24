@@ -97,6 +97,9 @@ Route::middleware(['auth', 'role:1'])->group(function () {
     Route::get('/add-agent/{id?}',[AiAgentBotController::class,'addAgentform'])->name('addagentform');
     Route::post('/save-agent',[AiAgentBotController::class,'saveAgent'])->name('saveAgent');
     Route::get('/delete-agent/{id?}',[AiAgentBotController::class,'deleteAgent'])->name('deleteagent');
+
+    Route::get('/live-chat',[AiAgentBotController::class,'liveChatAgent'])->name('live-chat');
+    Route::post('/messages', [AiAgentBotController::class, 'message'])->name('message');
 });
 
 

@@ -101,6 +101,9 @@
             let newQuestionBlock = `
             <div class="question-block" data-question-index="${questionIndex}">
                 <input type="hidden" name="questions[${questionIndex}][bot_id]" value="{{ $id }}">
+                <div class="col-md-1 mt-2 mb-1 d-flex justify-content-end">
+                    <button type="button" class="btn btn-danger" onclick="removeQuestion(this)">x</button>
+                </div>
                 <div class="mb-3">
                     <label for="question-input" class="form-label mb-3">Question ${questionIndex + 1}</label>
                     <input type="text" class="form-control" placeholder="Enter Question?" name="questions[${questionIndex}][text]">

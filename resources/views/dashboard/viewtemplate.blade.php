@@ -70,15 +70,47 @@
                     <h4>Digital Marketing</h4>
                     <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</p>
 
-                    <h5>Click Below to replicate & edit the bot.</h5>
-                    <form class="content-search" id="add-bot-template" method="post" action="{{route('addbottemplate')}}">
-                        <input type="search" name="bot_name" id="bot_name" placeholder="Enter Your Bot Name">
+                    <div class="card" style="width: 40rem;">
+                        <div class="card-body">
+                            <h5 class="card-title">Click Below to replicate & edit the bot.</h5>
+                            <form id="add-bot-template" method="post" action="{{route('addbottemplate')}}">
+                                <div class="form-group">
+                                    <label for="bot_name">Bot Name</label>
+                                    <input type="text" class="form-control" name="bot_name" id="bot_name" placeholder="Enter Your Bot Name">
+                                </div>
+                                <div class="form-group">
+                                    <label for="type">Select Bot Type</label>
+                                    <select class="form-select" name="type" id="type">
+                                        <option selected disabled>select menu</option>
+                                        <option value="lead">Lead</option>
+                                        <option value="support">Support</option>
+                                    </select>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- <form class="content-search" id="add-bot-template" method="post" action="{{route('addbottemplate')}}">
+                        <input type="search" class="form-control" name="bot_name" id="bot_name" placeholder="Enter Your Bot Name">
                         <p class="error" style="color:red"></p>
+
+                        <div class="select-temp">
+                            <label for="">Select Type</label>
+                            <select name="All" id="" class="form-control">
+                                <option value="">All</option>
+                                <option value="">option1</option>
+                                <option value="">option2</option>
+                                <option value="">option3</option>
+                                <option value="">option4</option>
+                            </select>
+                        </div>
                         <div class="form-btn">
                             <button class="form-frist-btn" type="submit">Submit</button>
                             <button class="form-second-btn" type="button">Back</button>
                         </div>
-                    </form>
+                    </form> -->
                 </div>
 
                 <div class="col-5 chat-section">
@@ -143,6 +175,8 @@
 @endsection
 
 @section('java_scripts')
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
 <script>
     $(document).ready(function() {
         const temp = <?php echo json_encode($templates); ?>;
@@ -186,6 +220,7 @@
             e.preventDefault();
 
             var bot_name = $('#bot_name').val();
+            var type = $('#type').val();
             if (bot_name === '') {
                 $('.error').html('Bot name field can not be empty.');
             } else {
@@ -194,6 +229,7 @@
 
             const formData = new FormData();
             formData.append('bot_name', bot_name);
+            formData.append('type', type);
             formData.append('tempData', JSON.stringify(temp));
 
 
@@ -204,15 +240,36 @@
             });
 
             $.ajax({
-                url: "{{route('addbottemplate')}}",
-                type: 'post',
+                url: "{{ route('addbottemplate') }}", // Ensure this is rendered correctly in Blade
+                type: 'POST', // Use uppercase for consistency
                 data: formData,
                 contentType: false,
                 processData: false,
             }).done(function(response) {
-                if(response.success == true){
-                    window.location.reload();
+                if (response.success === true) {
+                    Swal.fire({
+                        title: "Add template successfully.",
+                        icon: "success"
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.reload(); // Reload the page
+                        }
+                    });
+                } else {
+                    // Optional: Handle the case where success is false
+                    Swal.fire({
+                        title: "Error!",
+                        text: "Something went wrong.",
+                        icon: "error"
+                    });
                 }
+            }).fail(function(jqXHR, textStatus, errorThrown) {
+                // Optional: Handle AJAX request failure
+                Swal.fire({
+                    title: "Error!",
+                    text: "Request failed: " + textStatus,
+                    icon: "error"
+                });
             });
         });
 

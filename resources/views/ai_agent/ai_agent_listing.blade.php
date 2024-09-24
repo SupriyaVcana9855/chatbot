@@ -6,7 +6,7 @@
         <div class="col-2 set-boat-heading">
             <h6>AI Agents</h6>
         </div>
-    
+
         <div class="col-10">
             <div class="search-container">
                 <select class="form-control form-select mr-2">
@@ -69,10 +69,20 @@
                                         <h3>{{$details->phone_number}}</h3>
                                     </td>
                                     <td>
-                                        <h3>@if ($details->status == 1)
-                                            <span>Active</span>
+
+                                    <!-- <td>
+                                        <div class="custom-control custom-switch">
+                                            <input type="checkbox" class="custom-control-input toggle-class" id="customSwitch1" data-id="{{$details->id}}" {{ ($details->status == '1') ? 'checked' : '' }}>
+                                            <label class="custom-control-label" for="customSwitch1" title="User Enable/Disable">
+                                                <span id="switch-label">{{ $details->status == '1' ? 'Online' : 'Offline' }}</span>
+                                            </label>
+                                        </div>
+
+                                    </td> -->
+                                    <h3>@if ($details->status == 1)
+                                            <button type="button" class="btn btn-success">Online</button>
                                             @else
-                                            <span>InActive</span>
+                                            <button type="button" class="btn btn-danger">Offline</button>
                                             @endif
                                         </h3>
                                     </td>
@@ -158,4 +168,27 @@
         top: 151px;
     }
 </style>
+
+<SCript>
+    $(document).ready(function() {
+        $('#customSwitch1').change(function() {
+            $('#switch-label').text(this.checked ? '1' : '0');
+            var status = this.checked ? '1' : '0';
+
+            // Send the AJAX request to change status in the backend
+            $.ajax({
+                type: "GET",
+                dataType: "json",
+                url: '/changeStatus',
+                data: {
+                    'status': status,
+                    'user_id': user_id
+                },
+                success: function(data) {
+                    console.log(data.success); // Handle success response
+                }
+            });
+        });
+    });
+</SCript>
 @endsection

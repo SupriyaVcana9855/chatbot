@@ -217,7 +217,6 @@
 }
 </style>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-4
 <script>
  function dataType(data) {
     // Set the value of the input

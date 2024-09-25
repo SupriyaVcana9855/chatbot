@@ -508,6 +508,8 @@ class ChatBotController extends Controller
         // $logoUrl = asset('storage/' . $chatbot->logo);
         
         // Fetch the CSRF token
+
+        
         $csrfToken = csrf_token();
 
         // Generate the script with dynamic values

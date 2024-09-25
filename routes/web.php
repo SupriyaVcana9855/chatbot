@@ -10,8 +10,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ChatBotController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\BotController;
-
-
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\URL;
 
 /*
 |--------------------------------------------------------------------------
@@ -92,6 +92,8 @@ Route::middleware(['auth', 'role:1'])->group(function () {
 
     Route::get('/faq/{id?}', [FaqController::class, 'faq'])->name('faq');
     Route::post('/addFaq', [FaqController::class, 'addFaq'])->name('addFaq');
+    Route::get('/bot-faq-listing/{id}', [FaqController::class, 'singleBotFaqListing'])->name('singleBotFaqListing');
+
 
     Route::get('/agent',[AiAgentBotController::class,'agents'])->name('agent');
     Route::get('/add-agent/{id?}',[AiAgentBotController::class,'addAgentform'])->name('addagentform');
@@ -100,6 +102,14 @@ Route::middleware(['auth', 'role:1'])->group(function () {
 
     Route::get('/live-chat',[AiAgentBotController::class,'liveChatAgent'])->name('live-chat');
     Route::post('/messages', [AiAgentBotController::class, 'message'])->name('message');
+
+
+    Route::get('/clear', function() {
+        // Clear the cache
+        Artisan::call('optimize:clear');
+        return redirect()->route('admin.dashboard');
+    });
+    
 });
 
 
@@ -136,3 +146,4 @@ Route::get('/welcome', function () {
 });
 Route::get('/bot-chat/{id?}', [ChatBotController::class, 'botChat'])->name('botChat');
 Route::get('/editPrefrence', [ChatBotController::class, 'editPrefrence'])->name('editPrefrence');
+

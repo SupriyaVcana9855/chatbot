@@ -55,7 +55,7 @@
                                 
                         @if($bot->type == 'support')
                         <td><button class="btn btn-outline-secondary">
-                                <a href="{{ route('faq',$bot->id) }}"> <img src="./assets/images/totalchat.png" title="Bot faq">
+                                <a href="{{ route('singleBotFaqListing',$bot->id) }}"> <img src="./assets/images/totalchat.png" title="Bot faq">
                                     @else
                                 </a></button></td>
                         <td><button class="btn btn-outline-secondary">

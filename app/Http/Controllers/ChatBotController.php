@@ -148,8 +148,12 @@ class ChatBotController extends Controller
             $botQuestion->options = $questionData['options']; //json_encode($questionData['options']); // Store options as JSON
             $botQuestion->save();
         }
-    
-        return redirect()->back()->with('success', 'Questions added successfully!');
+        if($botQuestion){
+            return redirect()->route('singleBotListing',$botQuestion->chat_bot_id)->with('success', 'Questions saved successfully.');
+
+        }else{
+            return redirect()->back()->with('error', 'Somthing went wrong.');
+        }
     }
     
     public function getQuestion($botId)
@@ -710,7 +714,6 @@ class ChatBotController extends Controller
                                     border-radius: $chatbot->radius;
                                     width: 70% !important;
                                     padding: 10px;
-                                    border-radius: 15px;
                                     position: relative;
                                     font-weight: 400;
                                     line-height: 25px;

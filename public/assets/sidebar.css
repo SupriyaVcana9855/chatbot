@@ -264,11 +264,11 @@ ul {
     padding-left: 0px !important;
 }
 
-@media (min-width: 768px) and (max-width: 991.98px) {
+/* @media (min-width: 768px) and (max-width: 991.98px) {
     .row.searchi-section.mt-4 {
         margin-bottom: 40px !important;
     }
-}
+} */
 /* .sidebar css end  */
 
 /* header css start  */
@@ -899,9 +899,9 @@ thead.sethead {
 
 /* ai-agent scree css end  */
 
-.row.searchi-section.mt-4 {
+/* .row.searchi-section.mt-4 {
     margin-bottom: 90px;
-}
+} */
 thead.sethead {
     position: relative;
     bottom: 18px;
@@ -979,7 +979,7 @@ tbody.table-body tr {
 .template-card {
     margin-top: 20px;
     margin-bottom: 20px;
-    margin-left: 15px;
+    /* margin-left: 15px; */
 }
 .template-card a {
     background: linear-gradient(88deg, #004485 -1%, #00315f 57%);

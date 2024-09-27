@@ -135,7 +135,7 @@
 
 
    // Form submission validation
-$('form').on('submit', function(e) {
+   $('form').on('submit', function(e) {
     e.preventDefault(); // Prevent default form submission
 
     // Validate question blocks
@@ -147,25 +147,25 @@ $('form').on('submit', function(e) {
         const questionInput = questionBlock.querySelector(`input[name="questions[${i}][text]"]`);
         const optionInputs = questionBlock.querySelectorAll(`input[name="questions[${i}][options][]"]`);
 
-        // Validate the question input
-        if (questionInput.value.trim() === '') {
+        // Ensure the question input exists before trying to access its value
+        if (questionInput && questionInput.value.trim() === '') {
             isValid = false;
             $(questionInput).addClass('is-invalid');
             $(questionInput).next('.invalid-feedback').remove();
             $(questionInput).after('<div class="invalid-feedback">This question is required.</div>');
-        } else {
+        } else if (questionInput) {
             $(questionInput).removeClass('is-invalid');
             $(questionInput).next('.invalid-feedback').remove();
         }
 
-        // Validate each answer input
+        // Ensure each option input exists before validating
         optionInputs.forEach(function(optionInput) {
-            if (optionInput.value.trim() === '') {
+            if (optionInput && optionInput.value.trim() === '') {
                 isValid = false;
                 $(optionInput).addClass('is-invalid');
                 $(optionInput).next('.invalid-feedback').remove();
                 $(optionInput).after('<div class="invalid-feedback">This option is required.</div>');
-            } else {
+            } else if (optionInput) {
                 $(optionInput).removeClass('is-invalid');
                 $(optionInput).next('.invalid-feedback').remove();
             }
@@ -177,6 +177,7 @@ $('form').on('submit', function(e) {
         this.submit();
     }
 });
+
 
 </script>
 @endsection

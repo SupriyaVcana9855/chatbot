@@ -40,7 +40,23 @@
     margin-right: 20px;
     padding-right: 25px !important;
 }
+.fade-out {
+    opacity: 1;
+    transition: opacity 5s ease-out;
+    animation: fadeOut 5s forwards;
+}
 
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+td.dt-empty {
+    color: #777777 !important;
+}
          
 </style>
 <body>

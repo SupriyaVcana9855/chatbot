@@ -58,11 +58,14 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://cdn.datatables.net/2.1.5/js/dataTables.js"></script>  
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     {{-- <script src="http://localhost:8000/chatbot-script/1"></script> --}}
       {{-- <script src="http://localhost:8000/scriptchatbot/1"></script> --}}
           {{-- <script src="path/to/chatbot.js"></script> --}}
           <script src="http://localhost:8000/scriptchatbots/{{ $scriptId }}"></script>
+          <script src="http://127.0.0.1:8000/5"></script>
+        
           <!-- <script src=" https://daa6-122-160-201-111.ngrok-free.app/scriptchatbots/{{ $scriptId }}"></script> -->
 
 

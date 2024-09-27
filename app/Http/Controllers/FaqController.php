@@ -66,8 +66,12 @@ class FaqController extends Controller
             $botQuestion->answer = $questionData['answer']; // Store answer
             $botQuestion->save();
         }
-    
-        return redirect()->back()->with('success', 'FAQs added successfully!');
+
+        if($botQuestion){
+            return redirect()->route('singleBotFaqListing',$botQuestion->chat_bot_id)->with('success', 'FAQs saved successfully.');
+        }else{
+            return redirect()->back()->with('error', 'Somthing went wrong.');
+        }
     }
     
 }

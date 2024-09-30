@@ -1,6 +1,11 @@
 @extends('layout.app')
 
 @section('content')
+
+<?php 
+    $id = $_GET['id'] ?? '';
+    echo 'sadaaaaaaaaa',$id;
+?>
 <style>
     .option-row {
         display: flex;
@@ -37,12 +42,12 @@
                                 <input type="hidden" name="questions[0][bot_id]" value="{{ $id }}">
                                 <div class="mb-3">
                                     <label for="question-input" class="form-label mb-3">Question 1</label>
-                                    <input type="text" class="form-control" placeholder="Enter Question?" name="questions[0][text]">
+                                    <input type="text" class="form-control" placeholder="Enter Question?" name="questions[0][text]" value="{{$botQuestions->question ?? ''}}">
                                 </div>
                                 <div class="row addMoreOptions">
                                     <div class="col-md-12 mb-3">
                                         <label for="option-input" class="form-label mb-3">Option 1</label>
-                                        <input type="text" class="form-control" placeholder="Enter option 1" name="questions[0][options][]">
+                                        <input type="text" class="form-control" placeholder="Enter option 1" name="questions[0][options][]" value="{{$botQuestions->options[0] ?? ''}}">
                                     </div>
                                 </div>
                                 <div>
@@ -68,19 +73,43 @@
 <script>
     $(document).ready(function() {
         let questionIndex = 1;
-        let optionIndexes = {};
+let optionIndexes = {};
 
-        // Add more options for a question
-        $(document).on('click', '.add-more-options', function() {
-            let currentQuestionIndex = $(this).closest('.question-block').data('question-index');
+const getData = <?= json_encode($botQuestions->options); ?>;
+console.log('=========', getData);
 
-            if (typeof optionIndexes[currentQuestionIndex] === 'undefined') {
-                optionIndexes[currentQuestionIndex] = 1;
-            }
+// Add more options for a question
+$(document).on('click', '.add-more-options', function() {
+    let currentQuestionIndex = $(this).closest('.question-block').data('question-index');
 
-            optionIndexes[currentQuestionIndex]++;
+    // Initialize the option count for this question if it doesn't exist
+    if (typeof optionIndexes[currentQuestionIndex] === 'undefined') {
+        optionIndexes[currentQuestionIndex] = 1;
+    }
 
-            let newOptionsBlock = `
+    optionIndexes[currentQuestionIndex]++;
+
+    // Define a newOptionsBlock variable to hold the HTML
+    let newOptionsBlock = '';
+
+    // Check if getData has elements
+    if (getData.length > 1) {
+        // Loop through getData and append options
+        $.each(getData.slice(1), function(index, val) {  // Use slice to skip the first item
+            newOptionsBlock += `
+                <div class="row option-row">
+                    <div class="col-md-11 mt-2">
+                        <label for="option-input" class="form-label">Option ${optionIndexes[currentQuestionIndex]}</label>
+                        <input type="text" class="form-control" placeholder="Enter option ${optionIndexes[currentQuestionIndex]}" name="questions[${currentQuestionIndex}][options][]" value="${val}">
+                    </div>
+                    <div class="col-md-1 mt-2 mb-1 d-flex justify-content-end">
+                        <button type="button" class="btn btn-danger" onclick="removeRow(this)">x</button>
+                    </div>
+                </div>`;
+        });
+    } else {
+        // If getData is empty, provide a blank input
+        newOptionsBlock += `
             <div class="row option-row">
                 <div class="col-md-11 mt-2">
                     <label for="option-input" class="form-label">Option ${optionIndexes[currentQuestionIndex]}</label>
@@ -90,9 +119,12 @@
                     <button type="button" class="btn btn-danger" onclick="removeRow(this)">x</button>
                 </div>
             </div>`;
+    }
 
-            $(this).closest('.question-block').find('.addMoreOptions').append(newOptionsBlock);
-        });
+    // Append the new options block to the closest question block
+    $(this).closest('.question-block').find('.addMoreOptions').append(newOptionsBlock);
+});
+
 
         // Add another question
         $('.add-question').click(function() {
@@ -135,7 +167,7 @@
 
 
    // Form submission validation
-$('form').on('submit', function(e) {
+   $('form').on('submit', function(e) {
     e.preventDefault(); // Prevent default form submission
 
     // Validate question blocks
@@ -147,25 +179,25 @@ $('form').on('submit', function(e) {
         const questionInput = questionBlock.querySelector(`input[name="questions[${i}][text]"]`);
         const optionInputs = questionBlock.querySelectorAll(`input[name="questions[${i}][options][]"]`);
 
-        // Validate the question input
-        if (questionInput.value.trim() === '') {
+        // Ensure the question input exists before trying to access its value
+        if (questionInput && questionInput.value.trim() === '') {
             isValid = false;
             $(questionInput).addClass('is-invalid');
             $(questionInput).next('.invalid-feedback').remove();
             $(questionInput).after('<div class="invalid-feedback">This question is required.</div>');
-        } else {
+        } else if (questionInput) {
             $(questionInput).removeClass('is-invalid');
             $(questionInput).next('.invalid-feedback').remove();
         }
 
-        // Validate each answer input
+        // Ensure each option input exists before validating
         optionInputs.forEach(function(optionInput) {
-            if (optionInput.value.trim() === '') {
+            if (optionInput && optionInput.value.trim() === '') {
                 isValid = false;
                 $(optionInput).addClass('is-invalid');
                 $(optionInput).next('.invalid-feedback').remove();
                 $(optionInput).after('<div class="invalid-feedback">This option is required.</div>');
-            } else {
+            } else if (optionInput) {
                 $(optionInput).removeClass('is-invalid');
                 $(optionInput).next('.invalid-feedback').remove();
             }
@@ -177,6 +209,7 @@ $('form').on('submit', function(e) {
         this.submit();
     }
 });
+
 
 </script>
 @endsection

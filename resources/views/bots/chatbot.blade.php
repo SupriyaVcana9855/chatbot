@@ -126,7 +126,7 @@
     max-width: 70% !important;
     padding: 10px;
     background-color:{{ $chatbot->question_color }};
-    border-radius: 15px;
+    /* border-radius: 15px; */
     position: relative;
     border-radius: 0px 5px 5px 0px;
     color: #606060;

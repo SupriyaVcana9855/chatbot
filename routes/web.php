@@ -10,6 +10,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ChatBotController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\BotController;
+use App\Http\Controllers\TemplateController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\URL;
 
@@ -76,23 +77,42 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/bots', [BotController::class, 'bots'])->name('bots');
     Route::post('/savebot', [BotController::class, 'savebot'])->name('savebot');
     Route::post('/updateBot', [BotController::class, 'updateBot'])->name('updateBot');
+  
+    Route::get('/add-questions/{id}', [ChatBotController::class, 'botQuestion'])->name('botQuestion');
+  
+    Route::get('/delete-bot/{id?}',[BotController::class,'deleteBot'])->name('deleteBot');
+  
+    Route::get('logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/get-questions', [ChatBotController::class, 'getQuestion'])->name('questions');
     Route::post('/add-questions', [ChatBotController::class, 'addQuestion'])->name('addQuestion');
-    Route::get('/add-questions/{id}', [ChatBotController::class, 'botQuestion'])->name('botQuestion');
-    Route::get('templates', [DashboardController::class, 'templates'])->name('templates');
-    Route::get('template-view/{id?}', [DashboardController::class, 'templateView'])->name('templateview');
-    Route::post('add-bot-template', [DashboardController::class, 'addBotTemplate'])->name('addbottemplate');
+    Route::get('/add-questions/{bot_id?}/{questionId?}', [ChatBotController::class, 'botQuestion'])->name('botQuestion');
+    Route::get('/delete-questions/{id?}',[ChatBotController::class,'questionsDelete'])->name('questionsDelete');
+
+
+    Route::get('templates', [TemplateController::class, 'templates'])->name('templates');
+    Route::get('template-view/{id?}', [TemplateController::class, 'templateView'])->name('templateview');
+    Route::post('add-bot-template', [TemplateController::class, 'addBotTemplate'])->name('addbottemplate');
+
+    Route::get('/add-template/{id?}', [TemplateController::class, 'addTemplateView'])->name('addTemplateview');
+    Route::post('/save-template', [TemplateController::class, 'saveTemplate'])->name('saveTemplate');
+    Route::get('/delete-template/{id?}',[TemplateController::class,'templateDelete'])->name('templatedelete');
+
+
+    Route::get('chatanalytics', [DashboardController::class, 'chatanalytics'])->name('chatanalytics');
+
     Route::get('/bot-flow/{id}', [ChatBotController::class, 'botFlow'])->name('botFlow');
     Route::get('/get-answer', [ChatBotController::class, 'getAnswer'])->name('getAnswer');
     Route::post('/addQuestionFlow', [ChatBotController::class, 'addQuestionFlow'])->name('addQuestionFlow');
     Route::get('/bot-questions-listing/{id}', [ChatBotController::class, 'singleBotListing'])->name('singleBotListing');
-    Route::get('/faq/{id?}', [FaqController::class, 'faq'])->name('faq');
-    Route::post('/addFaq', [FaqController::class, 'addFaq'])->name('addFaq');
-    Route::get('/bot-faq-listing/{id}', [FaqController::class, 'singleBotFaqListing'])->name('singleBotFaqListing');
     Route::get('/website-bot', [ChatBotController::class, 'websiteChat'])->name('website.bot');
     Route::get('/bot-chat/{id?}', [ChatBotController::class, 'botChat'])->name('botChat');
 
+    Route::get('/faq/{chat_bot_id?}/{questions_id?}', [FaqController::class, 'faq'])->name('faq');
+    Route::post('/addFaq', [FaqController::class, 'addFaq'])->name('addFaq');
+    Route::get('/bot-faq-listing/{id}', [FaqController::class, 'singleBotFaqListing'])->name('singleBotFaqListing');
+    Route::get('/delete-faq/{id?}',[FaqController::class,'deleteFaq'])->name('deleteFaq');
 });
+
 
 
 /// Admin Routes
@@ -102,7 +122,8 @@ Route::middleware(['auth', 'role:1'])->group(function () {
     Route::get('/agent',[AiAgentBotController::class,'agents'])->name('agent');
     Route::get('/add-agent/{id?}',[AiAgentBotController::class,'addAgentform'])->name('addagentform');
     Route::post('/save-agent',[AiAgentBotController::class,'saveAgent'])->name('saveAgent');
-    Route::get('/delete-agent/{id?}',[AiAgentBotController::class,'deleteAgent'])->name('deleteagent');
+    Route::get('/delete-agent/{id?}',[AiAgentBotController::class,'deleteAgent'])->name('deleteAgent');
+
     Route::get('/live-chat',[AiAgentBotController::class,'liveChatAgent'])->name('live-chat');
     Route::post('/messages', [AiAgentBotController::class, 'message'])->name('message');
 

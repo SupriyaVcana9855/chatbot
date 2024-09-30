@@ -43,6 +43,10 @@
                                 <h3>PRO-TRIAL <span>End In 10 Days</span></h3>
                             </div>
                         </div>
+                        
+                         <div class="chat-status set-statusee">
+                            <h6> <a href="{{route('changePassword')}}">Change Password</a></h6>
+                        </div>
                         <div class="chat-status set-statusee">
                             <h6> <a href="{{route('logout')}}">Logout</a></h6>
                         </div>

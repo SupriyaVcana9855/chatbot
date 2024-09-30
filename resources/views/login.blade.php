@@ -58,10 +58,12 @@
               <div class="row set-data">
                 <div class="form-group col-lg-6  ">
                   <label for="email">Your Email</label>
-                  <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" id="email" placeholder="typeyourmail@example.com" >
-                  @error('email')
-                      <div style="color:red">{{ $message }}</div>
-                  @enderror
+                  <input type="email" class="form-control" name="email" id="email" placeholder="typeyourmail@example.com" >
+                 @if ($errors->has('email'))
+                    <div style="color: red;">
+                        {{ $errors->first('email') }}
+                    </div>
+                @endif
                 </div>
 
                 <div class="form-group col-lg-6 set-pass-icon"> 
@@ -77,7 +79,7 @@
                   <label class="form-check-label" for="rememberMe">Remember Me</label>
                 </div> -->
                 <div class="col-lg-8 set_pass ">
-                  <a href="#">Forgot Password?</a>
+                  <a href="{{ route('forgetpassword') }}">Forgot Password?</a>
                 </div>
                 <div class=" col-12 set_sign">
                 <button type="submit" class="setBtn_primary signin_button">Sign In</button>

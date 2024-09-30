@@ -3,12 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Models\BotQuestion;
+use App\Models\BotQuestionFlow;
 use App\Models\ChatBot;
 use Illuminate\Http\Request;
 
 class FaqController extends Controller
 {
    
+    public function singleBotFaqListing($id)
+    {
+        $bots=BotQuestion::where('chat_bot_id',$id)->get();
+        $sequence = BotQuestion::select('sequence')->where('chat_bot_id',$id)->get();
+
+        $questionFlowIds = BotQuestionFlow::pluck('bot_question_id2')->toArray();
+        $questionsNotInFlow = BotQuestion::where('chat_bot_id', $id)
+            ->whereNotIn('id', $questionFlowIds)
+            ->get();
+
+        return view('bots.bot-faq-listing',compact('bots','id','questionsNotInFlow'));
+    } 
     public function faq($id)
     {
         $chatBot = ChatBot::find($id);

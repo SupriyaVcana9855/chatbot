@@ -6,6 +6,7 @@ use App\Models\Template;
 use App\Models\ChatBot;
 use Illuminate\Http\Request;
 use Auth;
+use Twilio\Rest\Client;
 
 class DashboardController extends Controller
 {
@@ -79,70 +80,37 @@ class DashboardController extends Controller
     
     public function sendMessage(Request $request)
     {
-        try {
-           
-            $message = $request->input('message');
-            $mobile = $request->input('mobile', '918557068128'); 
-            $template_id = 'msg91'; 
-            $auth_key = '430560AlWE3IZgFi366e983edP1'; 
+        // Validate the incoming request
+        $request->validate([
+            'to' => 'required|string', // Ensure the 'to' number is provided
+            'message' => 'required|string', // Ensure the message is provided
+        ]);
     
-            // Prepare the data to send in the cURL request
-            $postData = [
-                'template_id' => $template_id,
-                'short_url' => '1', // Set as needed (1 for On, 0 for Off)
-                'realTimeResponse' => '1', // Optional, set based on your needs
-                'recipients' => [
-                    [
-                        'mobiles' => $mobile,
-                        'VAR1' => $message,
-                        'VAR2' => 'VALUE 2', // Replace with actual value or get from request
-                    ]
-                ]
-            ];
+        // Get Twilio credentials from the .env file
+        $twilioSid = env('TWILIO_SID');
+        $twilioAuthToken = env('TWILIO_AUTH_TOKEN');
+        $twilioWhatsAppNumber = env('TWILIO_WHATSAPP_NUMBER');
     
-            // Initialize cURL
-            $curl = curl_init();
+        // Create a Twilio client
+        $client = new Client($twilioSid, $twilioAuthToken);
     
-            curl_setopt_array($curl, [
-                CURLOPT_URL => "https://control.msg91.com/api/v5/flow",
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => "",
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 30,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_CUSTOMREQUEST => "POST",
-                CURLOPT_POSTFIELDS => json_encode($postData),
-                CURLOPT_HTTPHEADER => [
-                    "accept: application/json",
-                    "authkey: $auth_key",
-                    "content-type: application/json"
-                ],
-            ]);
+        // Send the WhatsApp message
+        // try {
+        //     $client->messages->create(
+        //         'whatsapp:' . $request->input('to'), // Use 'whatsapp:' prefix for the number
+        //         [
+        //             'from' => 'whatsapp:' . $twilioWhatsAppNumber, // Use 'whatsapp:' for the Twilio number
+        //             'body' => $request->input('message'),
+        //         ]
+        //     );
     
-            // Execute the request
-            $response = curl_exec($curl);
-            $err = curl_error($curl);
-    
-            // Close cURL
-            curl_close($curl);
-    
-            // Handle the response or error
-            if ($err) {
-                return response()->json(['error' => "cURL Error: $err"], 500);
-            } else {
-                $decodedResponse = json_decode($response, true);
-    
-                if (isset($decodedResponse['type']) && $decodedResponse['type'] === 'error') {
-                    return response()->json(['error' => $decodedResponse['message']], 400);
-                }
-    
-                return response()->json(['response' => $decodedResponse], 200);
-            }
-        } catch (\Exception $e) {
-            // Handle exceptions properly by logging and returning a meaningful message
-            \Log::error('Error in sendMessage: ' . $e->getMessage());
-            return response()->json(['error' => 'An error occurred while sending the message.'], 500);
-        }
+        //     return response()->json(['status' => 'Message sent successfully!'], 200);
+        // } catch (\Exception $e) {
+        //     // Log error details for troubleshooting
+        //     dd($e);
+            
+        //     return response()->json(['error' => 'Failed to send message: ' . $e->getMessage()], 500);
+        // }
     }
     
 
@@ -161,17 +129,20 @@ class DashboardController extends Controller
     public function templateView($id)
     {
         $templates = Template::where('id', $id)->first();
+        // dd($templates );
         return view('dashboard.viewtemplate', compact('templates'));
     }
 
     public function addBotTemplate(Request $request)
     {
+        // dd($request->all());
         $tempData = json_decode($request->tempData, true);
 
         if (is_array($tempData)) {
             $chatBot = ChatBot::create([
                 'name'              => $request->bot_name,
-                'type'              => $tempData['type'] ?? null, // Assuming type is part of tempData
+                'width'              => $tempData['width'] ?? null,
+                'type'              =>  $request->type,
                 'intro_message'     => $tempData['intro_message'] ?? null,
                 'main_color'        => $tempData['main_color'] ?? null,
                 'bubble_background' => $tempData['bubble_background'] ?? null,
@@ -179,9 +150,9 @@ class DashboardController extends Controller
                 'description'       => $tempData['description'] ?? null,
                 'font'              => $tempData['font'] ?? null,
                 'font_size'         => $tempData['font_size'] ?? null,
-                'bot_position'      => 'left',
+                'bot_position'      => $tempData['bot_position'] ?? null,
                 'message_bubble'    => $tempData['message_bubble'] ?? null,
-                'radius'            => $tempData['question_radius'] ?? null,
+                'radius'            => $tempData['radius'] ?? null,
                 'text_alignment'    => $tempData['text_alignment'] ?? null,
                 'question_color'    => $tempData['question_color'] ?? null,
                 'answer_color'      => $tempData['answer_color'] ?? null,
@@ -191,7 +162,8 @@ class DashboardController extends Controller
                 'option_color'      => $tempData['option_color'] ?? null,
                 'option_border_color' => $tempData['option_border_color'] ?? null,
                 'button_design'     => $tempData['button_type'] ?? null,
-                // 'button_type'       => $tempData['button_type'] ?? null,
+                'button_color'       => $tempData['button_color'] ?? null,
+                'button_text_color'       => $tempData['button_text_color'] ?? null,
             ]);
 
             // Return success or redirect

@@ -19,12 +19,18 @@
                                 <div class="mb-3">
                                     <label for="question-input" class="form-label">Question 1</label>
                                     <input type="text" class="form-control" placeholder="Enter Question?" name="questions[]">
+                                    <!-- @if($errors->has('questions.0'))
+                                    <span class="text-danger">{{ $errors->first('questions.0') }}</span>
+                                    @endif -->
                                 </div>
 
                                 <div class="row addMoreOptions">
                                     <div class="col-md-12">
                                         <label for="answer-input" class="form-label">Answer</label>
                                         <input type="text" class="form-control" placeholder="Enter answer" name="answer[]">
+                                        <!-- @if($errors->has('answer.0'))
+                                    <span class="text-danger">{{ $errors->first('answer.0') }}</span>
+                                    @endif -->
                                     </div>
                                 </div>
                             </div>
@@ -121,5 +127,51 @@
     function removeQuestion(element) {
         $(element).closest('.question-block').remove();
     }
+
+// Form submission validation
+$('form').on('submit', function(e) {
+    let isValid = true; // Flag to track if the form is valid
+
+    // Get all question-block elements
+    let questionBlocks = document.getElementsByClassName('question-block');
+
+    // If there is more than one question-block
+    if (questionBlocks.length > 0) {
+        // Loop through each question-block
+        for (let i = 0; i < questionBlocks.length; i++) {
+            let questionInput = questionBlocks[i].querySelector('input[name="questions[]"]');
+            let answerInput = questionBlocks[i].querySelector('input[name="answer[]"]');
+
+            // Validate the question input
+            if (questionInput.value.trim() === '') {
+                isValid = false;
+                $(questionInput).addClass('is-invalid');
+                $(questionInput).next('.invalid-feedback').remove();
+                $(questionInput).after('<div class="invalid-feedback">This question is required.</div>');
+            } else {
+                $(questionInput).removeClass('is-invalid');
+                $(questionInput).next('.invalid-feedback').remove();
+            }
+
+            // Validate the answer input
+            if (answerInput.value.trim() === '') {
+                isValid = false;
+                $(answerInput).addClass('is-invalid');
+                $(answerInput).next('.invalid-feedback').remove();
+                $(answerInput).after('<div class="invalid-feedback">This answer is required.</div>');
+            } else {
+                $(answerInput).removeClass('is-invalid');
+                $(answerInput).next('.invalid-feedback').remove();
+            }
+        }
+
+        // If any field is invalid, prevent the form submission
+        if (!isValid) {
+            e.preventDefault();
+        }
+    
+    }
+});
+
 </script>
 @endsection

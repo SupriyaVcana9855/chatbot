@@ -55,7 +55,7 @@
                                 
                         @if($bot->type == 'support')
                         <td><button class="btn btn-outline-secondary">
-                                <a href="{{ route('faq',$bot->id) }}"> <img src="./assets/images/totalchat.png" title="Bot faq">
+                                <a href="{{ route('singleBotFaqListing',$bot->id) }}"> <img src="./assets/images/totalchat.png" title="Bot faq">
                                     @else
                                 </a></button></td>
                         <td><button class="btn btn-outline-secondary">
@@ -110,7 +110,7 @@
                 <div class="bot-option">
                     <div class="d-flex align-items-center">
                         <i class="fa-solid fa-database"></i>
-                        <span class="lead" onclick="dataType('lead')">Lead Generation Bot (or) Any Data Collection Bot</span>
+                        <span class="lead" data-dismiss="modal" data-toggle="modal" aria-label="Close" data-target="#createCustomerSupportBotModal" class="lead" onclick="dataType('lead')">Lead Generation Bot (or) Any Data Collection Bot</span>
                     </div>
                 </div>
                 <div class="bot-option">
@@ -136,7 +136,11 @@
             </div>
             <div class="modal-body">
                 <p>Creating a <strong>Customer Support Bot</strong> is just a matter of seconds now.</p>
-                <button style="margin-left: 74px;" type="button" class="btn btn-primary btn-template">Pick From Templates</button>
+                <a id="template-link" href="{{ route('templates') }}">
+    <button style="margin-left: 74px;" type="button" class="btn btn-primary btn-template">
+        Pick From Templates
+    </button>
+</a>
                 <div>OR</div>
                 <button style="margin-left: 74px;" type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#createCustomBotModal" data-dismiss="modal" aria-label="Close">Create Your Own Bot</button>
             </div>
@@ -214,8 +218,20 @@
 </style>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    function dataType(data) {
-        $('#bottype').val(data);
-    }
+ function dataType(data) {
+    // Set the value of the input
+    $('#bottype').val(data);
+    
+    // Alert the data
+  
+    // Update the URL in the anchor tag dynamically
+    const link = document.getElementById('template-links');
+    // Use string interpolation to include the data variable correctly
+    const newUrl = `{{ route('templates', ['type' => '__data__']) }}`.replace('__data__', data);
+    // alert(newUrl);
+
+    link.href = newUrl;
+}
+
 </script>
 @endsection

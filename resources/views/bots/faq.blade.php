@@ -1,6 +1,8 @@
 @extends('layout.app')
-
 @section('content')
+<?php 
+    $id = $_GET['id'] ?? '';
+?>
 <link rel="stylesheet" href="{{ asset('css/setup.css') }}">
 <div class="boxpadding">
     <div class="accordion-body">
@@ -15,10 +17,11 @@
                         <div id="questions-container">
                             <!-- Question block -->
                             <div class="question-block">
-                                <input type="hidden" name="bot_id" value="{{$chatBot->id}}">
+                                <input type="hidden" name="bot_id" value="{{$chatBot->id ?? $id}}">
+                                <input type="hidden" name="question_id" value="{{$botQuestions->id ?? ''}}">
                                 <div class="mb-3">
                                     <label for="question-input" class="form-label">Question 1</label>
-                                    <input type="text" class="form-control" placeholder="Enter Question?" name="questions[]">
+                                    <input type="text" class="form-control" placeholder="Enter Question?" name="questions[]" value="{{$botQuestions->question ?? ''}}">
                                     <!-- @if($errors->has('questions.0'))
                                     <span class="text-danger">{{ $errors->first('questions.0') }}</span>
                                     @endif -->
@@ -27,7 +30,7 @@
                                 <div class="row addMoreOptions">
                                     <div class="col-md-12">
                                         <label for="answer-input" class="form-label">Answer</label>
-                                        <input type="text" class="form-control" placeholder="Enter answer" name="answer[]">
+                                        <input type="text" class="form-control" placeholder="Enter answer" name="answer[]" value="{{$botQuestions->answer ?? ''}}">
                                         <!-- @if($errors->has('answer.0'))
                                     <span class="text-danger">{{ $errors->first('answer.0') }}</span>
                                     @endif -->

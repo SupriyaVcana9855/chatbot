@@ -134,14 +134,14 @@
                                     <td>
                                         <div class="dropdown set-menu-btn d-inline-flex ">
 
-                                            <img class="file-img" src="./assets/images/boat/file.png">
+                                            <img class="file-img" src="{{asset('/assets/images/boat/file.png')}}">
                                             <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
 
                                                 <i class="fa-solid fa-ellipsis-vertical" style="color: #8b8b8b;"></i>
                                             </button>
                                             <ul class="dropdown-menu">
-                                                <li class="border-bottom"><a class="dropdown-item" href="{{route('addagentform',$details->id)}}">Edit <span><img src="./assets/images/editicon.png"></span></li></a>
-                                                <li><a class="dropdown-item" id="deleteagent" data-value="{{$details->id}}" href="#">Delete <span><img src="./assets/images/boat/Vector (6).png"></span></a></li>
+                                                <li class="border-bottom"><a class="dropdown-item" href="{{route('addagentform',$details->id)}}">Edit <span><img src="{{asset('/assets/images/editicon.png')}}"></span></li></a>
+                                                <li><a class="dropdown-item" id="deleteagent" data-value="{{$details->id}}" href="#">Delete <span><img src="{{asset('/assets/images/boat/Vector (6).png')}}"></span></a></li>
                                             </ul>
                                         </div>
                                     </td>
@@ -205,7 +205,7 @@
                     // Send the AJAX request to change status in the backend
                     $.ajax({
                         type: "GET",
-                        url: "{{route('deleteagent')}}" + '/' + agentId,
+                        url: "{{route('deleteAgent')}}" + '/' + agentId,
                         success: function(data) {
                             Swal.fire({
                                 title: "Deleted!",

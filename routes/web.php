@@ -96,10 +96,10 @@ Route::middleware(['auth', 'role:1'])->group(function () {
     Route::post('/addQuestionFlow', [ChatBotController::class, 'addQuestionFlow'])->name('addQuestionFlow');
     Route::get('/bot-questions-listing/{id}', [ChatBotController::class, 'singleBotListing'])->name('singleBotListing');
 
-
-    Route::get('/faq/{id?}', [FaqController::class, 'faq'])->name('faq');
+    Route::get('/faq/{chat_bot_id?}/{questions_id?}', [FaqController::class, 'faq'])->name('faq');
     Route::post('/addFaq', [FaqController::class, 'addFaq'])->name('addFaq');
     Route::get('/bot-faq-listing/{id}', [FaqController::class, 'singleBotFaqListing'])->name('singleBotFaqListing');
+    Route::get('/delete-faq/{id?}',[FaqController::class,'deleteFaq'])->name('deleteFaq');
 
 
     Route::get('/agent',[AiAgentBotController::class,'agents'])->name('agent');

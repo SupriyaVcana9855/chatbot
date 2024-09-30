@@ -192,6 +192,4 @@
             $('#bottype').val(data);
         }
     </script>
-
-
     @endsection

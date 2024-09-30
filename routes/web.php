@@ -78,7 +78,9 @@ Route::middleware(['auth', 'role:1'])->group(function () {
     Route::get('logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/get-questions', [ChatBotController::class, 'getQuestion'])->name('questions');
     Route::post('/add-questions', [ChatBotController::class, 'addQuestion'])->name('addQuestion');
-    Route::get('/add-questions/{id}', [ChatBotController::class, 'botQuestion'])->name('botQuestion');
+    Route::get('/add-questions/{bot_id?}/{questionId?}', [ChatBotController::class, 'botQuestion'])->name('botQuestion');
+    Route::get('/delete-questions/{id?}',[ChatBotController::class,'questionsDelete'])->name('questionsDelete');
+
 
     Route::get('templates', [TemplateController::class, 'templates'])->name('templates');
     Route::get('template-view/{id?}', [TemplateController::class, 'templateView'])->name('templateview');

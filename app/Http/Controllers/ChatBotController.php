@@ -65,10 +65,28 @@ class ChatBotController extends Controller
 
 
     //page for adding questions for bot
-    public function botQuestion($id)
+    public function botQuestion($bot_id, $question_id = null)
     {
-        return view('bots/bot-question',compact('id'));
+        // Retrieve the chatbot and question
+        $chatBot = ChatBot::find($bot_id);
+        $botQuestions = BotQuestion::find($question_id);
+    
+        // Decode the JSON-encoded options if they exist
+        if ($botQuestions && is_string($botQuestions->options)) {
+            $botQuestions->options = json_decode($botQuestions->options, true);
+        }
+    
+        return view('bots/bot-question', compact('chatBot', 'botQuestions'));
     }
+
+
+    public function questionsDelete($id)
+    {
+        $questionsDelete = BotQuestion::find($id);
+        $questionsDelete->delete();
+        return redirect()->back()->with('success', 'Question deleted successfully.');
+    }
+    
 
 
 
@@ -120,41 +138,45 @@ class ChatBotController extends Controller
 
     public function addQuestion(Request $request)
     {
-        // dd($request);
-        // Initialize an array to hold questions
-        $questions = [];
-    
         // Loop through each question in the "questions" array
         foreach ($request->questions as $questionData) {
-            // Ensure bot_id and question text are set and valid
+            // Extract data
             $botId = $questionData['bot_id'] ?? null;
+            $questionId = $questionData['question_id'] ?? null; // Add question_id
             $questionText = $questionData['text'] ?? null;
+            $options = $questionData['options'] ?? [];
     
+            // Validate data
             if ($botId && $questionText) {
-                $questions[] = [
-                    'bot_id' => $botId,
-                    'question' => $questionText,
-                    'options' => $questionData['options'] ?? []
-                ];
+                if ($questionId) {
+                    // If question_id is provided, update the existing question
+                    $botQuestion = BotQuestion::find($questionId);
+                    if ($botQuestion) {
+                        $botQuestion->question = $questionText;
+                        $botQuestion->options = json_encode($options); // Store options as JSON
+                        $botQuestion->save();
+                    }
+                } else {
+                    // If question_id is not provided, create a new question
+                    $botQuestion = new BotQuestion();
+                    $botQuestion->chat_bot_id = $botId;
+                    $botQuestion->question_type = 'Question';
+                    $botQuestion->question = $questionText;
+                    $botQuestion->options = json_encode($options); // Store options as JSON
+                    $botQuestion->save();
+                }
             }
         }
     
-        // Store each question in the database
-        foreach ($questions as $questionData) {
-            $botQuestion = new BotQuestion();
-            $botQuestion->chat_bot_id = $questionData['bot_id'];
-            $botQuestion->question_type = 'Question';
-            $botQuestion->question = $questionData['question'];
-            $botQuestion->options = $questionData['options']; //json_encode($questionData['options']); // Store options as JSON
-            $botQuestion->save();
-        }
-        if($botQuestion){
-            return redirect()->route('singleBotListing',$botQuestion->chat_bot_id)->with('success', 'Questions saved successfully.');
-
-        }else{
-            return redirect()->back()->with('error', 'Somthing went wrong.');
+        // Return appropriate response
+        if (isset($botQuestion) && $botQuestion->wasRecentlyCreated || $botQuestion->wasChanged()) {
+            return redirect()->route('singleBotListing', $botQuestion->chat_bot_id)
+                             ->with('success', 'Questions saved successfully.');
+        } else {
+            return redirect()->back()->with('error', 'Something went wrong.');
         }
     }
+    
     
     public function getQuestion($botId)
     {

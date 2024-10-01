@@ -19,6 +19,7 @@ return new class extends Migration
             // Correct table name for the foreign key
             $table->integer('bot_question_id')->nullable(); 
             
+            
             $table->text('answer')->nullable(); 
             $table->string('status')->nullable(); 
 

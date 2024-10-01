@@ -16,7 +16,8 @@ class BotController extends Controller
     }
     public function setup($id)
     {
-        $scriptId = 2; 
+        // dd($id);
+        $scriptId = $id; 
         $bot = ChatBot::find($id);
         return view('bots.setup',compact('id','bot','scriptId'));
     }
@@ -58,20 +59,21 @@ class BotController extends Controller
     }
 
     public function updateBot(Request $request)
-{
-    // Validate input data
-    $validated = $request->validate([
-        'name' => 'required|unique:chat_bots,name,' . $request->bot_id . '|max:20|min:3', // Ignore the current bot name during unique check
-        'font' => 'required',
-        'font_size' => 'required',
-    ], [
-        'name.required' => 'The bot name is required.',
-        'name.unique' => 'This bot name is already taken. Please choose another one.',
-        'name.max' => 'The bot name cannot exceed 20 characters.',
-        'name.min' => 'The bot name must be at least 3 characters.',
-        'font.required' => 'Please select a font for the bot.',
-        'font_size.required' => 'Please select a font size for the bot.',
-    ]);
+    {
+    
+        // Validate input data
+        // $validated = $request->validate([
+        //     'name' => 'required|unique:chat_bots,name,' . $request->bot_id . '|max:20|min:3', // Ignore the current bot name during unique check
+        //     'font' => 'required',
+        //     'font_size' => 'required',
+        // ], [
+        //     'name.required' => 'The bot name is required.',
+        //     'name.unique' => 'This bot name is already taken. Please choose another one.',
+        //     'name.max' => 'The bot name cannot exceed 20 characters.',
+        //     'name.min' => 'The bot name must be at least 3 characters.',
+        //     'font.required' => 'Please select a font for the bot.',
+        //     'font_size.required' => 'Please select a font size for the bot.',
+        // ]);
 
     // Retrieve the bot by its ID
     $bot = ChatBot::find($request->bot_id);
@@ -89,7 +91,6 @@ class BotController extends Controller
     if ($radiusValue !== null) {
         $radiusValueData = $radiusValue . '%';  // Append the percentage symbol
     }
-
     // Update bot data based on form type
     switch ($formType) {
         case 'form1':

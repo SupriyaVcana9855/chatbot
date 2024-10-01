@@ -32,6 +32,19 @@
     display: block !important;
 }
 
+/* .innerflxbox2:active,
+.innerflxbox2:focus,
+.innerflxbox:active,
+.innerflxbox:focus,
+.bottonbg:active,
+.bottonbg:focus {
+    border: 4px solid #03c7fb !important;
+} */
+
+.bottonbg.innerflxbox2:active {
+    border: 10px solid;
+}
+
 .hideshowbox {
     padding: 10px;
     left: -120px;
@@ -551,10 +564,12 @@ progress::-moz-progress-bar {
 .activein {
     background: #005b96 !important;
 }
+
 .search-container {
     border-bottom: none !important;
     justify-content: flex-end !important;
 }
+
 .favapp {
     font-size: 20px;
     font-weight: 500;
@@ -562,6 +577,7 @@ progress::-moz-progress-bar {
     text-align: left;
     color: #005b96 !important;
 }
+
 .search-container .btn {
     min-width: 190px;
     max-width: 190px;
@@ -569,6 +585,7 @@ progress::-moz-progress-bar {
     background: #fff !important;
     color: #005b96 !important;
 }
+
 .favappflex {
     display: flex;
     margin-right: 20px !important;
@@ -577,11 +594,13 @@ progress::-moz-progress-bar {
     align-content: center;
     border-bottom: none !important;
 }
+
 .icontextbox a img {
     margin: 0 auto 20px;
     height: 50px;
     width: 50px;
 }
+
 .icontextbox {
     display: flex;
     color: #a1a1a1 !important;
@@ -595,6 +614,7 @@ progress::-moz-progress-bar {
     align-items: center;
     align-content: center;
 }
+
 /* height control overflow */
 /* .websiteheight {
     height: 290px;
@@ -604,9 +624,11 @@ progress::-moz-progress-bar {
     padding-right: 0px !important;
     padding-left: 0px !important;
 }
+
 .favappflex .active img {
     filter: brightness(0) invert(1) !important;
 }
+
 .accordinbox h6 {
     font-size: 17px;
     font-weight: 400;
@@ -614,6 +636,7 @@ progress::-moz-progress-bar {
     text-align: left;
     color: #777777;
 }
+
 .accordinbox h6 span {
     font-size: 18px;
     margin-right: 10px;
@@ -622,6 +645,7 @@ progress::-moz-progress-bar {
     text-align: left;
     color: #005b96;
 }
+
 .accordinbox {
     border: 2px solid #77777726 !important;
     padding: 40px;
@@ -630,18 +654,21 @@ progress::-moz-progress-bar {
     margin-top: 50px;
     margin-bottom: 35px;
 }
+
 .acccorboxbg {
     margin-top: 30px;
     padding: 40px;
     border-radius: 5px;
     background: #f7f8f9;
 }
+
 .acccorboxbg p {
     font-size: 17px !important;
     font-weight: 400 !important;
     line-height: 24.57px !important;
     text-align: left;
 }
+
 .accordinbox p {
     font-family: Inter;
     font-size: 18px;
@@ -650,6 +677,7 @@ progress::-moz-progress-bar {
     text-align: left;
     color: #777777;
 }
+
 .favappflex .active {
     flex-direction: column;
     justify-content: center;
@@ -664,6 +692,7 @@ progress::-moz-progress-bar {
     color: #ffffff !important;
     background-color: #005b96 !important;
 }
+
 .icontextbox a {
     color: #a1a1a1;
     font-size: 21.09px;
@@ -672,6 +701,7 @@ progress::-moz-progress-bar {
     text-align: center;
     text-decoration: none !important;
 }
+
 .nav-tabs .nav-item.show .nav-link,
 .nav-tabs .nav-link.active {
     color: #ffffff !important;
@@ -682,6 +712,7 @@ li.active img {
     filter: brightness(0) invert(1) !important;
     transform: translateY(-1000px);
 }
+
 .btn2 {
     min-width: 190px;
     border: 2px solid #005b96 !important;
@@ -725,6 +756,7 @@ li.active img {
     border: none !important;
     max-width: 60px;
 }
+
 .button_design:active,
 .button_design:focus,
 .text_alignment:active,

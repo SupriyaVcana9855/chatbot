@@ -547,7 +547,7 @@ class ChatBotController extends Controller
                                 }
                                 
                                 .chat-boat-position-center {
-                                    --top: 37%;
+                                    --top: 51%;
                                     --right: 20px;
                                 }
                                 

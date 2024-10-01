@@ -220,7 +220,6 @@
                                                     <div class="imgboxhead">
                                                         <button type="submit" class="btn btn-primary"
                                                             style="width: 86px;">Save</button>
-                                     
                                                     </div>
                                                 </div>
                                                 <div class="border-r mt-3 mb-3">
@@ -233,14 +232,14 @@
                                                         </i>
                                                     </h6>
                                                     <div class="flxbox">
-                                                        <div class="bottonbg innerflxbox2">
-                                                            <input class="activein bot_position" data-attr="left">
+                                                        <div class="bottonbg innerflxbox2 "  >
+                                                            <input class="activein bot_position" data-attr="right">
                                                         </div>
                                                         <div class="innerflxbox bottonbg">
                                                             <input class="activein bot_position" data-attr="center">
                                                         </div>
                                                         <div class=" bottonbg">
-                                                            <input class="activein bot_position" data-attr="right">
+                                                            <input class="activein bot_position" data-attr="left">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -339,6 +338,8 @@
                                         <div class="boxinner">
                                             <form action="{{route('updateBot')}}" method="post">
                                                 @csrf
+                                                                                                <input type="hidden" name="form_type" value="form4">
+
                                                 <input type="hidden" name="bot_id" value="{{$id}}">
                                                 <div class="textbox">
                                                     <h6>Text</h6>
@@ -436,11 +437,11 @@
                         </ul>
                     </div>
                     <div class="tab-content">
-                        <div id="hubspot" class="tab-pane fade in active">
+                        <div>
                             <div class="accordinbox">
-                                <p>Copy this code snippet ... </p>
+                                <p>Copy this code snippet ...</p>
                                 <h6><span>Note:-</span>Paste it in your Website / Blog (In the head tag)</h6>
-                                <div class="acccorboxbg">
+                                <div id="hubspot" class="acccorboxbg tab-pane fade in active">
                                     <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
                                         Ipsum has been the industry's standard dummy text ever since the 1500s, when an
                                         unknown printer took a galley of type and scrambled it to make a type specimen
@@ -450,76 +451,51 @@
                                         recently with desktop publishing software like Aldus PageMaker including
                                         versions of Lorem Ipsum.</p>
                                 </div>
-                            </div>
-                        </div>
-                        <div id="chatbot" class="tab-pane fade in ">
-                            <div class="accordinbox">
-                                <p>Copy this code snippet ...  2</p>
-                                <h6><span>Note:-</span>Paste it in your Website / Blog (In the head tag)</h6>
-                                <div class="acccorboxbg">
-                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                                        Ipsum has been the industry's standard dummy text ever since the 1500s, when an
-                                        unknown printer took a galley of type and scrambled it to make a type specimen
-                                        book. It has survived not only five centuries, but also the leap into electronic
-                                        typesetting, remaining essentially unchanged. It was popularised in the 1960s
-                                        with the release of Letraset sheets containing Lorem Ipsum passages, and more
-                                        recently with desktop publishing software like Aldus PageMaker including
-                                        versions of Lorem Ipsum.</p>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div id="airtable" class="tab-pane fade in ">
-                            <div class="accordinbox">
-                                <p>Copy this code snippet ...  3</p>
-                                <h6><span>Note:-</span>Paste it in your Website / Blog (In the head tag)</h6>
-                                <div class="acccorboxbg">
-                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                                        Ipsum has been the industry's standard dummy text ever since the 1500s, when an
-                                        unknown printer took a galley of type and scrambled it to make a type specimen
-                                        book. It has survived not only five centuries, but also the leap into electronic
-                                        typesetting, remaining essentially unchanged. It was popularised in the 1960s
-                                        with the release of Letraset sheets containing Lorem Ipsum passages, and more
-                                        recently with desktop publishing software like Aldus PageMaker including
-                                        versions of Lorem Ipsum.</p>
+                                <div id="chatbot" class="acccorboxbg tab-pane fade in active">
+                                    <p>An API chatbot is a conversational tool that leverages natural language
+                                        processing (NLP) to interpret user inputs and interacts with external services
+                                        through APIs. It provides dynamic, real-time responses by retrieving or sending
+                                        data, making it ideal for tasks like customer support, product recommendations
+                                        bookings, and data retrieval. This enables businesses to automate interactions,
+                                        improve user engagement, and deliver personalized experiences efficiently across
+                                        various platforms such as websites and messaging apps.</p>
+                                </div>
+                                <div id="airtable" class="acccorboxbg tab-pane fade in active">
+                                    <p>
+                                        Airtable is a cloud-based collaboration platform that combines the functionality
+                                        of spreadsheets and databases. It allows users to organize data, create custom
+                                        workflows, and collaborate in real-time. With its easy-to-use interface,
+                                        Airtable is ideal for project management, content planning, and data tracking.
+                                        It integrates with various apps and services via APIs, enabling automation and
+                                        synchronization of data across platforms, making it a versatile tool for teams
+                                        to manage and visualize information efficiently.</p>
+                                </div>
+
+                                <div id="celendly" class="acccorboxbg tab-pane fade in active">
+                                    <p>
+                                        Calendly is a scheduling tool that simplifies meeting bookings by allowing users
+                                        to set their availability and share a personalized link. Invitees can choose
+                                        from available time slots, eliminating back-and-forth emails. It integrates with
+                                        calendars like Google, Outlook, and Office 365, and supports video conferencing
+                                        tools like Zoom. Calendly also offers automated reminders and follow-ups, making
+                                        it ideal for professionals to manage appointments, interviews, or consultations
+                                        efficiently across various industries.</p>
+                                </div>
+
+                                <div id="dialogflow" class="acccorboxbg tab-pane fade in active">
+                                    <p>Dialogflow is a natural language understanding (NLU) platform by Google that
+                                        enables the creation of conversational agents, such as chatbots and voice
+                                        assistants. It uses machine learning to process user inputs, identify intent,
+                                        and provide appropriate responses. Dialogflow supports multiple languages and
+                                        integrates with various platforms like Google Assistant, Slack, and Facebook
+                                        Messenger. Its API allows developers to build custom integrations, making it
+                                        ideal for creating dynamic, AI-driven conversations for customer support,
+                                        automation, and other business applications.</p>
                                 </div>
                             </div>
                         </div>
-
-
-                        <div id="celendly" class="tab-pane fade in ">
-                            <div class="accordinbox">
-                                <p>Copy this code snippet ...  4</p>
-                                <h6><span>Note:-</span>Paste it in your Website / Blog (In the head tag)</h6>
-                                <div class="acccorboxbg">
-                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                                        Ipsum has been the industry's standard dummy text ever since the 1500s, when an
-                                        unknown printer took a galley of type and scrambled it to make a type specimen
-                                        book. It has survived not only five centuries, but also the leap into electronic
-                                        typesetting, remaining essentially unchanged. It was popularised in the 1960s
-                                        with the release of Letraset sheets containing Lorem Ipsum passages, and more
-                                        recently with desktop publishing software like Aldus PageMaker including
-                                        versions of Lorem Ipsum.</p>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div id="dialogflow" class="tab-pane fade in ">
-                            <div class="accordinbox">
-                                <p>Copy this code snippet ... </p>
-                                <h6><span>Note:-</span>Paste it in your Website / Blog (In the head tag)</h6>
-                                <div class="acccorboxbg">
-                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                                        Ipsum has been the industry's standard dummy text ever since the 1500s, when an
-                                        unknown printer took a galley of type and scrambled it to make a type specimen
-                                        book. It has survived not only five centuries, but also the leap into electronic
-                                        typesetting, remaining essentially unchanged. It was popularised in the 1960s
-                                        with the release of Letraset sheets containing Lorem Ipsum passages, and more
-                                        recently with desktop publishing software like Aldus PageMaker including
-                                        versions of Lorem Ipsum.</p>
-                                </div>
-                            </div>
-                        </div>
+                       
                     </div>
                 </div>
             </div>
@@ -542,10 +518,15 @@ $(document).ready(function() {
         var alignment = $(this).val();
         $('#text_alignment').val(alignment);
     });
-    $('.bot_position').on('click', function() {
-        var bot_position = $(this).attr('data-attr');
-        $('#bot_position').val(bot_position);
-    });
+ 
+$('.bottonbg').on('click', function() {
+    $('.bottonbg').removeClass('active');
+    $(this).addClass('active');
+    $('.bottonbg').css('border', 'none'); // Remove borders from all
+    $(this).css('border', '4px solid #03c7fb');   // Add border to the clicked element
+    var bot_position = $(this).find('.bot_position').attr('data-attr');
+    $('#bot_position').val(bot_position);
+});
 
     $('.selectImg').on('click', function() {
         $('.clickImage').click(); // Simulate a click on the element with class 'clickImage'

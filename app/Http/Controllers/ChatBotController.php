@@ -138,6 +138,7 @@ class ChatBotController extends Controller
 
     public function addQuestion(Request $request)
     {
+        // dd($request->all());
         // Loop through each question in the "questions" array
         foreach ($request->questions as $questionData) {
             // Extract data
@@ -153,7 +154,7 @@ class ChatBotController extends Controller
                     $botQuestion = BotQuestion::find($questionId);
                     if ($botQuestion) {
                         $botQuestion->question = $questionText;
-                        $botQuestion->options = json_encode($options); // Store options as JSON
+                        $botQuestion->options = $options; // Store options as JSON
                         $botQuestion->save();
                     }
                 } else {
@@ -162,7 +163,7 @@ class ChatBotController extends Controller
                     $botQuestion->chat_bot_id = $botId;
                     $botQuestion->question_type = 'Question';
                     $botQuestion->question = $questionText;
-                    $botQuestion->options = json_encode($options); // Store options as JSON
+                    $botQuestion->options = $options; // Store options as JSON
                     $botQuestion->save();
                 }
             }

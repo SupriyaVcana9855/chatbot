@@ -64,7 +64,7 @@
       {{-- <script src="http://localhost:8000/scriptchatbot/1"></script> --}}
           {{-- <script src="path/to/chatbot.js"></script> --}}
           <script src="http://localhost:8000/scriptchatbots/{{ $scriptId }}"></script>
-          <script src="http://127.0.0.1:8000/5"></script>
+          {{-- <script src="http://127.0.0.1:8000/5"></script> --}}
         
           <!-- <script src=" https://daa6-122-160-201-111.ngrok-free.app/scriptchatbots/{{ $scriptId }}"></script> -->
 

@@ -362,7 +362,20 @@ class ChatBotController extends Controller
                         }
                         $optionNew = $arr;
                         if (!count($optionNew)) {
-                            $optionNew = array('Please select to know more about our website.....','schedule a meeting', 'chat with live agent', 'exit');
+                            if($botAnswer)
+                            {
+                                if($botAnswer->answer)
+                                {
+                                    $optionNew = array('Please select to know more about our website.....','schedule a meeting', 'chat with live agent', 'exit');
+                                }else
+                                {
+                                    $optionNew = array('schedule a meeting', 'chat with live agent', 'exit');
+                                }
+                            }else
+                            {
+                                $optionNew = array('schedule a meeting', 'chat with live agent', 'exit');
+                            }
+                           
                         }
                     }
                 } else {
@@ -547,7 +560,7 @@ class ChatBotController extends Controller
                                 }
                                 
                                 .chat-boat-position-center {
-                                    --top: 37%;
+                                    --top: 51%;
                                     --right: 20px;
                                 }
                                 

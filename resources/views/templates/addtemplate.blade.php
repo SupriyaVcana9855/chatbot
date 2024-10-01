@@ -60,83 +60,91 @@
                                     </span>
                                 </div>
                             </div>
-                            <select class="form-select mt-3" name="font" aria-label="Choose A Font Family">
-    <option selected disabled>Choose A Font Family</option>
-    <option disabled style="font-weight: bold; background-color: #EEEEEE">Serif Fonts</option>
-    <option value="Georgia,serif" style="font-family: Georgia, serif;" 
-        @selected(isset($tempData) && $tempData->font === 'Georgia,serif')>
-        Georgia
-    </option>
-    <option value="Palatino Linotype,Book Antiqua,Palatino,serif" style="font-family: Palatino Linotype,Book Antiqua,Palatino,serif" 
-        @selected(isset($tempData) && $tempData->font === 'Palatino Linotype,Book Antiqua,Palatino,serif')>
-        Palatino Linotype
-    </option>
-    <option value="Times New Roman,Times,serif" style="font-family: Times New Roman,Times,serif" 
-        @selected(isset($tempData) && $tempData->font === 'Times New Roman,Times,serif')>
-        Times New Roman
-    </option>
-    <option disabled style="font-weight: bold; background-color: #EEEEEE">Sans-Serif Fonts</option>
-    <option value="Arial,Helvetica,sans-serif" style="font-family: Arial,Helvetica,sans-serif" 
-        @selected(isset($tempData) && $tempData->font === 'Arial,Helvetica,sans-serif')>
-        Arial
-    </option>
-    <option value="Arial Black,Gadget,sans-serif" style="font-family: Arial Black,Gadget,sans-serif" 
-        @selected(isset($tempData) && $tempData->font === 'Arial Black,Gadget,sans-serif')>
-        Arial Black
-    </option>
-    <option value="Comic Sans MS,cursive,sans-serif" style="font-family: Comic Sans MS,cursive,sans-serif" 
-        @selected(isset($tempData) && $tempData->font === 'Comic Sans MS,cursive,sans-serif')>
-        Comic Sans MS
-    </option>
-    <option value="Impact,Charcoal,sans-serif" style="font-family: Impact,Charcoal,sans-serif" 
-        @selected(isset($tempData) && $tempData->font === 'Impact,Charcoal,sans-serif')>
-        Impact
-    </option>
-    <option value="Lucida Sans Unicode,Lucida Grande,sans-serif" style="font-family: Lucida Sans Unicode,Lucida Grande,sans-serif" 
-        @selected(isset($tempData) && $tempData->font === 'Lucida Sans Unicode,Lucida Grande,sans-serif')>
-        Lucida Sans Unicode
-    </option>
-    <option value="Tahoma,Geneva,sans-serif" style="font-family: Tahoma,Geneva,sans-serif" 
-        @selected(isset($tempData) && $tempData->font === 'Tahoma,Geneva,sans-serif')>
-        Tahoma
-    </option>
-    <option value="Trebuchet MS,Helvetica,sans-serif" style="font-family: Trebuchet MS,Helvetica,sans-serif" 
-        @selected(isset($tempData) && $tempData->font === 'Trebuchet MS,Helvetica,sans-serif')>
-        Trebuchet MS
-    </option>
-    <option value="Verdana,Geneva,sans-serif" style="font-family: Verdana,Geneva,sans-serif" 
-        @selected(isset($tempData) && $tempData->font === 'Verdana,Geneva,sans-serif')>
-        Verdana
-    </option>
-    <option disabled style="font-weight: bold; background-color: #EEEEEE">Monospace Fonts</option>
-    <option value="Courier New,Courier,monospace" style="font-family: Courier New,Courier,monospace" 
-        @selected(isset($tempData) && $tempData->font === 'Courier New,Courier,monospace')>
-        Courier New
-    </option>
-    <option value="Lucida Console,Monaco,monospace" style="font-family: Lucida Console,Monaco,monospace" 
-        @selected(isset($tempData) && $tempData->font === 'Lucida Console,Monaco,monospace')>
-        Lucida Console
-    </option>
-</select>
-
-<select class="form-select mt-3" name="font_size" aria-label="Font Size">
-    <option selected disabled>Font Size</option>
-    <option value="8px" @selected(isset($tempData) && $tempData->font_size === '8px')> 8px</option>
-    <option value="10px" @selected(isset($tempData) && $tempData->font_size === '10px')> 10px</option>
-    <option value="12px" @selected(isset($tempData) && $tempData->font_size === '12px')> 12px</option>
-    <option value="14px" @selected(isset($tempData) && $tempData->font_size === '14px')> 14px </option>
-    <option value="16px" @selected(isset($tempData) && $tempData->font_size === '16px')> 16px </option>
-    <option value="20px" @selected(isset($tempData) && $tempData->font_size === '20px')> 20px </option>
-    <option value="24px" @selected(isset($tempData) && $tempData->font_size === '24px')> 24px </option>
-    <option value="28px" @selected(isset($tempData) && $tempData->font_size === '28px')> 28px </option>
-    <option value="34px" @selected(isset($tempData) && $tempData->font_size === '34px')> 34px </option>
-    <option value="40px" @selected(isset($tempData) && $tempData->font_size === '40px')> 40px </option>
-    <option value="46px" @selected(isset($tempData) && $tempData->font_size === '46px')> 46px </option>
-    <option value="44px" @selected(isset($tempData) && $tempData->font_size === '44px')> 44px </option>
-    <option value="66px" @selected(isset($tempData) && $tempData->font_size === '66px')> 66px </option>
-    <option value="88px" @selected(isset($tempData) && $tempData->font_size === '88px')> 88px </option>
-</select>
-
+                            <div class="row">
+                                <select class="form-select mt-3" name="font" aria-label="Choose A Font Family">
+                                    <option selected disabled>Choose A Font Family</option>
+                                    <option disabled style="font-weight: bold; background-color: #EEEEEE">Serif Fonts</option>
+                                    <option value="Georgia,serif" style="font-family: Georgia, serif;"
+                                        @selected(isset($tempData) && $tempData->font === 'Georgia,serif')>
+                                        Georgia
+                                    </option>
+                                    <option value="Palatino Linotype,Book Antiqua,Palatino,serif" style="font-family: Palatino Linotype,Book Antiqua,Palatino,serif"
+                                        @selected(isset($tempData) && $tempData->font === 'Palatino Linotype,Book Antiqua,Palatino,serif')>
+                                        Palatino Linotype
+                                    </option>
+                                    <option value="Times New Roman,Times,serif" style="font-family: Times New Roman,Times,serif"
+                                        @selected(isset($tempData) && $tempData->font === 'Times New Roman,Times,serif')>
+                                        Times New Roman
+                                    </option>
+                                    <option disabled style="font-weight: bold; background-color: #EEEEEE">Sans-Serif Fonts</option>
+                                    <option value="Arial,Helvetica,sans-serif" style="font-family: Arial,Helvetica,sans-serif"
+                                        @selected(isset($tempData) && $tempData->font === 'Arial,Helvetica,sans-serif')>
+                                        Arial
+                                    </option>
+                                    <option value="Arial Black,Gadget,sans-serif" style="font-family: Arial Black,Gadget,sans-serif"
+                                        @selected(isset($tempData) && $tempData->font === 'Arial Black,Gadget,sans-serif')>
+                                        Arial Black
+                                    </option>
+                                    <option value="Comic Sans MS,cursive,sans-serif" style="font-family: Comic Sans MS,cursive,sans-serif"
+                                        @selected(isset($tempData) && $tempData->font === 'Comic Sans MS,cursive,sans-serif')>
+                                        Comic Sans MS
+                                    </option>
+                                    <option value="Impact,Charcoal,sans-serif" style="font-family: Impact,Charcoal,sans-serif"
+                                        @selected(isset($tempData) && $tempData->font === 'Impact,Charcoal,sans-serif')>
+                                        Impact
+                                    </option>
+                                    <option value="Lucida Sans Unicode,Lucida Grande,sans-serif" style="font-family: Lucida Sans Unicode,Lucida Grande,sans-serif"
+                                        @selected(isset($tempData) && $tempData->font === 'Lucida Sans Unicode,Lucida Grande,sans-serif')>
+                                        Lucida Sans Unicode
+                                    </option>
+                                    <option value="Tahoma,Geneva,sans-serif" style="font-family: Tahoma,Geneva,sans-serif"
+                                        @selected(isset($tempData) && $tempData->font === 'Tahoma,Geneva,sans-serif')>
+                                        Tahoma
+                                    </option>
+                                    <option value="Trebuchet MS,Helvetica,sans-serif" style="font-family: Trebuchet MS,Helvetica,sans-serif"
+                                        @selected(isset($tempData) && $tempData->font === 'Trebuchet MS,Helvetica,sans-serif')>
+                                        Trebuchet MS
+                                    </option>
+                                    <option value="Verdana,Geneva,sans-serif" style="font-family: Verdana,Geneva,sans-serif"
+                                        @selected(isset($tempData) && $tempData->font === 'Verdana,Geneva,sans-serif')>
+                                        Verdana
+                                    </option>
+                                    <option disabled style="font-weight: bold; background-color: #EEEEEE">Monospace Fonts</option>
+                                    <option value="Courier New,Courier,monospace" style="font-family: Courier New,Courier,monospace"
+                                        @selected(isset($tempData) && $tempData->font === 'Courier New,Courier,monospace')>
+                                        Courier New
+                                    </option>
+                                    <option value="Lucida Console,Monaco,monospace" style="font-family: Lucida Console,Monaco,monospace"
+                                        @selected(isset($tempData) && $tempData->font === 'Lucida Console,Monaco,monospace')>
+                                        Lucida Console
+                                    </option>
+                                </select>
+                                @error('font')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                            </div>
+                            <div class="row">
+                                <select class="form-select mt-3" name="font_size" aria-label="Font Size">
+                                    <option selected disabled>Font Size</option>
+                                    <option value="8px" @selected(isset($tempData) && $tempData->font_size === '8px')> 8px</option>
+                                    <option value="10px" @selected(isset($tempData) && $tempData->font_size === '10px')> 10px</option>
+                                    <option value="12px" @selected(isset($tempData) && $tempData->font_size === '12px')> 12px</option>
+                                    <option value="14px" @selected(isset($tempData) && $tempData->font_size === '14px')> 14px </option>
+                                    <option value="16px" @selected(isset($tempData) && $tempData->font_size === '16px')> 16px </option>
+                                    <option value="20px" @selected(isset($tempData) && $tempData->font_size === '20px')> 20px </option>
+                                    <option value="24px" @selected(isset($tempData) && $tempData->font_size === '24px')> 24px </option>
+                                    <option value="28px" @selected(isset($tempData) && $tempData->font_size === '28px')> 28px </option>
+                                    <option value="34px" @selected(isset($tempData) && $tempData->font_size === '34px')> 34px </option>
+                                    <option value="40px" @selected(isset($tempData) && $tempData->font_size === '40px')> 40px </option>
+                                    <option value="46px" @selected(isset($tempData) && $tempData->font_size === '46px')> 46px </option>
+                                    <option value="44px" @selected(isset($tempData) && $tempData->font_size === '44px')> 44px </option>
+                                    <option value="66px" @selected(isset($tempData) && $tempData->font_size === '66px')> 66px </option>
+                                    <option value="88px" @selected(isset($tempData) && $tempData->font_size === '88px')> 88px </option>
+                                </select>
+                                @error('font_size')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror
+                            </div>
                         </div>
                     </div>
 
@@ -144,7 +152,7 @@
                         <div class="boxinner">
 
                             <input type="hidden" name="form_type" value="form2">
-                            
+
                             <div class="textbox">
                                 <h6>Logo</h6>
 

@@ -227,7 +227,8 @@
                             icon: "success"
                         }).then((result) => {
                             if (result.isConfirmed) {
-                                window.location.reload(); // Reload the page
+                                window.location = "{{route('templates')}}";
+                                // window.location.reload(); // Reload the page
                             }
                         });
                     } else {

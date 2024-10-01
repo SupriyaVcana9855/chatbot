@@ -141,7 +141,7 @@
                                             </button>
                                             <ul class="dropdown-menu">
                                                 <li class="border-bottom"><a class="dropdown-item" href="{{route('addagentform',$details->id)}}">Edit <span><img src="{{asset('/assets/images/editicon.png')}}"></span></li></a>
-                                                <li><a class="dropdown-item" id="deleteagent" data-value="{{$details->id}}" href="#">Delete <span><img src="{{asset('/assets/images/boat/Vector (6).png')}}"></span></a></li>
+                                                <li><a class="dropdown-item" id="deleteagent" data-value="{{$details->id}}" href="javascript:;">Delete <span><img src="{{asset('/assets/images/boat/Vector (6).png')}}"></span></a></li>
                                             </ul>
                                         </div>
                                     </td>
@@ -161,7 +161,7 @@
 <script>
     $(document).ready(function() {
 
-         // Initialize DataTable
+        // Initialize DataTable
         let table = new DataTable('#agentTable', {
             language: {
                 emptyTable: "No data available" // Custom message
@@ -189,8 +189,12 @@
         });
 
         // Send the AJAX request to delete record in the backend
-        $("#deleteagent").click(function() {
-            const agentId = $('#deleteagent').data('value');
+
+
+        $(document).on('click', '#deleteagent', function(event) {
+            event.preventDefault(); // Prevent the default anchor behavior
+            const agentId = $(this).data('value'); // Use 'this' to get the correct data-value
+
 
             Swal.fire({
                 title: "Are you sure?",
@@ -222,7 +226,7 @@
                 }
             });
         });
-    
+
     });
 </script>
 @endsection

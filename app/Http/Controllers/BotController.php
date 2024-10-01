@@ -7,6 +7,13 @@ use Storage;
 
 class BotController extends Controller
 {
+
+
+    public function userbots()
+    {
+        $bots = ChatBot::where('user_id',Auth::user()->id)->get();
+        return view('bots.bots',compact('bots'));
+    }
     public function setup($id)
     {
         $scriptId = 2; 
@@ -15,7 +22,13 @@ class BotController extends Controller
     }
     public function bots()
     {
-        $bots = ChatBot::all();
+        if(Auth::user()->role == 1)
+        {
+            $bots = ChatBot::all();
+        }else
+        {
+            $bots = ChatBot::where('user_id',Auth::user()->id)->get();
+        }
         return view('bots.bots',compact('bots'));
     }
     public function agent()

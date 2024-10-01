@@ -9,18 +9,19 @@ use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
 
-class TestEmail extends Mailable
+class ForgetPassword extends Mailable
 {
     use Queueable, SerializesModels;
+    public $details;
 
     /**
      * Create a new message instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct($details)
     {
-        //
+       $this->details = $details;
     }
 
     /**
@@ -31,7 +32,7 @@ class TestEmail extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'Test Email',
+            subject: 'ForgetPassword',
         );
     }
 
@@ -43,7 +44,7 @@ class TestEmail extends Mailable
     public function content()
     {
         return new Content(
-            view: 'view.name',
+            view: 'emails.forget_password',
         );
     }
 

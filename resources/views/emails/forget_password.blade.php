@@ -48,12 +48,13 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>OTP Verification</h1>
+            <h1>Reset Password</h1>
         </div>
         <div class="content">
             <p>Dear {{ $details['title']  }}</p>
-            <p>Your OTP code is <span class="otp-code">{{ $details['otp'] }}</span>.</p>
-            <p>Please enter this code to complete your verification.</p>
+            <p>Please click onthe given link to reset your password <span class="otp-code">{{ $details['url'] }}</span>.</p>
+            <p>Use this otp for reset password <span class="otp-code">{{ $details['otp'] }}</span>.</p>
+            <p>{{ $details['body'] }}</p>
         </div>
         <div class="footer">
             <p>Thank you for using our service!</p>

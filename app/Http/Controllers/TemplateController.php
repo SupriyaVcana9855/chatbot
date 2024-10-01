@@ -38,8 +38,8 @@ class TemplateController extends Controller
 
     public function addBotTemplate(Request $request)
     {
-
         $tempData = json_decode($request->tempData, true);
+        // dd($tempData);
 
         if (is_array($tempData)) {
             $chatBot = ChatBot::create([

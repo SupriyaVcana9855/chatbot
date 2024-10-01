@@ -143,7 +143,7 @@
 <script>
     $(document).ready(function() {
         const temp = <?php echo json_encode($templates); ?>;
-        console.log(temp);
+        // console.log(temp);
 
         // Apply the font, font size, and alignment to the chat container
         $('.chat-container-temp').css({
@@ -180,7 +180,8 @@
 
         $('#add-bot-template').on('submit', function(e) {
             e.preventDefault(); // Prevent form submission
-
+            const temp = <?php echo json_encode($templates); ?>;
+        
             var bot_name = $('#bot_name').val();
             var type = $('#type').val();
             var isValid = true; // Flag to check if the form is valid
@@ -205,6 +206,7 @@
                 const formData = new FormData();
                 formData.append('bot_name', bot_name);
                 formData.append('type', type);
+                formData.append('tempData', JSON.stringify(temp)); // Ensure tempData is serialized as JSON
 
                 $.ajaxSetup({
                     headers: {
@@ -221,7 +223,7 @@
                 }).done(function(response) {
                     if (response.success === true) {
                         Swal.fire({
-                            title: "Template added successfully.",
+                            title: "Template added successfully. Please check bot in bot section",
                             icon: "success"
                         }).then((result) => {
                             if (result.isConfirmed) {

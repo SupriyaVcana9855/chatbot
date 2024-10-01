@@ -72,13 +72,13 @@
                         <td><button class="btn btn-outline-secondary">
                                 <img src="./assets/images/boat/Triggers.png" title="Bot Notifications">
                             </button></td>
-                        <td><button class="btn btn-outline-secondary">
-                                <a href="{{ route('botChat',$bot->id) }}"> <img src="./assets/images/boat/Bot Chats.png" title="Bot Chat">
+                        <td><button class="btn btn-outline-secondary" >
+                                <a href="{{ route('botChat',$bot->id) }}"> <img src="./assets/images/boat/Bot Chats.png" title="Bot Chat" >
                                 </a></button></td>
 
                         @if($bot->type == 'support')
                         <td><button class="btn btn-outline-secondary">
-                                <a href="{{ route('singleBotFaqListing',$bot->id) }}"> <img src="./assets/images/totalchat.png" title="Bot faq">
+                                <a href="{{ route('singleBotFaqListing',$bot->id) }}"> <img src="./assets/images/totalchat.png" title="Bot faq" style="height: 23px;">
                                     @else
                                 </a></button></td>
                         <td><button class="btn btn-outline-secondary">

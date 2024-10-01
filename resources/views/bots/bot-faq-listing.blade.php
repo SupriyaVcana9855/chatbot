@@ -1,44 +1,44 @@
 @extends('layout.app')
 @section('content')
 <style>
-        .bot-option {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 15px;
-            border: 1px solid #dee2e6;
-            border-radius: 5px;
-            margin-bottom: 10px;
-            cursor: pointer;
-        }
+    .bot-option {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 15px;
+        border: 1px solid #dee2e6;
+        border-radius: 5px;
+        margin-bottom: 10px;
+        cursor: pointer;
+    }
 
-        .bot-option:hover {
-            background-color: #f8f9fa;
-        }
+    .bot-option:hover {
+        background-color: #f8f9fa;
+    }
 
-        .bot-option i {
-            height: 24px;
-            margin-right: 15px;
-        }
+    .bot-option i {
+        height: 24px;
+        margin-right: 15px;
+    }
 
-        .modal-body {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
+    .modal-body {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
 
-        .modal-body {
-            text-align: center;
-        }
+    .modal-body {
+        text-align: center;
+    }
 
-        .modal-body p {
-            margin-bottom: 20px;
-        }
+    .modal-body p {
+        margin-bottom: 20px;
+    }
 
-        .btn-template {
-            margin-bottom: 10px;
-        }
-    </style>
+    .btn-template {
+        margin-bottom: 10px;
+    }
+</style>
 
 <div class="boxpadding ">
     <div class="row searchi-section mt-4">
@@ -48,7 +48,7 @@
         <div class="col-4 set-boat-heading">
             <button class="btn btn-primary" style="margin-top: 40px; margin-left : 950px"><a style="color: black;" href="{{ route('faq', ['id' => $id]) }}">+Add</a></button>
         </div>
-  
+
         <div class="row bottable">
             @if (session('success'))
             <div class="col-sm-12">
@@ -115,47 +115,48 @@
     <script>
         $(document).ready(function() {
             $('#myTable').DataTable();
-      
-        $('.selctQuestion').on('change', function() {
-            var question1 = $(this).attr('data-question1-id');
-            var question2 = $(this).val();
-            var bot_id = $('#bot_id').val();
-            $.ajax({
-                url: "{{ route('addQuestionFlow') }}",
-                method: 'POST',
-                data: {
-                    _token: "{{ csrf_token() }}", // CSRF token for security
-                    question_1: question1,
-                    question_2: question2,
-                    bot_id: bot_id,
-                },
-                success: function(data) {
-                    alert("Sequence Saved successfully.");
 
-                    // Clear existing options in select (except the first default option)
-                    $('.selctQuestion').empty().append('<option selected>Choose A Question</option>');
+            $('.selctQuestion').on('change', function() {
+                var question1 = $(this).attr('data-question1-id');
+                var question2 = $(this).val();
+                var bot_id = $('#bot_id').val();
+                $.ajax({
+                    url: "{{ route('addQuestionFlow') }}",
+                    method: 'POST',
+                    data: {
+                        _token: "{{ csrf_token() }}", // CSRF token for security
+                        question_1: question1,
+                        question_2: question2,
+                        bot_id: bot_id,
+                    },
+                    success: function(data) {
+                        alert("Sequence Saved successfully.");
 
-                    // Loop through the data and append new options
-                    data.forEach(function(item) {
-                        $('.selctQuestion').append('<option value="' + item.id + '">' + item.question + '</option>');
-                    });
-                },
-                error: function(error) {
-                    alert("sscs");
+                        // Clear existing options in select (except the first default option)
+                        $('.selctQuestion').empty().append('<option selected>Choose A Question</option>');
 
-                    console.error('Error:', error);
-                }
+                        // Loop through the data and append new options
+                        data.forEach(function(item) {
+                            $('.selctQuestion').append('<option value="' + item.id + '">' + item.question + '</option>');
+                        });
+                    },
+                    error: function(error) {
+                        alert("sscs");
+
+                        console.error('Error:', error);
+                    }
+                });
+
+
+
             });
 
 
-            
-        });
+            // Send the AJAX request to delete record in the backend
+            $(document).on('click', '#deleteFaq', function(event) {
+                event.preventDefault(); // Prevent the default anchor behavior
+                const deleteFaqId = $(this).data('value'); // Use 'this' to get the correct data-value
 
-
-        // Send the AJAX request to delete record in the backend
-        $(document).on('click', '#deleteFaq', function(event) {
-            event.preventDefault(); // Prevent the default anchor behavior
-                const deleteFaqId = $('#deleteFaq').data('value');
                 Swal.fire({
                     title: "Are you sure?",
                     text: "You won't delete this Question!",
@@ -166,27 +167,32 @@
                     confirmButtonText: "Yes"
                 }).then((result) => {
                     if (result.isConfirmed) {
-                        // Send the AJAX request to change status in the backend
+                        // Send the AJAX request to delete the FAQ
                         $.ajax({
-                            type: "GET",
-                            url: "{{route('deleteFaq')}}" + '/' + deleteFaqId,
+                            type: "GET", // Use DELETE method for deleting
+                            url: "{{ route('deleteFaq', '') }}" + '/' + deleteFaqId, // Use the route correctly
                             success: function(data) {
                                 Swal.fire({
                                     title: "Deleted!",
                                     text: "Faq has been deleted.",
                                     icon: "success"
-                                }).then((result) => {
-                                    if (result.isConfirmed) {
-                                        window.location.reload();
-                                    }
+                                }).then(() => {
+                                    window.location.reload(); // Reload the page
+                                });
+                            },
+                            error: function(xhr) {
+                                Swal.fire({
+                                    title: "Error!",
+                                    text: "There was a problem deleting the FAQ.",
+                                    icon: "error"
                                 });
                             }
                         });
-
                     }
                 });
             });
         });
+
 
         function dataType(data) {
             $('#bottype').val(data);

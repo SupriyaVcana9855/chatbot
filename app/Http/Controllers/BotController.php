@@ -61,6 +61,7 @@ class BotController extends Controller
     public function updateBot(Request $request)
     {
     
+        // dd($request->all());
         // Validate input data
         // $validated = $request->validate([
         //     'name' => 'required|unique:chat_bots,name,' . $request->bot_id . '|max:20|min:3', // Ignore the current bot name during unique check

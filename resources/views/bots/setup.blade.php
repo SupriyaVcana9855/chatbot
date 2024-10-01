@@ -58,57 +58,113 @@
                                                 </div>
                                                 <div class="input-group flex-nowrap mt-3">
                                                     <input type="text" class="form-control" placeholder="Bot Name"
-                                                        aria-label="Bot Name" name="name"
+                                                        aria-label="Bot Name" name="name" value="{{$bot->name ?? ''}}"
                                                         aria-describedby="addon-wrapping">
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text" id="addon-wrapping"><i
-                                                                class="bi bi-info-circle-fill"></i>
-                                                            <div class="hideshowbox">
-                                                                <p>Here is a dummy content</p>
-                                                            </div>
-                                                        </span>
-                                                    </div>
                                                 </div>
+                                                <!-- @error('name')
+                        <span class="text-danger">{{ $message }}</span>
+                        @enderror -->
                                                 <div class="input-group flex-nowrap mt-3">
                                                     <input type="text" class="form-control" placeholder="Welcome Text"
-                                                        aria-label="Welcome Text" name="intro_message"
+                                                        aria-label="Welcome Text" name="intro_message" value="{{$bot->intro_message ?? ''}}"
                                                         aria-describedby="addon-wrapping">
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text" id="addon-wrapping"><i
-                                                                class="bi bi-info-circle-fill"></i>
-                                                            <div class="hideshowbox">
-                                                                <p>Here is a dummy content</p>
-                                                            </div>
-                                                        </span>
-                                                    </div>
+                                                  
                                                 </div>
                                                 <div class="input-group flex-nowrap mt-3">
                                                     <input type="text" class="form-control"
                                                         placeholder="Bot Description" aria-label="Bot Description"
-                                                        name="description" aria-describedby="addon-wrapping">
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-text" id="addon-wrapping"><i
-                                                                class="bi bi-info-circle-fill"></i>
-                                                            <div class="hideshowbox">
-                                                                <p>Here is a dummy content</p>
-                                                            </div>
-                                                        </span>
-                                                    </div>
+                                                        name="description" value="{{$bot->description ?? ''}}" aria-describedby="addon-wrapping">
+                                                    
+                                                </div>
+                                                <div class="row">
+
+                                                    <select class="form-select mt-3" name="font" aria-label="Choose A Font">
+                                                        <option selected disabled>Choose A Font Family</option>
+                                                        <option disabled style="font-weight: bold; background-color: #EEEEEE">Serif Fonts</option>
+                                                        <option value="Georgia,serif" style="font-family: Georgia, serif;"
+                                                            @selected(isset($bot) && $bot->font === 'Georgia,serif')>
+                                                            Georgia
+                                                        </option>
+                                                        <option value="Palatino Linotype,Book Antiqua,Palatino,serif" style="font-family: Palatino Linotype,Book Antiqua,Palatino,serif"
+                                                            @selected(isset($bot) && $bot->font === 'Palatino Linotype,Book Antiqua,Palatino,serif')>
+                                                            Palatino Linotype
+                                                        </option>
+                                                        <option value="Times New Roman,Times,serif" style="font-family: Times New Roman,Times,serif"
+                                                            @selected(isset($bot) && $bot->font === 'Times New Roman,Times,serif')>
+                                                            Times New Roman
+                                                        </option>
+                                                        <option disabled style="font-weight: bold; background-color: #EEEEEE">Sans-Serif Fonts</option>
+                                                        <option value="Arial,Helvetica,sans-serif" style="font-family: Arial,Helvetica,sans-serif"
+                                                            @selected(isset($bot) && $bot->font === 'Arial,Helvetica,sans-serif')>
+                                                            Arial
+                                                        </option>
+                                                        <option value="Arial Black,Gadget,sans-serif" style="font-family: Arial Black,Gadget,sans-serif"
+                                                            @selected(isset($bot) && $bot->font === 'Arial Black,Gadget,sans-serif')>
+                                                            Arial Black
+                                                        </option>
+                                                        <option value="Comic Sans MS,cursive,sans-serif" style="font-family: Comic Sans MS,cursive,sans-serif"
+                                                            @selected(isset($bot) && $bot->font === 'Comic Sans MS,cursive,sans-serif')>
+                                                            Comic Sans MS
+                                                        </option>
+                                                        <option value="Impact,Charcoal,sans-serif" style="font-family: Impact,Charcoal,sans-serif"
+                                                            @selected(isset($bot) && $bot->font === 'Impact,Charcoal,sans-serif')>
+                                                            Impact
+                                                        </option>
+                                                        <option value="Lucida Sans Unicode,Lucida Grande,sans-serif" style="font-family: Lucida Sans Unicode,Lucida Grande,sans-serif"
+                                                            @selected(isset($bot) && $bot->font === 'Lucida Sans Unicode,Lucida Grande,sans-serif')>
+                                                            Lucida Sans Unicode
+                                                        </option>
+                                                        <option value="Tahoma,Geneva,sans-serif" style="font-family: Tahoma,Geneva,sans-serif"
+                                                            @selected(isset($bot) && $bot->font === 'Tahoma,Geneva,sans-serif')>
+                                                            Tahoma
+                                                        </option>
+                                                        <option value="Trebuchet MS,Helvetica,sans-serif" style="font-family: Trebuchet MS,Helvetica,sans-serif"
+                                                            @selected(isset($bot) && $bot->font === 'Trebuchet MS,Helvetica,sans-serif')>
+                                                            Trebuchet MS
+                                                        </option>
+                                                        <option value="Verdana,Geneva,sans-serif" style="font-family: Verdana,Geneva,sans-serif"
+                                                            @selected(isset($bot) && $bot->font === 'Verdana,Geneva,sans-serif')>
+                                                            Verdana
+                                                        </option>
+                                                        <option disabled style="font-weight: bold; background-color: #EEEEEE">Monospace Fonts</option>
+                                                        <option value="Courier New,Courier,monospace" style="font-family: Courier New,Courier,monospace"
+                                                            @selected(isset($bot) && $bot->font === 'Courier New,Courier,monospace')>
+                                                            Courier New
+                                                        </option>
+                                                        <option value="Lucida Console,Monaco,monospace" style="font-family: Lucida Console,Monaco,monospace"
+                                                            @selected(isset($bot) && $bot->font === 'Lucida Console,Monaco,monospace')>
+                                                            Lucida Console
+                                                        </option>
+
+                                                    </select>
+                                                    <!-- @error('font')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror -->
+                                                </div>
+                                                <div class="row">
+                                                    <select class="form-select mt-3" name="font_size"
+                                                        aria-label="Font Size">
+                                                        <option selected disabled>Font Size</option>
+                                                        <option value="8px" @selected(isset($bot) && $bot->font_size === '8px')> 8px</option>
+                                                        <option value="10px" @selected(isset($bot) && $bot->font_size === '10px')> 10px</option>
+                                                        <option value="12px" @selected(isset($bot) && $bot->font_size === '12px')> 12px</option>
+                                                        <option value="14px" @selected(isset($bot) && $bot->font_size === '14px')> 14px </option>
+                                                        <option value="16px" @selected(isset($bot) && $bot->font_size === '16px')> 16px </option>
+                                                        <option value="20px" @selected(isset($bot) && $bot->font_size === '20px')> 20px </option>
+                                                        <option value="24px" @selected(isset($bot) && $bot->font_size === '24px')> 24px </option>
+                                                        <option value="28px" @selected(isset($bot) && $bot->font_size === '28px')> 28px </option>
+                                                        <option value="34px" @selected(isset($bot) && $bot->font_size === '34px')> 34px </option>
+                                                        <option value="40px" @selected(isset($bot) && $bot->font_size === '40px')> 40px </option>
+                                                        <option value="46px" @selected(isset($bot) && $bot->font_size === '46px')> 46px </option>
+                                                        <option value="44px" @selected(isset($bot) && $bot->font_size === '44px')> 44px </option>
+                                                        <option value="66px" @selected(isset($bot) && $bot->font_size === '66px')> 66px </option>
+                                                        <option value="88px" @selected(isset($bot) && $bot->font_size === '88px')> 88px </option>
+                                                    </select>
+                                                    <!-- @error('font_size')
+                            <span class="text-danger">{{ $message }}</span>
+                            @enderror -->
                                                 </div>
 
-                                                <select class="form-select mt-3" name="font" aria-label="Choose A Font">
-                                                    <option selected>Choose A Font</option>
-                                                    <option value="1">Font 1</option>
-                                                    <option value="2">Font 2</option>
-                                                    <option value="3">Font 3</option>
-                                                </select>
-                                                <select class="form-select mt-3" name="font_size"
-                                                    aria-label="Font Size">
-                                                    <option selected>Font Size</option>
-                                                    <option value="1">Size 1</option>
-                                                    <option value="2">Size 2</option>
-                                                    <option value="3">Size 3</option>
-                                                </select>
 
                                             </form>
                                         </div>
@@ -232,7 +288,7 @@
                                                         </i>
                                                     </h6>
                                                     <div class="flxbox">
-                                                        <div class="bottonbg innerflxbox2 "  >
+                                                        <div class="bottonbg innerflxbox2 ">
                                                             <input class="activein bot_position" data-attr="right">
                                                         </div>
                                                         <div class="innerflxbox bottonbg">
@@ -338,7 +394,7 @@
                                         <div class="boxinner">
                                             <form action="{{route('updateBot')}}" method="post">
                                                 @csrf
-                                                                                                <input type="hidden" name="form_type" value="form4">
+                                                <input type="hidden" name="form_type" value="form4">
 
                                                 <input type="hidden" name="bot_id" value="{{$id}}">
                                                 <div class="textbox">
@@ -495,7 +551,7 @@
                                 </div>
                             </div>
                         </div>
-                       
+
                     </div>
                 </div>
             </div>
@@ -509,47 +565,47 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
-$(document).ready(function() {
-    $('.button_design').on('click', function() {
-        var design = $(this).val();
-        $('#button_design').val(design);
-    });
-    $('.text_alignment').on('click', function() {
-        var alignment = $(this).val();
-        $('#text_alignment').val(alignment);
-    });
- 
-$('.bottonbg').on('click', function() {
-    $('.bottonbg').removeClass('active');
-    $(this).addClass('active');
-    $('.bottonbg').css('border', 'none'); // Remove borders from all
-    $(this).css('border', '4px solid #03c7fb');   // Add border to the clicked element
-    var bot_position = $(this).find('.bot_position').attr('data-attr');
-    $('#bot_position').val(bot_position);
-});
+    $(document).ready(function() {
+        $('.button_design').on('click', function() {
+            var design = $(this).val();
+            $('#button_design').val(design);
+        });
+        $('.text_alignment').on('click', function() {
+            var alignment = $(this).val();
+            $('#text_alignment').val(alignment);
+        });
 
-    $('.selectImg').on('click', function() {
-        $('.clickImage').click(); // Simulate a click on the element with class 'clickImage'
-    });
-    $('.imgarea img').on('click', function() {
-        var newSrc = $(this).attr('src');
-        $('#companyLogo').attr('src', newSrc);
-        $('#selectedAvatar').val(newSrc);
-    });
-    $('.clickImage').on('change', function() {
-        if (this.files && this.files[0]) {
-            var reader = new FileReader();
-            reader.onload = function(e) {
-                $('#companyLogo').attr('src', e.target.result);
+        $('.bottonbg').on('click', function() {
+            $('.bottonbg').removeClass('active');
+            $(this).addClass('active');
+            $('.bottonbg').css('border', 'none'); // Remove borders from all
+            $(this).css('border', '4px solid #03c7fb'); // Add border to the clicked element
+            var bot_position = $(this).find('.bot_position').attr('data-attr');
+            $('#bot_position').val(bot_position);
+        });
+
+        $('.selectImg').on('click', function() {
+            $('.clickImage').click(); // Simulate a click on the element with class 'clickImage'
+        });
+        $('.imgarea img').on('click', function() {
+            var newSrc = $(this).attr('src');
+            $('#companyLogo').attr('src', newSrc);
+            $('#selectedAvatar').val(newSrc);
+        });
+        $('.clickImage').on('change', function() {
+            if (this.files && this.files[0]) {
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    $('#companyLogo').attr('src', e.target.result);
+                }
+                reader.readAsDataURL(this.files[0]); // Convert the file to a data URL
             }
-            reader.readAsDataURL(this.files[0]); // Convert the file to a data URL
-        }
+        });
     });
-});
 
-$('#progressBar').on('change', function() {
-    var radius = $(this).val();
-    $('#dynamicButton').css('border-radius', radius + '%');
-})
+    $('#progressBar').on('change', function() {
+        var radius = $(this).val();
+        $('#dynamicButton').css('border-radius', radius + '%');
+    })
 </script>
 @endsection

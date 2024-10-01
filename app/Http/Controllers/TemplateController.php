@@ -84,11 +84,14 @@ class TemplateController extends Controller
 
     public function saveTemplate(Request $request) {
         // Validate the request data
+        // dd($request->all());
         $validated = $request->validate(
             [
                 'name' => 'required',
                 'temp_title' => 'required|string|min:10',
                 'temp_description' => 'required|string|min:20',
+                'font' => 'required',
+                'font_size' => 'required',
             ],
             [
                 'name.required' => 'The name field is required.',
@@ -97,6 +100,8 @@ class TemplateController extends Controller
                 'temp_title.min' => 'The title must be at least 10 characters long.',
                 'temp_description.required' => 'The description field is required.',
                 'temp_description.min' => 'The description must be at least 20 characters long.',
+                'font.required' => 'The font field is required.',
+                'font_size.required' => 'The font size field is required.',
             ]
         );
     
@@ -142,11 +147,11 @@ class TemplateController extends Controller
         $tempData->description = $request->description;
         $tempData->font = $request->font;
         $tempData->font_size = $request->font_size;
-        $tempData->button_design = $request->button_design;
+        $tempData->button_design = $radiusValueData;
         $tempData->text_alignment = $request->text_alignment;
         $tempData->bot_position = $request->position;
         $tempData->radius = $radiusValueData;
-        $tempData->main_color = $request->main_color;
+        $tempData->main_color = $request->header_color;
         $tempData->header_color = $request->header_color;
         $tempData->background_color = $request->background_color;
         $tempData->question_color = $request->question_color;

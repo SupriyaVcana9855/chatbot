@@ -21,7 +21,7 @@
 </head>
 
 <body>
-
+    
   <section class="login-container">
     <div class="container ">
       <div class="row">
@@ -81,6 +81,14 @@
                 <div class="col-lg-8 set_pass ">
                   <a href="{{ route('forgetpassword') }}">Forgot Password?</a>
                 </div>
+
+                  @if (session('error'))
+                    <div class="col-sm-12">
+                        <div class="alert  alert-danger " role="alert">
+                            {{ session('error') }}
+                        </div>
+                    </div>
+                  @endif
                 <div class=" col-12 set_sign">
                 <button type="submit" class="setBtn_primary signin_button">Sign In</button>
               </div>

@@ -48,7 +48,7 @@ class AuthController extends Controller
             }
         }
     
-        return redirect()->back()->withErrors('Invalid credentials');
+        return redirect()->back()->with('error', 'Invalid credentials');
     }
     public function signup(Request $request)
     {
@@ -99,6 +99,13 @@ class AuthController extends Controller
     }
     public function forgetpassword(Request $request)
     {
+        $request->validate([
+            'email' => 'required|email',
+        ], [
+            'email.required' => 'Please enter your email address.',
+            'email.email' => 'The email address format is not valid.',
+           
+        ]);
         $otp = rand(100000, 999999);
         $user = User::where('email',$request->email)->first();
         
@@ -185,5 +192,6 @@ class AuthController extends Controller
         {
             return redirect()->intended('otpverify');
         }
+        
     }
 }

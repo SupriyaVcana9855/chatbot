@@ -73,10 +73,20 @@
               @csrf
               <div class="row set-data">
                 <div class="form-group col-lg-12  mt-3 ">
-                  <input type="email" class="form-control mt-3" name="email" id="email" placeholder="Enter Your Email" >
+                  <input type="email" class="form-control mt-3  @error('email') is-invalid @enderror" name="email" id="email" placeholder="Enter Your Email" >
+                    @error('email')
+                      <div style="color:red">{{ $message }}</div>
+                    @enderror
                 </div>
                 <h6 class="text-center mt-3 mb-3">Enter the email address and then the <br>confirmation email will be sent</h6>
                 <div class=" col-12 set_sign mt-3">
+                   @if (session('error'))
+                    <div class="col-sm-12">
+                        <div class="alert  alert-danger " role="alert">
+                            {{ session('error') }}
+                        </div>
+                    </div>
+                  @endif
                 <button type="submit" class="verify_button">Verify Email</button>
               </div>
               </div>

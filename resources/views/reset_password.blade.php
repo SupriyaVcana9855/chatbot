@@ -89,6 +89,13 @@
                       <div style="color:red">{{ $message }}</div>
                   @enderror
                 </div>
+                   @if (session('error'))
+                    <div class="col-sm-12">
+                        <div class="alert  alert-danger " role="alert">
+                            {{ session('error') }}
+                        </div>
+                    </div>
+                  @endif
                   <div class="col-lg-8 set_pass ">
                   <a href="{{ route('forgetpassword') }}" style="margin-right: 110px;">Resend Otp</a>
                 </div>

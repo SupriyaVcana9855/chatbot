@@ -220,6 +220,7 @@
                                                     <div class="imgboxhead">
                                                         <button type="submit" class="btn btn-primary"
                                                             style="width: 86px;">Save</button>
+                                     
                                                     </div>
                                                 </div>
                                                 <div class="border-r mt-3 mb-3">

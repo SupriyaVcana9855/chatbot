@@ -50,7 +50,7 @@ echo 'sadaaaaaaaaa', $id;
                                     @foreach ($botQuestions->options as $key => $option)
                                     <div class="row option-row">
                                         <div class="col-md-11 mt-2">
-                                            <label for="option-input" class="form-label">Option {{$key+1}}</label>
+                                            <label for="option-input" class="form-label">Option</label>
                                             <input type="text" class="form-control" placeholder="Enter option " name="questions[0][options][]" value="{{$option?? ''}}">
                                         </div>
                                         @if ($key != 0)
@@ -65,8 +65,8 @@ echo 'sadaaaaaaaaa', $id;
                                     @else
 
                                     <div class="col-md-12 mb-3">
-                                        <label for="option-input" class="form-label mb-3">Option 1</label>
-                                        <input type="text" class="form-control" placeholder="Enter option 1" name="questions[0][options][]" value="{{$option?? ''}}">
+                                        <label for="option-input" class="form-label mb-3">Option</label>
+                                        <input type="text" class="form-control" placeholder="Enter option" name="questions[0][options][]" value="{{$option?? ''}}">
                                     </div>
                                     @endif
 
@@ -111,8 +111,8 @@ echo 'sadaaaaaaaaa', $id;
             let newOptionsBlock = `
             <div class="row option-row">
                 <div class="col-md-11 mt-2">
-                    <label for="option-input" class="form-label">Option ${optionCount}</label>
-                    <input type="text" class="form-control" placeholder="Enter option ${optionCount}" name="questions[${currentQuestionIndex}][options][]">
+                    <label for="option-input" class="form-label">Option</label>
+                    <input type="text" class="form-control" placeholder="Enter option" name="questions[${currentQuestionIndex}][options][]">
                 </div>
                 <div class="col-md-1 mt-2 mb-1 d-flex justify-content-end">
                     <button type="button" class="btn btn-danger" onclick="removeRow(this)">x</button>
@@ -138,8 +138,8 @@ echo 'sadaaaaaaaaa', $id;
                 </div>
                 <div class="row addMoreOptions">
                     <div class="col-md-12 mb-3">
-                        <label for="option-input" class="form-label mb-3">Option 1</label>
-                        <input type="text" class="form-control" placeholder="Enter option 1" name="questions[${questionIndex}][options][]">
+                        <label for="option-input" class="form-label mb-3">Option</label>
+                        <input type="text" class="form-control" placeholder="Enter option" name="questions[${questionIndex}][options][]">
                     </div>
                 </div>
                 <div class="mt-4">

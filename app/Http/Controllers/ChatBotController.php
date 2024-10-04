@@ -10,8 +10,12 @@ use App\Models\QuestionAnswer;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use App\Models\BotUser;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\DB;
 
-
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Response;
 class ChatBotController extends Controller
 {
 
@@ -85,6 +89,32 @@ class ChatBotController extends Controller
         $questionsDelete->delete();
         return redirect()->back()->with('success', 'Question deleted successfully.');
     }
+
+    
+    public function downloadHistoryPdf($id)
+{
+    // Retrieve the data needed for the PDF
+    $data = QuestionAnswer::with('botUser', 'botQuestion')
+        ->where('bot_user_id', $id)
+        ->orWhere('bot_user_id', null)
+        ->get();
+
+    // Check if data is being retrieved correctly
+    if ($data->isEmpty()) {
+        return back()->withErrors('No data found for the selected user.');
+    }
+
+    // Load the view and pass the data
+    $pdf = Pdf::loadView('bots.chat-history', compact('data'));
+// dd($pdf );
+    // return view('bots.chat-history', compact('data'));
+
+    // Return the generated PDF for download
+    return $pdf->download('chat-history.pdf');
+}
+
+    
+    
 
     public function addQuestion(Request $request)
     {
@@ -258,20 +288,22 @@ class ChatBotController extends Controller
             }
         }
 
-
-
         $botUserData = BotUser::find($request->bot_user_id);
-        if (!$botUserData) {
-            $botUserData = new BotUser;
-            $botUserData->chat_bot_id = $bot->id;
-            //$botUserData->$coloum = $message;
-            $botUserData->save();
-        } else {
-            if ($coloum != '') {
-                $botUserData->$coloum = $message;
+        if($request->bot_id !='0')
+        {
+            if (!$botUserData) {
+                $botUserData = new BotUser;
+                $botUserData->chat_bot_id = $bot->id;
+                //$botUserData->$coloum = $message;
                 $botUserData->save();
+            } else {
+                if ($coloum != '') {
+                    $botUserData->$coloum = $message;
+                    $botUserData->save();
+                }
             }
         }
+       
 
         $saveanswer = new QuestionAnswer;
         $saveanswer->bot_question_id = ($question) ? $question->id : '0';
@@ -279,7 +311,7 @@ class ChatBotController extends Controller
         $saveanswer->user_id = 1; //chat bot ka malik 
         $saveanswer->chat_bot_id = $bot->id;
         $saveanswer->status = '1';
-        $saveanswer->bot_user_id = $botUserData->id; // kon chat krne aaya
+        $saveanswer->bot_user_id = ($botUserData)?$botUserData->id:$request->bot_user_id; // kon chat krne aaya
         $saveanswer->save();
 
 
@@ -508,6 +540,10 @@ class ChatBotController extends Controller
                                             <div class='closeicon'>
                                                 <img src='" . asset('assets/images/close.png') . "' id='close-chat-icon'>
                                             </div>
+                                            <div>
+                                                <img class='download-history' src='".asset('assets/images/download.png')."' style='width: 13px; margin-left: 10px;' data-id='$chatbot->id'>
+                                            </div>
+
                                         </div>
                                     </div>
                                     <div class='chat-body'>
@@ -895,7 +931,6 @@ class ChatBotController extends Controller
                     $('#close-chat-icon').on('click', function() {
                         $('#chat-container').hide();
                     });
-
                 });
         
             }

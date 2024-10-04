@@ -88,6 +88,9 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/add-questions/{bot_id?}/{questionId?}', [ChatBotController::class, 'botQuestion'])->name('botQuestion');
     Route::get('/delete-questions/{id?}',[ChatBotController::class,'questionsDelete'])->name('questionsDelete');
 
+    Route::get('/download-history-pdf/{id?}',[ChatBotController::class,'downloadHistoryPdf'])->name('download-history-pdf');
+
+
 
     Route::get('templates', [TemplateController::class, 'templates'])->name('templates');
     Route::get('template-view/{id?}', [TemplateController::class, 'templateView'])->name('templateview');

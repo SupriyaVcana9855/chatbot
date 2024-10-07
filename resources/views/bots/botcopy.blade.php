@@ -3,121 +3,175 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dynamic Question Form</title>
+    <title>Dynamic Tree Structure for Chatbot</title>
     <style>
-        .question, .option, .sub-question {
-            margin-bottom: 15px;
+        .question-block, .option-block, .sub-question-block {
+            margin: 10px 0;
             padding: 10px;
-            border: 1px solid #ccc;
+            border: 1px solid #ddd;
+            background-color: #f9f9f9;
+        }
+        button {
+            margin-left: 10px;
         }
     </style>
 </head>
 <body>
 
-<form id="questionForm">
-    <div id="questionsContainer">
-        <div class="question">
-            <label>Question:</label>
-            <input type="text" name="question_text[]" placeholder="Enter your question">
-            <button type="button" class="add-option">Add Option</button>
-            <div class="optionsContainer"></div>
-        </div>
+<!-- Section to add the first question -->
+<div id="first-question-section">
+    <label>First Question:</label>
+    <input type="text" id="first-question-input" placeholder="Enter the first question">
+    <button onclick="addFirstQuestion()">Add First Question</button>
+</div>
+
+<!-- Tree container for the questions -->
+<div id="tree-container">
+    <!-- The tree will be appended here -->
+</div>
+
+<!-- Option template (hidden) -->
+<div id="option-template" style="display: none;">
+    <div class="option-block">
+        <input type="text" placeholder="Enter option text">
+        <button onclick="addSubQuestion(this)">Add Sub-question</button>
+        <button onclick="removeOption(this)">Remove Option</button>
     </div>
-    <button type="button" id="add-question">Add Question</button>
-    <button type="submit">Submit</button>
-</form>
+</div>
+
+<!-- Template for sub-question -->
+<div id="sub-question-template" style="display: none;">
+    <div class="sub-question-block">
+        <label>Sub-question:</label>
+        <input type="text" placeholder="Enter sub-question">
+        <button onclick="addOption(this)">Add Option</button>
+        <button onclick="removeSubQuestion(this)">Remove Sub-question</button>
+    </div>
+</div>
+
+<button onclick="submitData()">Save Data</button>
 
 <script>
-document.getElementById('add-question').addEventListener('click', function() {
-    const questionsContainer = document.getElementById('questionsContainer');
+// Add the first question into the tree
+function addFirstQuestion() {
+    let firstQuestionInput = document.getElementById('first-question-input').value;
     
-    const newQuestionDiv = document.createElement('div');
-    newQuestionDiv.className = 'question';
-    
-    newQuestionDiv.innerHTML = `
-        <label>Question:</label>
-        <input type="text" name="question_text[]" placeholder="Enter your question">
-        <button type="button" class="add-option">Add Option</button>
-        <div class="optionsContainer"></div>
-    `;
-    
-    questionsContainer.appendChild(newQuestionDiv);
-    
-    // Attach event listener to new option button
-    newQuestionDiv.querySelector('.add-option').addEventListener('click', function() {
-        addOption(newQuestionDiv.querySelector('.optionsContainer'));
-    });
-});
-
-// Function to add an option with sub-questions
-function addOption(optionsContainer) {
-    const newOptionDiv = document.createElement('div');
-    newOptionDiv.className = 'option';
-
-    newOptionDiv.innerHTML = `
-        <label>Option:</label>
-        <input type="text" name="option_text[]" placeholder="Enter your option">
-        <button type="button" class="add-sub-question">Add Sub-question</button>
-        <div class="subQuestionsContainer"></div>
-    `;
-    
-    optionsContainer.appendChild(newOptionDiv);
-
-    // Attach event listener to new sub-question button
-    newOptionDiv.querySelector('.add-sub-question').addEventListener('click', function() {
-        addSubQuestion(newOptionDiv.querySelector('.subQuestionsContainer'));
-    });
-}
-
-// Function to add a sub-question with sub-options
-function addSubQuestion(subQuestionsContainer) {
-    const newSubQuestionDiv = document.createElement('div');
-    newSubQuestionDiv.className = 'sub-question';
-
-    newSubQuestionDiv.innerHTML = `
-        <label>Sub-question:</label>
-        <input type="text" name="sub_question_text[]" placeholder="Enter your sub-question">
-        <button type="button" class="add-sub-option">Add Sub-option</button>
-        <div class="subOptionsContainer"></div>
-    `;
-    
-    subQuestionsContainer.appendChild(newSubQuestionDiv);
-
-    // Attach event listener to new sub-option button
-    newSubQuestionDiv.querySelector('.add-sub-option').addEventListener('click', function() {
-        addSubOption(newSubQuestionDiv.querySelector('.subOptionsContainer'));
-    });
-}
-
-// Function to add a sub-option
-function addSubOption(subOptionsContainer) {
-    const newSubOptionDiv = document.createElement('div');
-
-    newSubOptionDiv.innerHTML = `
-        <label>Sub-option:</label>
-        <input type="text" name="sub_options[]" placeholder="Enter your sub-option">
-    `;
-    
-    subOptionsContainer.appendChild(newSubOptionDiv);
-}
-
-// Handle form submission
-document.getElementById('questionForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    // Here you can gather the form data and process it
-    const formData = new FormData(this);
-    const data = {};
-    
-    for (let [key, value] of formData.entries()) {
-        if (!data[key]) {
-            data[key] = [];
-        }
-        data[key].push(value);
+    if (!firstQuestionInput) {
+        alert('Please enter a question!');
+        return;
     }
     
-    console.log(JSON.stringify(data)); // This is where you can handle the data
-});
+    let questionBlock = document.createElement('div');
+    questionBlock.className = 'question-block';
+    questionBlock.innerHTML = `
+        <label>${firstQuestionInput}</label>
+        <input type="text" value="${firstQuestionInput}" style="display:none">
+        <button onclick="addOption(this)">Add Option</button>
+        <button onclick="removeQuestion(this)">Remove Question</button>
+    `;
+    
+    document.getElementById('tree-container').appendChild(questionBlock);
+    document.getElementById('first-question-section').style.display = 'none'; // Hide first question input after adding
+}
+
+// Add an option to a specific question block
+function addOption(button) {
+    let questionBlock = button.parentElement;
+    let optionTemplate = document.getElementById('option-template').innerHTML;
+    let optionBlock = document.createElement('div');
+    optionBlock.innerHTML = optionTemplate;
+    questionBlock.appendChild(optionBlock);
+}
+
+// Add a sub-question to an option
+function addSubQuestion(button) {
+    let optionBlock = button.parentElement;
+    let subQuestionTemplate = document.getElementById('sub-question-template').innerHTML;
+    let subQuestionBlock = document.createElement('div');
+    subQuestionBlock.innerHTML = subQuestionTemplate;
+    optionBlock.appendChild(subQuestionBlock);
+}
+
+// Remove an option
+function removeOption(button) {
+    button.parentElement.remove();
+}
+
+// Remove a question
+function removeQuestion(button) {
+    button.parentElement.remove();
+}
+
+// Remove a sub-question
+function removeSubQuestion(button) {
+    button.parentElement.remove();
+}
+
+// Function to collect the tree data and submit to backend
+function submitData() {
+    let treeContainer = document.getElementById('tree-container');
+    let questionBlocks = treeContainer.querySelectorAll('.question-block');
+    let data = [];
+
+    questionBlocks.forEach((questionBlock) => {
+        let questionText = questionBlock.querySelector('input[type="text"]').value;
+        let options = [];
+
+        let optionBlocks = questionBlock.querySelectorAll('.option-block');
+        optionBlocks.forEach((optionBlock) => {
+            let optionText = optionBlock.querySelector('input[type="text"]').value;
+            let subQuestionBlock = optionBlock.querySelector('.sub-question-block');
+
+            let optionData = {
+                option_text: optionText,
+                sub_question: null
+            };
+
+            if (subQuestionBlock) {
+                let subQuestionText = subQuestionBlock.querySelector('input[type="text"]').value;
+                let subOptionBlocks = subQuestionBlock.querySelectorAll('.option-block');
+
+                let subOptions = [];
+                subOptionBlocks.forEach((subOptionBlock) => {
+                    let subOptionText = subOptionBlock.querySelector('input[type="text"]').value;
+                    subOptions.push({
+                        option_text: subOptionText,
+                        sub_question: null
+                    });
+                });
+
+                optionData.sub_question = {
+                    question_text: subQuestionText,
+                    options: subOptions
+                };
+            }
+
+            options.push(optionData);
+        });
+
+        let questionData = {
+            question_text: questionText,
+            options: options
+        };
+
+        data.push(questionData);
+    });
+
+    // Send the data to the server
+    fetch('/save-tree', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-TOKEN': '{{ csrf_token() }}' // Laravel CSRF token for security
+        },
+        body: JSON.stringify({questions: data})
+    }).then(response => response.json())
+      .then(result => {
+          alert(result.message);
+      }).catch(error => {
+          console.error('Error:', error);
+      });
+}
 </script>
 
 </body>

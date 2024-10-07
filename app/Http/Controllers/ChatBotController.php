@@ -264,7 +264,6 @@ class ChatBotController extends Controller
         if (!$botUserData) {
             $botUserData = new BotUser;
             $botUserData->chat_bot_id = $bot->id;
-            //$botUserData->$coloum = $message;
             $botUserData->save();
         } else {
             if ($coloum != '') {

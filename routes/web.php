@@ -24,6 +24,13 @@ use Illuminate\Support\Facades\URL;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/botcopy', function () {
+    return view('bots.botcopy');
+});
+Route::post('/save-tree', [BotmanController::class, 'saveTree'])->name('saveTree');
+
+
 // Route::get('/abc', [ChatBotController::class, 'abc'])->name('abc');
 Route::get('/scriptchatbots/{id}', [ChatBotController::class, 'scriptchatbots'])->name('scriptchatbots');
 // Route::get('/scriptchatbot/{id}',[ChatBotController::class,'scriptchatbot'])->name('scriptchatbot');
@@ -166,3 +173,8 @@ Route::get('/clear', function() {
 // });
 // Route::get('/editPrefrence', [ChatBotController::class, 'editPrefrence'])->name('editPrefrence');
 
+
+
+
+Route::get('/newQuestions',[BotmanController::class,'newQuestions'])->name('newQuestions');
+Route::post('/getOptionsData', [BotmanController::class, 'getOptionsData'])->name('getOptionsData');

@@ -22,44 +22,26 @@
         <div class="row">
             <div class="col-xl-12">
                 <div class="boxinner">
-
-                    <h1>Please add question sequence wise.</h1>
-
-
+                    <h1>Please add questions in sequence.</h1>
                     <div id="questions-container">
-                        <form action="{{route('addQuestion')}}" method="post">
+                        <form method="post">
                             @csrf
-                        <!-- Section to add the first question -->
-                        <div id="first-question-section">
-                            <label>First Question:</label>
-                            <input type="text" id="first-question-input" name="question" placeholder="Enter the first question">
-                            <button type="button" onclick="addFirstQuestion()">Add First Question</button>
-                        </div>
-
-                        <!-- Tree container for the questions -->
-                        <div id="tree-container">
-                            <!-- The tree will be appended here -->
-                        </div>
-
-                        <!-- Option template (hidden) -->
-                        <div id="option-template" style="display: none;">
-                            <div class="option-block">
-                                <input type="text" name="option" placeholder="Enter option text">
-                                <button type="button" onclick="addSubQuestion(this)">Add Sub-question</button>
-                                <button type="button" onclick="removeOption(this)">Remove Option</button>
+                            <!-- Section to add the first question -->
+                            <div id="first-question-section">
+                                <label>First Question:</label>
+                                <input type="text" id="first-question-input" name="question" placeholder="Enter the first question">
+                                <button type="button" onclick="addFirstQuestion()">Add First Question</button>
                             </div>
-                        </div>
 
-                        <!-- Template for sub-question -->
-                        <div id="sub-question-template" style="display: none;">
-                            <div class="sub-question-block">
-                                <label>Sub-question:</label>
-                                <input type="text" name="sub-question" placeholder="Enter sub-question">
-                                <button type="button" onclick="addOption(this)">Add Option</button>
-                                <button type="button" onclick="removeSubQuestion(this)">Remove Sub-question</button>
+                            <!-- Tree container for dynamically adding questions and options -->
+                            <div id="tree-container"></div>
+
+                            <!-- Template for sub-question (hidden by default) -->
+                            <div id="sub-question-template">
+                          
                             </div>
-                        </div>
-                        <button type="submit" class="btn-info">Submit</button>
+
+                            <button type="submit" class="btn-info">Submit</button>
                         </form>
                     </div>
                 </div>
@@ -67,6 +49,9 @@
         </div>
     </div>
 </div>
+
+@endsection
+@section('java_scripts')
 <script>
     // Add the first question into the tree
     function addFirstQuestion() {
@@ -94,7 +79,7 @@
         questionBlock.className = 'question-block';
         questionBlock.innerHTML = `
         <label>New Question:</label>
-        <input type="text" name="question" placeholder="Enter question">
+        <input type="text" data-value="" name="question" placeholder="Enter question">
         <button type="button" onclick="addOption(this)">Add Option</button>
         <button type="button" onclick="removeQuestion(this)">Remove Question</button>
     `;
@@ -104,28 +89,132 @@
     // Add an option to a specific question block
     function addOption(button) {
         let questionBlock = button.parentElement;
-        let optionTemplate = document.getElementById('option-template').innerHTML;
+
+        // Create a new option block element
         let optionBlock = document.createElement('div');
-        optionBlock.innerHTML = optionTemplate;
+        optionBlock.classList.add('option-block');
+
+        // Set the inner HTML of the new option block
+        optionBlock.innerHTML = `
+            <input type="text" data-value="" class="option-block-data" name="option" placeholder="Enter option text">
+            <button type="button" onclick="addSubQuestion(this)">Add Sub-question</button>
+            <button type="button" onclick="removeOption(this)">Remove Option</button>
+        `;
+
+        // Append the new option block to the question block
         questionBlock.appendChild(optionBlock);
     }
 
-// Add a sub-question to an option (only if one doesn't already exist)
-function addSubQuestion(button) {
-    let optionBlock = button.parentElement;
-    let existingSubQuestion = optionBlock.querySelector('.sub-question-block');
+    function addSubQuestion(button) {
+        // Get the parent element of the button clicked (the option block)
+        let optionBlock = button.parentElement;
+        let existingSubQuestion = optionBlock.querySelector('.sub-question-block');
+        const chat_bot_id = new URLSearchParams(window.location.search).get('id');
 
-    if (existingSubQuestion) {
-        alert('You can only add one sub-question per option.');
-        return;
+        // Prevent adding multiple sub-questions to the same option block
+        if (existingSubQuestion) {
+            alert('You can only add one sub-question per option.');
+            return;
+        }
+
+        // Fetch the first question input value
+        let firstQuestionInput = document.getElementById('first-question-input').value;
+
+        // Collect all values from elements with the class 'option-block-data'
+        let optionBlockDataArray = [];
+        document.querySelectorAll('.option-block-data').forEach(function(input) {
+            optionBlockDataArray.push(input.value);
+        });
+
+        console.log(optionBlockDataArray);
+
+        // Check if any option is empty
+        let hasEmptyOption = optionBlockDataArray.some(function(option) {
+            return option.trim() === ""; // Check if the option is an empty string
+        });
+
+        if (hasEmptyOption) {
+            alert('Please fill all the options before adding a sub-question!');
+            return; // Stop execution if any option is empty
+        }
+
+        if (!firstQuestionInput) {
+            alert('Please enter a question!');
+            return;
+        }
+
+        // Initialize FormData
+        var formData = new FormData();
+
+        // Set up CSRF token for Laravel
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        // Append the first question and all options (looped)
+        formData.append('question', firstQuestionInput);
+        formData.append('chat_bot_id', chat_bot_id);
+        optionBlockDataArray.forEach(function(option, index) {
+            formData.append('option[' + index + ']', option);  // Treat each option as part of an array
+        });
+
+        // AJAX request
+        $.ajax({
+            url: "{{ route('addQuestion') }}",  // Replace with your correct route
+            type: "POST",
+            cache: false,
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                var getData = response.data;
+
+                $.each(getData.option_ids, function(key, val) {
+                    console.log('okkkkk', val);
+                    
+                    // Find the input element in the option block
+                    var $inputElement = $(optionBlock).find(`input[data-value=""]`); // Main option input
+
+                    // Find the sub-question input element within the same option block
+                    var $inputElementOption = $(optionBlock).find('.sub-question-block input[data-option=""]'); // Sub-question input
+
+                    // Append ID to the main option input
+                    if ($inputElement.length) {
+                        $inputElement.first().attr('data-value', val); 
+                        $inputElement.first().val("Option " + val); // Set the display value
+                    }
+
+                    // Append ID to the sub-question input if it exists
+                    if ($inputElementOption.length) {
+                        $inputElementOption.first().attr('data-option', val);
+                        $inputElementOption.first().val("Sub-question Option " + val); // Set the display value for sub-question
+                    }
+                });
+
+                alert('Sub-question added successfully!');
+            },
+            error: function(xhr, status, error) {
+                console.error('Error:', xhr.responseText); // Log detailed error response
+                alert('An error occurred while adding the question: ' + xhr.responseText);
+            }
+        });
+
+        // Clone and append the sub-question block template
+        let subQuestionTemplate = document.getElementById('sub-question-template').innerHTML;
+        let subQuestionBlock = document.createElement('div');
+        subQuestionBlock.classList.add('sub-question-block'); // Add a class to the sub-question block
+
+         // Set the inner HTML of the new option block
+         subQuestionBlock.innerHTML = `
+            <label>Sub-question:</label>
+                                    <input type="text" data-option="" name="sub-question" placeholder="Enter sub-question">
+                                    <button type="button" onclick="addOption(this)">Add Option</button>
+                                    <button type="button" onclick="removeSubQuestion(this)">Remove Sub-question</button>
+        `;
+        optionBlock.appendChild(subQuestionBlock);
     }
-
-    let subQuestionTemplate = document.getElementById('sub-question-template').innerHTML;
-    let subQuestionBlock = document.createElement('div');
-    subQuestionBlock.innerHTML = subQuestionTemplate;
-    optionBlock.appendChild(subQuestionBlock);
-}
-
 
     // Remove an option
     function removeOption(button) {
@@ -142,95 +231,94 @@ function addSubQuestion(button) {
         button.parentElement.remove();
     }
 
-  function collectFormData() {
-    let formData = new FormData();
-    let question = document.getElementById('first-question-input').value;
+    function collectFormData() {
+        let formData = new FormData();
+        let question = document.getElementById('first-question-input').value;
 
-    // Validate the first question
-    if (!question) {
-        alert('First question is required');
-        return false; // Stop form submission if the question is missing
-    }
-    formData.append('question', question);
+        // Validate the first question
+        if (!question) {
+            alert('First question is required');
+            return false; // Stop form submission if the question is missing
+        }
+        formData.append('question', question);
 
-    let options = [];
-    let optionBlocks = document.querySelectorAll('.option-block');
-    
-    // Validate options and sub-questions
-    for (let optionBlock of optionBlocks) {
-        let optionText = optionBlock.querySelector('input[name="option"]').value;
-        console.log(optionText);
-        // Validate the option text
-        // if (!optionText) {
-        //     alert('Option text is required');
-        //     return false; // Stop form submission if an option is missing
-        // }
+        let options = [];
+        let optionBlocks = document.querySelectorAll('.option-block');
 
-        let subQuestions = [];
-        let subQuestionBlocks = optionBlock.querySelectorAll('.sub-question-block');
+        // Validate options and sub-questions
+        for (let optionBlock of optionBlocks) {
+            let optionText = optionBlock.querySelector('input[name="option"]').value;
 
-        // Check if sub-questions are available and validate them
-        for (let subQuestionBlock of subQuestionBlocks) {
-            let subQuestionText = subQuestionBlock.querySelector('input[name="sub-question"]').value;
-
-            // Validate the sub-question text
-            if (!subQuestionText) {
-                alert('Sub-question text is required');
-                return false; // Stop form submission if a sub-question is missing
+            // Validate the option text
+            if (!optionText) {
+                alert('Option text is required');
+                return false; // Stop form submission if an option is missing
             }
-            subQuestions.push({ sub_question: subQuestionText });
+
+            let subQuestions = [];
+            let subQuestionBlocks = optionBlock.querySelectorAll('.sub-question-block');
+
+            // Check if sub-questions are available and validate them
+            for (let subQuestionBlock of subQuestionBlocks) {
+                let subQuestionText = subQuestionBlock.querySelector('input[name="sub-question"]').value;
+
+                // Validate the sub-question text
+                if (!subQuestionText) {
+                    alert('Sub-question text is required');
+                    return false; // Stop form submission if a sub-question is missing
+                }
+                subQuestions.push({
+                    sub_question: subQuestionText
+                });
+            }
+
+            options.push({
+                option: optionText,
+                sub_questions: subQuestions
+            });
         }
 
-        
-
-        options.push({ option: optionText, sub_questions: subQuestions });
-    }
-
-    // Check if at least one option is provided
-    if (options.length === 0) {
-        alert('At least one option is required');
-        return false;
-    }
-
-
-    formData.append('options', JSON.stringify(options));
-
-    return formData;
-}
-
-document.querySelector('form').onsubmit = function(event) {
-    event.preventDefault();  // Prevent form from submitting traditionally
-
-    let formData = collectFormData();
-    
-    if (!formData) {
-        return; // Stop form submission if validation failed
-    }
-
-    // Proceed with form submission if validation passed
-    fetch("{{ route('addQuestion') }}", {
-        method: "POST",
-        headers: {
-            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
-        },
-        body: formData
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            alert('Questions saved successfully!');
-            // Optionally, clear the form or redirect
-        } else {
-            alert('There was an error saving the questions');
+        // Check if at least one option is provided
+        if (options.length === 0) {
+            alert('At least one option is required');
+            return false;
         }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('An error occurred during form submission.');
-    });
-};
 
+        formData.append('options', JSON.stringify(options));
 
+        return formData;
+    }
 
+    document.querySelector('form').onsubmit = function(event) {
+        event.preventDefault(); // Prevent form from submitting traditionally
+
+        let formData = collectFormData();
+
+        if (!formData) {
+            return; // Stop form submission if validation failed
+        }
+
+        // Proceed with form submission if validation passed
+        fetch("{{ route('addQuestion') }}", {
+                method: "POST",
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                },
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('Questions saved successfully!');
+                    // Optionally, clear the form or redirect
+                } else {
+                    alert('There was an error saving the questions.');
+                }
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                alert('An error occurred while saving the questions.');
+            });
+    }
 </script>
 @endsection

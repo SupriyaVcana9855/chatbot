@@ -10,6 +10,8 @@ use App\Models\QuestionAnswer;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use App\Models\BotUser;
+use App\Models\NewQuestion;
+use App\Models\QuestionOption;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
@@ -118,44 +120,33 @@ class ChatBotController extends Controller
 
     public function addQuestion(Request $request)
     {
-        // dd($request->all());
-        // Loop through each question in the "questions" array
-        foreach ($request->questions as $questionData) {
-            // Extract data
-            $botId = $questionData['bot_id'] ?? null;
-            $questionId = $questionData['question_id'] ?? null; // Add question_id
-            $questionText = $questionData['text'] ?? null;
-            $options = $questionData['options'] ?? [];
+        // dd($request->parent_id ?? 0);
+        $newquestion = new NewQuestion();
+        $newquestion->question = $request->question;
+        $newquestion->chat_bot_id = $request->chat_bot_id;
+        $newquestion->option_id = $request->option_id ?? 0;
+        $newquestion->parent_id = $request->parent_id ?? 0;
+        $newquestion->save();
 
-            // Validate data
-            if ($botId && $questionText) {
-                if ($questionId) {
-                    // If question_id is provided, update the existing question
-                    $botQuestion = BotQuestion::find($questionId);
-                    if ($botQuestion) {
-                        $botQuestion->question = $questionText;
-                        $botQuestion->options = $options; // Store options as JSON
-                        $botQuestion->save();
-                    }
-                } else {
-                    // If question_id is not provided, create a new question
-                    $botQuestion = new BotQuestion();
-                    $botQuestion->chat_bot_id = $botId;
-                    $botQuestion->question_type = 'Question';
-                    $botQuestion->question = $questionText;
-                    $botQuestion->options = $options; // Store options as JSON
-                    $botQuestion->save();
-                }
-            }
+        // Handle question options (since $request->option is already an array)
+        $optionIds = [];
+        foreach ($request->option as $option) {
+
+            $questionoption = new QuestionOption();
+            $questionoption->option = $option;
+            $questionoption->question_id = $newquestion->id;
+            $questionoption->save();
+            $optionIds[] = $questionoption->id;
         }
 
-        // Return appropriate response
-        if (isset($botQuestion) && $botQuestion->wasRecentlyCreated || $botQuestion->wasChanged()) {
-            return redirect()->route('singleBotListing', $botQuestion->chat_bot_id)
-                ->with('success', 'Questions saved successfully.');
-        } else {
-            return redirect()->back()->with('error', 'Something went wrong.');
-        }
+        // Prepare the response data
+        $data = [
+            'parent_id' => $newquestion->id,
+            'option_ids' => $optionIds,
+            'chat_bot_id' => $request->chat_bot_id,
+        ];
+
+        return response()->json(['data' => $data], 200);
     }
 
 

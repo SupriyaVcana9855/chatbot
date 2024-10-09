@@ -12,8 +12,8 @@ class BotmanController extends Controller
 {
     public function getOptionsData(Request $request)
     {
-      
-
+        $newquestion = NewQuestion::where('chat_bot_id',$request->chat_bot_id)->with('options')->get();
+        dd($newquestion);
     }
     public function newQuestions(Request $request)
     {

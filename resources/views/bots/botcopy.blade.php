@@ -107,71 +107,64 @@ function removeSubQuestion(button) {
     button.parentElement.remove();
 }
 
-// Function to collect the tree data and submit to backend
+
 function submitData() {
     let treeContainer = document.getElementById('tree-container');
     let questionBlocks = treeContainer.querySelectorAll('.question-block');
     let data = [];
 
-    questionBlocks.forEach((questionBlock) => {
-        let questionText = questionBlock.querySelector('input[type="text"]').value;
-        let options = [];
-
+    questionBlocks.forEach(function (questionBlock) {
+        let questionText = questionBlock.querySelector('label').textContent;
+        console.log(questionText);
+        let questionObj = {
+            question_text: questionText,
+            options: []
+        };
+        console.log('questionObj',questionObj);
         let optionBlocks = questionBlock.querySelectorAll('.option-block');
-        optionBlocks.forEach((optionBlock) => {
+        optionBlocks.forEach(function (optionBlock) {
             let optionText = optionBlock.querySelector('input[type="text"]').value;
-            let subQuestionBlock = optionBlock.querySelector('.sub-question-block');
-
-            let optionData = {
+            let optionObj = {
                 option_text: optionText,
-                sub_question: null
+                sub_questions: []
             };
+        console.log('optionText',optionText);
 
-            if (subQuestionBlock) {
+            // Look for sub-question blocks within this option block
+            let subQuestionBlocks = optionBlock.querySelectorAll('.sub-question-block');
+            subQuestionBlocks.forEach(function (subQuestionBlock) {
                 let subQuestionText = subQuestionBlock.querySelector('input[type="text"]').value;
-                let subOptionBlocks = subQuestionBlock.querySelectorAll('.option-block');
+                let subQuestionObj = {
+                    question_text: subQuestionText,
+                    options: []
+                    
+                };
 
-                let subOptions = [];
-                subOptionBlocks.forEach((subOptionBlock) => {
+                // Look for options within this sub-question block
+                let subOptionBlocks = subQuestionBlock.querySelectorAll('.sub-option-block');
+                subOptionBlocks.forEach(function (subOptionBlock) {
                     let subOptionText = subOptionBlock.querySelector('input[type="text"]').value;
-                    subOptions.push({
-                        option_text: subOptionText,
-                        sub_question: null
+                    subQuestionObj.options.push({
+                        option_text: subOptionText
                     });
                 });
 
-                optionData.sub_question = {
-                    question_text: subQuestionText,
-                    options: subOptions
-                };
-            }
+                // Add the sub-question object to the option's sub_questions array
+                optionObj.sub_questions.push(subQuestionObj);
+            });
 
-            options.push(optionData);
+            // Add the option object to the question's options array
+            questionObj.options.push(optionObj);
         });
 
-        let questionData = {
-            question_text: questionText,
-            options: options
-        };
-
-        data.push(questionData);
+        // Add the question object to the main data array
+        data.push(questionObj);
     });
 
-    // Send the data to the server
-    fetch('/save-tree', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': '{{ csrf_token() }}' // Laravel CSRF token for security
-        },
-        body: JSON.stringify({questions: data})
-    }).then(response => response.json())
-      .then(result => {
-          alert(result.message);
-      }).catch(error => {
-          console.error('Error:', error);
-      });
+    console.log(data);
+    return data;
 }
+
 </script>
 
 </body>

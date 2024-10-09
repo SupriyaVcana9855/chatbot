@@ -45,6 +45,36 @@
                     $(".dropdown_c .drop-content ul").slideUp();
             });
 
+            // $(document).ready(function() {
+            //     $('.download-history').on('click', function() {
+            //         var chatbotId = $(this).data('id');
+            //         window.location.href = '{{ route("download-history-pdf", ":id") }}'.replace(':id', chatbotId);
+            //     });
+            // });
+            $(document).ready(function() {
+                $('.download-history').on('click', function() {
+                    var chatbotId = $(this).data('id');
+
+                    $.ajax({
+                        url: '{{ route("download-history-pdf", ":id") }}'.replace(':id', chatbotId),
+                        method: 'GET',
+                        xhrFields: {
+                            responseType: 'blob'
+                        },
+                        success: function(data, status, xhr) {
+                            var blob = new Blob([data], { type: 'application/pdf' });
+                            var link = document.createElement('a');
+                            link.href = window.URL.createObjectURL(blob);
+                            link.download = "history.pdf";
+                            link.click();
+                        },
+                        error: function(xhr, status, error) {
+                            console.error('Error downloading PDF:', error);
+                        }
+                    });
+                });
+            });
+
 
             //profile hover end
         </script>

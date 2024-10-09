@@ -10,8 +10,14 @@ use App\Models\QuestionAnswer;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use App\Models\BotUser;
+use App\Models\NewQuestion;
+use App\Models\QuestionOption;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Date;
+use Illuminate\Support\Facades\DB;
 
-
+use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Response;
 class ChatBotController extends Controller
 {
 
@@ -86,46 +92,61 @@ class ChatBotController extends Controller
         return redirect()->back()->with('success', 'Question deleted successfully.');
     }
 
+    
+    public function downloadHistoryPdf($id)
+{
+    // Retrieve the data needed for the PDF
+    $data = QuestionAnswer::with('botUser', 'botQuestion')
+        ->where('bot_user_id', $id)
+        ->orWhere('bot_user_id', null)
+        ->get();
+
+    // Check if data is being retrieved correctly
+    if ($data->isEmpty()) {
+        return back()->withErrors('No data found for the selected user.');
+    }
+
+    // Load the view and pass the data
+    $pdf = Pdf::loadView('bots.chat-history', compact('data'));
+// dd($pdf );
+    // return view('bots.chat-history', compact('data'));
+
+    // Return the generated PDF for download
+    return $pdf->download('chat-history.pdf');
+}
+
+    
+    
+
     public function addQuestion(Request $request)
     {
-        // dd($request->all());
-        // Loop through each question in the "questions" array
-        foreach ($request->questions as $questionData) {
-            // Extract data
-            $botId = $questionData['bot_id'] ?? null;
-            $questionId = $questionData['question_id'] ?? null; // Add question_id
-            $questionText = $questionData['text'] ?? null;
-            $options = $questionData['options'] ?? [];
+        // dd($request->parent_id ?? 0);
+        $newquestion = new NewQuestion();
+        $newquestion->question = $request->question;
+        $newquestion->chat_bot_id = $request->chat_bot_id;
+        $newquestion->option_id = $request->option_id ?? 0;
+        $newquestion->parent_id = $request->parent_id ?? 0;
+        $newquestion->save();
 
-            // Validate data
-            if ($botId && $questionText) {
-                if ($questionId) {
-                    // If question_id is provided, update the existing question
-                    $botQuestion = BotQuestion::find($questionId);
-                    if ($botQuestion) {
-                        $botQuestion->question = $questionText;
-                        $botQuestion->options = $options; // Store options as JSON
-                        $botQuestion->save();
-                    }
-                } else {
-                    // If question_id is not provided, create a new question
-                    $botQuestion = new BotQuestion();
-                    $botQuestion->chat_bot_id = $botId;
-                    $botQuestion->question_type = 'Question';
-                    $botQuestion->question = $questionText;
-                    $botQuestion->options = $options; // Store options as JSON
-                    $botQuestion->save();
-                }
-            }
+        // Handle question options (since $request->option is already an array)
+        $optionIds = [];
+        foreach ($request->option as $option) {
+
+            $questionoption = new QuestionOption();
+            $questionoption->option = $option;
+            $questionoption->question_id = $newquestion->id;
+            $questionoption->save();
+            $optionIds[] = $questionoption->id;
         }
 
-        // Return appropriate response
-        if (isset($botQuestion) && $botQuestion->wasRecentlyCreated || $botQuestion->wasChanged()) {
-            return redirect()->route('singleBotListing', $botQuestion->chat_bot_id)
-                ->with('success', 'Questions saved successfully.');
-        } else {
-            return redirect()->back()->with('error', 'Something went wrong.');
-        }
+        // Prepare the response data
+        $data = [
+            'parent_id' => $newquestion->id,
+            'option_ids' => $optionIds,
+            'chat_bot_id' => $request->chat_bot_id,
+        ];
+
+        return response()->json(['data' => $data], 200);
     }
 
 
@@ -258,19 +279,22 @@ class ChatBotController extends Controller
             }
         }
 
-
-
         $botUserData = BotUser::find($request->bot_user_id);
-        if (!$botUserData) {
-            $botUserData = new BotUser;
-            $botUserData->chat_bot_id = $bot->id;
-            $botUserData->save();
-        } else {
-            if ($coloum != '') {
-                $botUserData->$coloum = $message;
+        if($request->bot_id !='0')
+        {
+            if (!$botUserData) {
+                $botUserData = new BotUser;
+                $botUserData->chat_bot_id = $bot->id;
+                //$botUserData->$coloum = $message;
                 $botUserData->save();
+            } else {
+                if ($coloum != '') {
+                    $botUserData->$coloum = $message;
+                    $botUserData->save();
+                }
             }
         }
+       
 
         $saveanswer = new QuestionAnswer;
         $saveanswer->bot_question_id = ($question) ? $question->id : '0';
@@ -278,7 +302,7 @@ class ChatBotController extends Controller
         $saveanswer->user_id = 1; //chat bot ka malik 
         $saveanswer->chat_bot_id = $bot->id;
         $saveanswer->status = '1';
-        $saveanswer->bot_user_id = $botUserData->id; // kon chat krne aaya
+        $saveanswer->bot_user_id = ($botUserData)?$botUserData->id:$request->bot_user_id; // kon chat krne aaya
         $saveanswer->save();
 
 
@@ -507,6 +531,10 @@ class ChatBotController extends Controller
                                             <div class='closeicon'>
                                                 <img src='" . asset('assets/images/close.png') . "' id='close-chat-icon'>
                                             </div>
+                                            <div>
+                                                <img class='download-history' src='".asset('assets/images/download.png')."' style='width: 13px; margin-left: 10px;' data-id='$chatbot->id'>
+                                            </div>
+
                                         </div>
                                     </div>
                                     <div class='chat-body'>
@@ -894,7 +922,6 @@ class ChatBotController extends Controller
                     $('#close-chat-icon').on('click', function() {
                         $('#chat-container').hide();
                     });
-
                 });
         
             }

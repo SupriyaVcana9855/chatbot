@@ -173,26 +173,16 @@
 
                 $.each(getData.option_ids, function(key, val) {
                     console.log('okkkkk', val);
-                    
-                    // Find the input element in the option block
+                    alert($(optionBlock).find('option-block-data'));
                     var $inputElement = $(optionBlock).find(`input[data-value=""]`); // Main option input
-
-                    // Find the sub-question input element within the same option block
-                    var $inputElementOption = $(optionBlock).find('.sub-question-block input[data-option=""]'); // Sub-question input
-
-                    // Append ID to the main option input
+                    var $inputElementOption = $(optionBlock).find('.sub-question-block input[data-option=""]'); 
                     if ($inputElement.length) {
                         $inputElement.first().attr('data-value', val); 
-                        $inputElement.first().val("Option " + val); // Set the display value
                     }
-
-                    // Append ID to the sub-question input if it exists
                     if ($inputElementOption.length) {
                         $inputElementOption.first().attr('data-option', val);
-                        $inputElementOption.first().val("Sub-question Option " + val); // Set the display value for sub-question
                     }
                 });
-
                 alert('Sub-question added successfully!');
             },
             error: function(xhr, status, error) {
@@ -200,18 +190,16 @@
                 alert('An error occurred while adding the question: ' + xhr.responseText);
             }
         });
-
         // Clone and append the sub-question block template
         let subQuestionTemplate = document.getElementById('sub-question-template').innerHTML;
         let subQuestionBlock = document.createElement('div');
         subQuestionBlock.classList.add('sub-question-block'); // Add a class to the sub-question block
-
          // Set the inner HTML of the new option block
          subQuestionBlock.innerHTML = `
             <label>Sub-question:</label>
-                                    <input type="text" data-option="" name="sub-question" placeholder="Enter sub-question">
-                                    <button type="button" onclick="addOption(this)">Add Option</button>
-                                    <button type="button" onclick="removeSubQuestion(this)">Remove Sub-question</button>
+                <input type="text" data-option="" name="sub-question" placeholder="Enter sub-question">
+                <button type="button" onclick="addOption(this)">Add Option</button>
+                <button type="button" onclick="removeSubQuestion(this)">Remove Sub-question</button>
         `;
         optionBlock.appendChild(subQuestionBlock);
     }
@@ -234,8 +222,6 @@
     function collectFormData() {
         let formData = new FormData();
         let question = document.getElementById('first-question-input').value;
-
-        // Validate the first question
         if (!question) {
             alert('First question is required');
             return false; // Stop form submission if the question is missing

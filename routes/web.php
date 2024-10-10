@@ -3,7 +3,7 @@
 use App\Http\Controllers\AiAgentBotController;
 use App\Http\Controllers\AiAgentController;
 use App\Http\Controllers\FaqController;
-use App\Http\Controllers\TwilioController;
+use App\Http\Controllers\QuestionController;
 use Illuminate\Support\Facades\Route;
 use  App\Http\Controllers\BotmanController;
 use App\Http\Controllers\AuthController;
@@ -24,6 +24,14 @@ use Illuminate\Support\Facades\URL;
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+Route::get('/option-question', [QuestionController::class, 'addOptionQuestion'])->name('addOptionQuestion');
+Route::get('/add-new-question', [QuestionController::class, 'addNewQuestion'])->name('addNewQuestion');
+
+Route::post('/option-question', [QuestionController::class, 'saveOptionQuestion'])->name('saveOptionQuestion');
+
+
+
 
 Route::get('/botcopy', function () {
     return view('bots.botcopy');

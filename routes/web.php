@@ -26,7 +26,7 @@ use Illuminate\Support\Facades\URL;
 */
 
 Route::get('/option-question/{id?}', [QuestionController::class, 'addOptionQuestion'])->name('addOptionQuestion');
-Route::get('/add-new-question/{id?}', [QuestionController::class, 'addNewQuestion'])->name('addNewQuestion');
+Route::get('/add-new-question/{chat_bot_id?}/{bot_questions?}', [QuestionController::class, 'addNewQuestion'])->name('addNewQuestion');
 
 Route::post('/option-question', [QuestionController::class, 'saveOptionQuestion'])->name('saveOptionQuestion');
 

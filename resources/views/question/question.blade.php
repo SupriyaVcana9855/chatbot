@@ -16,7 +16,6 @@
         <div class="row">
             <div class="col-xl-12">
                 <div class="boxinner">
-
                     <h1>Create Question with Options</h1>
                     <form id="questionForm" action="{{route('saveOptionQuestion')}}" method="post">
     @csrf

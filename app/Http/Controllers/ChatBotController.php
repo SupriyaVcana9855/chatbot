@@ -184,11 +184,15 @@ class ChatBotController extends Controller
         $bot = ChatBot::find($request->chatbotId);
 
         // if (!$question) {
-        //     $reply = $this->getData($message, $bot);
-        // } else {
+            $reply = $this->getData($message, $bot);
+            if(count($reply))
+            {
+                return response()->json(['reply' => $reply]);
+            }
+            else {
 
-            $reply = $this->generateReply($message, $bot, $question, $request);
-        // }
+                $reply = $this->generateReply($message, $bot, $question, $request);
+            }
         return response()->json(['reply' => $reply]);
     }
     public function getData($message, $bot)
@@ -204,7 +208,7 @@ class ChatBotController extends Controller
                 'chat_bot_type' => $bot->type,
             ];
             return $data;
-        } else if ($message == 'chat with live agent') {
+        } else if ($bot->type != 'lead' && $message == 'chat with live agent') {
 
             // add twilio acount and end message to the livwe agent using agent function.
             $data = [
@@ -223,15 +227,7 @@ class ChatBotController extends Controller
             ];
             return $data;
         } else {
-            $optionNew = array('schedule a meeting', 'exit');
-            $data = [
-                'message' => "Please Select from following to know more about us...",
-                'question_id' => 0,
-                'chat_bot_type' => $bot->type,
-                'options' =>  $optionNew,
-
-            ];
-            return $data;
+          return $data = [];
         }
     }
 
@@ -315,27 +311,26 @@ class ChatBotController extends Controller
 
 
         if ($bot->type == 'lead') {
-            // $questions = BotQuestion::where(function ($query) use ($bot,$request) {
-            //     $query->where('chat_bot_id', $bot->id)
-            //         ->orWhere('chat_bot_id', 0)
-            //         ->orWhere('option_id', $request->option_id)
-            //         ->orWhere('parent_id', $request->bot_id);
-            // })
-            //     ->whereNotIn('id', $questionsIds)
-            //     ->first();
-
-            $questions = BotQuestion::where(function ($query) use ($bot, $request) {
-                // Match chat_bot_id with the specific bot id or global (0)
-                $query->where('chat_bot_id', $bot->id)
-                      ->orWhere('chat_bot_id', 0);
-                     
-                
-            })
-            ->whereNotIn('id', $questionsIds)
-            ->where('option_id',$request->option_id) // Exclude IDs in $questionsIds
-            ->first(); // Get the first matching record
-            
-            // dd($questions);
+           
+    if($request->option_id != '')
+    {
+        $questions = BotQuestion::where(function ($query) use ($bot, $request) {
+            // Match chat_bot_id with the specific bot id or global (0)
+            $query->where('chat_bot_id', $bot->id)
+                ->orWhere('chat_bot_id', 0);
+                })
+        ->whereNotIn('id', $questionsIds)
+        ->where('option_id',$request->option_id) 
+        ->first();
+    }else{
+        $questions = BotQuestion::where(function ($query) use ($bot,$request) {
+            $query->where('chat_bot_id', $bot->id)
+                ->orWhere('chat_bot_id', 0);
+        })
+        ->whereNotIn('id', $questionsIds)
+        ->first();
+    }
+           
             
                 
 
@@ -435,7 +430,7 @@ class ChatBotController extends Controller
             $data = [
                 'message' => $questionNew,
                 'question_id' => ($questions->count() > 0) ? $questionId : '',
-                'bot_user_id' => $botUserData->id,
+                'bot_user_id' => ($botUserData)?$botUserData->id:'',
                 'chat_bot_type' => $bot->type,
                 'options' =>  $optionNew,
                 'questions' => $questions,

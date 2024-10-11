@@ -56,7 +56,7 @@ $chat_bot_id = end($urlSegments);
         @if ($newQuestions->isEmpty())
 
         <div class="col-4 set-boat-heading">
-            <a href="{{ route('addNewQuestion', ['chat_bot_id' => $chat_bot_id]) }}"> 
+            <a href="{{ route('addNewQuestion',  $chat_bot_id) }}"> 
                 <button class="btn btn-primary" style="margin-top: 40px; margin-left: 950px;">+Add</button>
             </a>
         </div>
@@ -108,7 +108,7 @@ $chat_bot_id = end($urlSegments);
                                     </button>
                                     <ul class="dropdown-menu">
                                         <li class="border-bottom">
-                                            <a class="dropdown-item" href="{{ route('addNewQuestion', ['chat_bot_id' => $bot->chat_bot_id, 'bot_questions' => $bot->id]) }}">
+                                            <a class="dropdown-item" href="{{ route('addNewQuestion',  $bot->id) }}">
                                                 Edit <span><img src="{{ asset('/assets/images/editicon.png') }}"></span>
                                             </a>
                                         </li>

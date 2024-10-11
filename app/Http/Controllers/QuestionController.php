@@ -22,25 +22,20 @@ class QuestionController extends Controller
     //     dd( $newQuestions);
     //     return view('question.question',compact('newQuestions'));
     // }
-    public function addNewQuestion($chat_bot_id, $bot_questions = null)
+    public function addNewQuestion($id = null)
     {
-        // This should print the correct `chat_bot_id` and `bot_questions`.
-        // dd($chat_bot_id, $bot_questions);
-        $bot_id = $chat_bot_id;
-    
-        // Get all non-null, non-zero option_ids from BotQuestion
-        $optionIds = BotQuestion::pluck('option_id')->filter(function($value) {
-            return !is_null($value) && $value != 0;
-        })->toArray();
-    
-        // Use these option IDs to filter out options from the QuestionOption table
-        $newQuestions = QuestionOption::where('bot_question_id', $bot_questions)
+      
+            // Get all option_id values from the BotQuestion table
+            $optionIds = BotQuestion::pluck('option_id')->filter(function($value) {
+                return !is_null($value) && $value != 0;  // Filter out null and 0
+            })->toArray();
+        $newQuestions = QuestionOption::where('bot_question_id', $id)
             ->whereNotIn('id', $optionIds)
             ->get();
-    
-        return view('question.question', compact('newQuestions', 'bot_id'));
+
+
+        return view('question.question', compact('newQuestions','id'));
     }
-    
     
     
     public function saveOptionQuestion(Request $request)

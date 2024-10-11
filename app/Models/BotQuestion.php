@@ -15,7 +15,10 @@ class BotQuestion extends Model
     {
          return $this->belongsTo(ChatBot::class,'chat_bot_id');
     }
-
+    public function options()
+    {
+        return $this->hasMany(QuestionOption::class, 'bot_question_id');
+    }
     public function questionFlow()
     {
         return $this->hasMany(BotQuestionFlow::class);
@@ -24,5 +27,10 @@ class BotQuestion extends Model
     public function questionAnswers()
     {
         return $this->hasMany(QuestionAnswer::class,'bot_question_id');
+    }
+
+    public function triggerOption()
+    {
+        return $this->belongsTo(QuestionOption::class, 'option_id');
     }
 }

@@ -12,7 +12,7 @@ class QuestionController extends Controller
 {
     public function addOptionQuestion($id)
     {
-        $newQuestions = NewQuestion::with('options')->where('chat_bot_id',$id)->get();
+        $newQuestions = BotQuestion::with('options')->where('chat_bot_id',$id)->get();
         return view('question.questionList',compact('newQuestions'));
     }
     // public function addNewQuestion($id =null)
@@ -25,13 +25,15 @@ class QuestionController extends Controller
     public function addNewQuestion($id = null)
     {
       
-        $newQuestions = QuestionOption::where('question_id', $id)
-        ->whereNotIn('id', function($query) {
-            $query->select('option_id')
-                  ->from('new_questions'); // Assuming 'new_questions' is the table name
-        })
-        ->get();
-    
+            // Get all option_id values from the BotQuestion table
+            $optionIds = BotQuestion::pluck('option_id')->filter(function($value) {
+                return !is_null($value) && $value != 0;  // Filter out null and 0
+            })->toArray();
+                    // Use these option IDs to filter out options in the QuestionOption table
+        $newQuestions = QuestionOption::where('bot_question_id', $id)
+            ->whereNotIn('id', $optionIds)
+            ->get();
+
         return view('question.question', compact('newQuestions'));
     }
     
@@ -71,7 +73,7 @@ class QuestionController extends Controller
     foreach ($options as $option) {
         $questionoption = new QuestionOption();
         $questionoption->option = $option;
-        $questionoption->question_id = $botQuestion->id;
+        $questionoption->bot_question_id = $botQuestion->id;
         $questionoption->save();
         $optionIds[] = $questionoption->id;
     }

@@ -34,38 +34,38 @@ class ChatBotController extends Controller
     // }    
 
     //single bot question listing
-    public function singleBotListing($id)
-    {
-        $bots = BotQuestion::where('chat_bot_id', $id)->get();
-        $sequence = BotQuestion::select('sequence')->where('chat_bot_id', $id)->get();
+    // public function singleBotListing($id)
+    // {
+    //     $bots = BotQuestion::where('chat_bot_id', $id)->get();
+    //     $sequence = BotQuestion::select('sequence')->where('chat_bot_id', $id)->get();
 
-        $questionFlowIds = BotQuestionFlow::pluck('bot_question_id2')->toArray();
-        $questionsNotInFlow = BotQuestion::where('chat_bot_id', $id)
-            ->whereNotIn('id', $questionFlowIds)
-            ->get();
+    //     $questionFlowIds = BotQuestionFlow::pluck('bot_question_id2')->toArray();
+    //     $questionsNotInFlow = BotQuestion::where('chat_bot_id', $id)
+    //         ->whereNotIn('id', $questionFlowIds)
+    //         ->get();
 
-        return view('bots.single-bot-listing', compact('bots', 'id', 'questionsNotInFlow'));
-    }
-    // saving questions flow .
-    public function addQuestionFlow(Request $request)
-    {
-        $addFlow = BotQuestionFlow::where('bot_question_id', $request->question_1)->first();
-        if (!$addFlow) {
-            $addFlow = new BotQuestionFlow();
-        }
-        $addFlow->bot_question_id = $request->question_1;
-        $addFlow->bot_question_id2 = $request->question_2;
-        $addFlow->chat_bot_id = $request->bot_id;
+    //     return view('bots.single-bot-listing', compact('bots', 'id', 'questionsNotInFlow'));
+    // }
+    // // saving questions flow .
+    // public function addQuestionFlow(Request $request)
+    // {
+    //     $addFlow = BotQuestionFlow::where('bot_question_id', $request->question_1)->first();
+    //     if (!$addFlow) {
+    //         $addFlow = new BotQuestionFlow();
+    //     }
+    //     $addFlow->bot_question_id = $request->question_1;
+    //     $addFlow->bot_question_id2 = $request->question_2;
+    //     $addFlow->chat_bot_id = $request->bot_id;
 
-        $addFlow->save();
-        $questionFlowIds = BotQuestionFlow::pluck('bot_question_id2')->toArray();
-        $questionsNotInFlow = BotQuestion::where('chat_bot_id', $request->bot_id)
-            ->whereNotIn('id', $questionFlowIds)
-            ->where('id', '!=', $request->question_1)
-            ->get();
+    //     $addFlow->save();
+    //     $questionFlowIds = BotQuestionFlow::pluck('bot_question_id2')->toArray();
+    //     $questionsNotInFlow = BotQuestion::where('chat_bot_id', $request->bot_id)
+    //         ->whereNotIn('id', $questionFlowIds)
+    //         ->where('id', '!=', $request->question_1)
+    //         ->get();
 
-        return  response()->json($questionsNotInFlow);
-    }
+    //     return  response()->json($questionsNotInFlow);
+    // }
 
 
     //page for adding questions for bot
@@ -133,7 +133,7 @@ class ChatBotController extends Controller
 
             $questionoption = new QuestionOption();
             $questionoption->option = $option;
-            $questionoption->question_id = $newquestion->id;
+            $questionoption->bot_question_id = $newquestion->id;
             $questionoption->save();
             $optionIds[] = $questionoption->id;
         }
@@ -305,22 +305,40 @@ class ChatBotController extends Controller
         $saveanswer->save();
 
 
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
         $questionsIds = QuestionAnswer::where('chat_bot_id', $bot->id)
             ->where('status', '1')
             ->where('bot_question_id', '!=', '0')
             ->pluck('bot_question_id')
             ->toArray();
         $questionsIds = array_unique($questionsIds);
-        if ($bot->type == 'lead') {
-            $questions = BotQuestion::where(function ($query) use ($bot,$request) {
-                $query->where('chat_bot_id', $bot->id)
-                    ->orWhere('chat_bot_id', 0);
-                //    ->orWhere('option_id', $request->option_id);//add option id for getting that question
 
+
+        if ($bot->type == 'lead') {
+            // $questions = BotQuestion::where(function ($query) use ($bot,$request) {
+            //     $query->where('chat_bot_id', $bot->id)
+            //         ->orWhere('chat_bot_id', 0)
+            //         ->orWhere('option_id', $request->option_id)
+            //         ->orWhere('parent_id', $request->bot_id);
+            // })
+            //     ->whereNotIn('id', $questionsIds)
+            //     ->first();
+
+            $questions = BotQuestion::where(function ($query) use ($bot, $request) {
+                // Match chat_bot_id with the specific bot id or global (0)
+                $query->where('chat_bot_id', $bot->id)
+                      ->orWhere('chat_bot_id', 0);
+                     
+                
             })
-                ->whereNotIn('id', $questionsIds)
-                ->first();
+            ->whereNotIn('id', $questionsIds)
+            ->where('option_id',$request->option_id) // Exclude IDs in $questionsIds
+            ->first(); // Get the first matching record
+            
+            // dd($questions);
+            
+                
+
         } else {
 
             $data = BotQuestion::where(function ($query) use ($bot) {
@@ -343,13 +361,17 @@ class ChatBotController extends Controller
         }
         $getAllOptions = '';
         if ($questions) {
-
             $arr = [];
             if ($bot->type == 'lead') {
+               
+               
                 $questionNew = $questions->question;
-                $getAllOptions =QuestionOption::where('question_id',$questions->id)->get();//get all the ids of options of that particular questions
+                $getAllOptions = QuestionOption::where('bot_question_id', $questions->id)
+                ->pluck('id');
                 $optionNew = ($questions->options) ? $questions->options : null;
                 $questionId = $questions->id;
+
+
             } else {
                 if ($length > 0) {
 
@@ -419,6 +441,7 @@ class ChatBotController extends Controller
                 'questions' => $questions,
                 'question_option_ids'=> ($getAllOptions)?$getAllOptions:'',//add ids here for the otions we have
             ];
+            // dd($data);
 
         } else {
 
@@ -514,6 +537,7 @@ class ChatBotController extends Controller
                             <body>
 
                              <input type='hidden' name='chat_bot_id' value='" . $chatbot->id . "' class='chat_bot_id'>
+                                <input type='hidden' name='selected_option_id' value='' class='selected_option_id'>
 
                                 <input type='hidden' name='bot_user_id' value='' class='bot_user_id'>
                                 <div class='chat-toggle chat-boat-position chat-boat-position-" . $chatbot->bot_position . "' id='chatMessages'>
@@ -795,10 +819,15 @@ class ChatBotController extends Controller
                  $(document).on('click', '.option1Select', function() {
                         var data = $(this).val();
                          var option_data_id = $(this).attr('dataID');
+                        var selected_option_id = $(this).attr('dataattr');
+
                          if(option_data_id)
                          {
                                 $('.question_id').val(option_data_id);
                          }
+                            console.log(selected_option_id);
+
+                            $('.selected_option_id').val(selected_option_id);
 
                         userMessageInput.val(data); // Assuming userMessageInput is defined elsewhere in your code
                     });
@@ -806,6 +835,7 @@ class ChatBotController extends Controller
                         var bot_user_id = $('.bot_user_id').val();
                         var botId = $('.question_id').val();
                         const message = userMessageInput.val().trim();
+
                         if (message) {
                             userMessageInput.val('');
                             handleUserMessage(message,botId,bot_user_id);
@@ -813,7 +843,7 @@ class ChatBotController extends Controller
                     });
 
                     function handleUserMessage(message,botId,bot_user_id) {
-
+                        var selectedOptionvalue =   $('.selected_option_id').val();
                         appendUserMessage(message);
                         $.ajax({
                             url: '/chatbot/message',
@@ -826,7 +856,10 @@ class ChatBotController extends Controller
                                 message: message,
                                 bot_id: botId,
                                 bot_user_id:bot_user_id,
-                                chatbotId:chatbotId
+                                chatbotId:chatbotId,
+                                option_id:selectedOptionvalue,
+                                 parent_id:botId
+
                             }),
                             success: function(data) {
                             console.log('data');
@@ -837,11 +870,11 @@ class ChatBotController extends Controller
                           $('.bot_user_id').val(data.reply.bot_user_id);
 
 
-                            
+                                const question_option_ids = data.reply.question_option_ids ? data.reply.question_option_ids : [];
                                 const reply = data.reply.message ? data.reply.message : 'No reply received';
                                 const options = data.reply.options ?data.reply.options : [];
                                 const ids = data.reply.question_id ? data.reply.question_id : [];
-                                appendBotMessage(reply, options,ids);
+                                appendBotMessage(reply, options,ids,question_option_ids);
                             },
                             error: function(error) {
                                 console.error('Error:', error);
@@ -869,7 +902,7 @@ class ChatBotController extends Controller
                     // }
 
 
-                    function appendBotMessage(reply, options,ids) {
+                    function appendBotMessage(reply, options,ids,question_option_ids) {
                         // Create the bot message div
                         const botMessageDiv = $('<div>', { class: 'message bot' });
 
@@ -887,19 +920,21 @@ class ChatBotController extends Controller
                                 options.forEach((option, index) => {
                                     let button;
                                     
-                                    if (option == 'Please select to know more about our website.....') {
-                                        button = $('<button>', {
-                                            value: option,
-                                            text: option,
-                                        });
-                                    } else {
+                                    // if (option == 'Please select to know more about our website.....') {
+                                    //     button = $('<button>', {
+                                    //         value: option,
+                                    //         text: option,
+                                    //         data-attr:question_option_ids[index],
+                                    //     });
+                                    // } else {
                                         button = $('<button>', {
                                             class: 'option1Select',
                                             value: option,
                                             text: option,
+                                            dataattr :question_option_ids[index],
                                             data: { id: ids[index] }  // Use data attribute in jQuery
                                         });
-                                    }
+                                    // }
 
                                     const buttonWrapper = $('<div>', { class: 'chat-btn' }).append(button);
 

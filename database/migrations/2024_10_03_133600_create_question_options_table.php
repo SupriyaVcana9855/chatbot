@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::create('question_options', function (Blueprint $table) {
             $table->id();
-            $table->integer('question_id')->nullable();
+            $table->integer('bot_question_id')->nullable();
             $table->integer('option')->nullable();
             $table->timestamps();
         });

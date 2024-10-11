@@ -19,11 +19,10 @@ $chat_bot_id = end($urlSegments);
                 <div class="boxinner">
 
                     <h1>Create Question with Options</h1>
-
                     <form id="questionForm" action="{{route('saveOptionQuestion')}}" method="post">
                         @csrf
-                        <input type="hidden" id="parent_id" name="parent_id" value="{{$newQuestions[0]->id ?? ''}}">
-                        <input type="hidden" id="chat_bot_id" name="chat_bot_id" value="{{$newQuestions[0]->chat_bot_id ?? $chat_bot_id}}">
+                        <input type="hidden" id="parent_id" name="parent_id" value="{{($newQuestions[0]->question->id) ? $newQuestions[0]->question->id: ''}}">
+                        <input type="hidden" id="chat_bot_id" name="chat_bot_id" value="{{($newQuestions[0]->question->chat_bot_id) ? $newQuestions[0]->question->chat_bot_id : ''}}">
                         <div class="row">
                             <div class="col-md-12">
                                 @if ($newQuestions->isNotEmpty())

@@ -39,15 +39,26 @@
         margin-bottom: 10px;
     }
 </style>
+<?php 
+
+
+$url = $_SERVER['REQUEST_URI'];
+$urlSegments = explode('/', $url);
+$chat_bot_id = end($urlSegments);
+
+?>
 
 <div class="boxpadding ">
     <div class="row searchi-section mt-4">
         <div class="col-2 set-boat-heading">
             <h6 style="    margin-top: 40px;">Bots Lead generation Questions</h6>
         </div>
+        @if ($newQuestions->isEmpty())
+
         <div class="col-4 set-boat-heading">
-            <button class="btn btn-primary" style="margin-top: 40px; margin-left : 950px"><a style="color: black;" href="{{ route('addOptionQuestion') }}">+Add</a></button>
+            <button class="btn btn-primary" style="margin-top: 40px; margin-left : 950px"><a style="color: black;" href="{{ route('addNewQuestion',$chat_bot_id) }}">+Add</a></button>
         </div>
+        @endif
 
         <div class="row bottable">
             @if (session('success'))
@@ -93,7 +104,7 @@
                                         <i class="fa-solid fa-ellipsis-vertical" style="color: #8b8b8b;"></i>
                                     </button>
                                     <ul class="dropdown-menu">
-                                        <li class="border-bottom"><a class="dropdown-item" href="{{ route('faq', ['chat_bot_id' => $bot->chat_bot_id, 'questions_id' => $bot->id]) }}">Edit <span><img src="{{asset('/assets/images/editicon.png')}}"></span></li></a>
+                                        <li class="border-bottom"><a class="dropdown-item" href="{{ route('addNewQuestion',$bot->id) }}">Edit <span><img src="{{asset('/assets/images/editicon.png')}}"></span></li></a>
                                         <li><a class="dropdown-item" id="deleteFaq" data-value="{{$bot->id}}" href="javascript:;">Delete <span><img src="{{asset('/assets/images/boat/Vector (6).png')}}"></span></a></li>
                                     </ul>
                                 </div>

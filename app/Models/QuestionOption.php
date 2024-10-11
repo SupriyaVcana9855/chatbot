@@ -18,4 +18,9 @@ class QuestionOption extends Model
     {
         return $this->belongsTo(NewQuestion::class, 'question_id');
     }
+    public function subquestion()
+    {
+        return $this->belongsTo(NewQuestion::class, 'id');
+    }
+
 }

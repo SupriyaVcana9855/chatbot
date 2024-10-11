@@ -81,10 +81,10 @@
                                 <a href="{{ route('singleBotFaqListing',$bot->id) }}"> <img src="./assets/images/totalchat.png" title="Bot faq" style="height: 23px;">
                                     @else
                                 </a></button></td>
-                        <td><button class="btn btn-outline-secondary">
-                                <a href="{{ route('singleBotListing', $bot->id) }}">
+                        <td><a href="{{ route('addOptionQuestion', $bot->id) }}"><button class="btn btn-outline-secondary">
+                               
                                     <img src="./assets/images/boat/Live Chat.png" title="Live Chat"></a>
-                            </button></td>
+                            </button></a></td>
                         @endif
                         <td><button class="btn btn-outline-secondary">
                                 <a href="{{ route('chatanalytics') }}"><img src="./assets/images/boat/Analytics.png" title="Chat Analytics">

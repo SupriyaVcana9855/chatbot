@@ -1,70 +1,116 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dynamic Form</title>
-    <style>
-        .option-group {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-        .option-group input {
-            margin-right: 10px;
-        }
-    </style>
-</head>
-<body>
+@extends('layout.app')
+@section('content')
 
-    <h1>Create Question with Options</h1>
 
-    <form id="questionForm">
-        <div>
-            <label for="question">Question:</label>
-            <input type="text" id="question" name="question" placeholder="Enter your question" required>
-                <button type="button" onclick="addOption()">Add Option</button>
-        </div>
+<?php
 
-        <div id="optionContainer">
-            <div class="option-group">
-                <input type="text" name="options[]" placeholder="Enter option" required>
+
+$url = $_SERVER['REQUEST_URI'];
+$urlSegments = explode('/', $url);
+$chat_bot_id = end($urlSegments);
+
+?>
+
+<link rel="stylesheet" href="{{ asset('css/setup.css') }}">
+<div class="boxpadding">
+    <div class="accordion-body">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="boxinner">
+
+                    <h1>Create Question with Options</h1>
+
+                    <form id="questionForm" action="{{route('saveOptionQuestion')}}" method="post">
+                        @csrf
+                        <input type="hidden" id="parent_id" name="parent_id" value="{{$newQuestions[0]->id ?? ''}}">
+                        <input type="hidden" id="chat_bot_id" name="chat_bot_id" value="{{$newQuestions[0]->chat_bot_id ?? $chat_bot_id}}">
+                        <div class="row">
+                            <div class="col-md-12">
+                                @if ($newQuestions->isNotEmpty())
+                                <div>
+                                    <label for="option_id">Select Option:</label>
+                                    <select name="option_id" id="option_id" class="form-control">
+                                        <option selected disabled>Please Select Option</option>
+                                        @foreach ($newQuestions as $option)
+                                        <option value="{{$option->id}}">{{$option->option}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                                @endif
+                            </div>
+
+                            <div class="row">
+                                <div>
+                                    <label for="question">Question:</label>
+                                    <div class="col-md-12" style="display: flex; align-items: center;">
+                                        <input type="text" class="form-control" id="question" name="question" placeholder="Enter your question" required>
+
+                                        <div class="col-md-2"> 
+                                            <button type="button" style="width: 60%;" class="btn btn-success" onclick="addOption()">Add Option</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-12 mt-4">
+                                <div id="optionContainer">
+                                    <div class="option-group">
+                                        <input type="text" class="form-control" name="options[]" placeholder="Enter option" required>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="optionContainer" class="mt-4">
+                                <a href="{{route('addOptionQuestion')}}"><button type="button" class="btn btn-secondary">Back</button></a>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                            </div>
+                    </form>
+                </div>
             </div>
         </div>
+    </div>
+</div>
 
-        <br>
-        <button type="submit">Submit</button>
-    </form>
 
-    <script>
-        function addOption() {
-            // Create a new option input field
-            let newOptionDiv = document.createElement('div');
-            newOptionDiv.classList.add('option-group');
 
-            // Create the option input field
-            let newOptionInput = document.createElement('input');
-            newOptionInput.type = 'text';
-            newOptionInput.name = 'options[]';
-            newOptionInput.placeholder = 'Enter option';
-            newOptionInput.required = true;
 
-            // Create the remove button
-            let removeButton = document.createElement('button');
-            removeButton.type = 'button';
-            removeButton.textContent = 'Remove';
-            removeButton.onclick = function() {
-                this.parentElement.remove();
-            };
+@endsection
+@section('java_scripts')
+<script>
+   function addOption() {
+    // Create a new option input field container (div)
+    let newOptionDiv = document.createElement('div');
+    newOptionDiv.classList.add('option-group');
 
-            // Append the input field and remove button to the div
-            newOptionDiv.appendChild(newOptionInput);
-            newOptionDiv.appendChild(removeButton);
+    // Add inline style for flex display and center alignment
+    newOptionDiv.style.display = 'flex';
+    newOptionDiv.style.alignItems = 'center';
+    newOptionDiv.style.marginBottom = '10px'; // Optional: Add some spacing
 
-            // Append the new option div to the container
-            document.getElementById('optionContainer').appendChild(newOptionDiv);
-        }
-    </script>
+    // Create the option input field
+    let newOptionInput = document.createElement('input');
+    newOptionInput.type = 'text';
+    newOptionInput.name = 'options[]';
+    newOptionInput.classList.add('col-md-10', 'form-control','mt-4');
+    newOptionInput.placeholder = 'Enter option';
+    newOptionInput.required = true;
 
-</body>
-</html>
+    // Create the remove button
+    let removeButton = document.createElement('button');
+    removeButton.type = 'button';
+    removeButton.textContent = 'Remove';
+    removeButton.classList.add('btn', 'btn-danger', 'ml-2'); // Bootstrap classes for styling
+    removeButton.onclick = function() {
+        this.parentElement.remove();
+    };
+
+    // Append the input field and remove button to the div
+    newOptionDiv.appendChild(newOptionInput);
+    newOptionDiv.appendChild(removeButton);
+
+    // Append the new option div to the container
+    document.getElementById('optionContainer').appendChild(newOptionDiv);
+}
+
+</script>
+@endsection

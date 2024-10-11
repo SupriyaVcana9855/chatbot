@@ -25,8 +25,8 @@ use Illuminate\Support\Facades\URL;
 |
 */
 
-Route::get('/option-question', [QuestionController::class, 'addOptionQuestion'])->name('addOptionQuestion');
-Route::get('/add-new-question', [QuestionController::class, 'addNewQuestion'])->name('addNewQuestion');
+Route::get('/option-question/{id?}', [QuestionController::class, 'addOptionQuestion'])->name('addOptionQuestion');
+Route::get('/add-new-question/{id?}', [QuestionController::class, 'addNewQuestion'])->name('addNewQuestion');
 
 Route::post('/option-question', [QuestionController::class, 'saveOptionQuestion'])->name('saveOptionQuestion');
 

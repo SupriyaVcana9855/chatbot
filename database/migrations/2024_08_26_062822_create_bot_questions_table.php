@@ -20,6 +20,8 @@ return new class extends Migration
            $table->text('question'); 
            $table->json('options')->nullable();
             $table->text('answer')->nullable(); 
+            $table->json('option_id')->nullable();
+            $table->json('parent_id')->nullable();
 
             // Changing question_type enum
             $table->enum('question_type', ['general', 'faq', 'question'])

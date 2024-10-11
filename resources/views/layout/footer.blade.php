@@ -96,6 +96,6 @@
           <script src="http://localhost:8000/scriptchatbots/{{ $scriptId }}"></script>
           {{-- <script src="http://127.0.0.1:8000/5"></script> --}}
         
-          <!-- <script src=" https://daa6-122-160-201-111.ngrok-free.app/scriptchatbots/{{ $scriptId }}"></script> -->
+          {{-- <script src=" https://9cc5-124-253-217-107.ngrok-free.app/scriptchatbots/1"></script>  --}}
 
 

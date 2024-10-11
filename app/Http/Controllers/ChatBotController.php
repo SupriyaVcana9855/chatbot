@@ -15,7 +15,6 @@ use App\Models\QuestionOption;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Date;
 use Illuminate\Support\Facades\DB;
-
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Response;
 class ChatBotController extends Controller
@@ -314,9 +313,11 @@ class ChatBotController extends Controller
             ->toArray();
         $questionsIds = array_unique($questionsIds);
         if ($bot->type == 'lead') {
-            $questions = BotQuestion::where(function ($query) use ($bot) {
+            $questions = BotQuestion::where(function ($query) use ($bot,$request) {
                 $query->where('chat_bot_id', $bot->id)
                     ->orWhere('chat_bot_id', 0);
+                //    ->orWhere('option_id', $request->option_id);//add option id for getting that question
+
             })
                 ->whereNotIn('id', $questionsIds)
                 ->first();
@@ -340,11 +341,13 @@ class ChatBotController extends Controller
                     ->get();
             }
         }
+        $getAllOptions = '';
         if ($questions) {
 
             $arr = [];
             if ($bot->type == 'lead') {
                 $questionNew = $questions->question;
+                $getAllOptions =QuestionOption::where('question_id',$questions->id)->get();//get all the ids of options of that particular questions
                 $optionNew = ($questions->options) ? $questions->options : null;
                 $questionId = $questions->id;
             } else {
@@ -414,7 +417,9 @@ class ChatBotController extends Controller
                 'chat_bot_type' => $bot->type,
                 'options' =>  $optionNew,
                 'questions' => $questions,
+                'question_option_ids'=> ($getAllOptions)?$getAllOptions:'',//add ids here for the otions we have
             ];
+
         } else {
 
             if ($message == 'schedule a meeting') {

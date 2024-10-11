@@ -25,7 +25,7 @@ class QuestionController extends Controller
         $options = explode(',',$request->option);
         foreach($options as $option)
         {
-            $questionoption->option = $option;
+            $questionoption->option = $option; 
             $questionoption->question_id = $newquestion->id;
             $questionoption->save();
             $optionIds[] = $questionoption->id;

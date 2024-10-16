@@ -476,79 +476,32 @@
                         <ul class="nav nav-tabs favappflex mt-3 row">
                             <li class=" col icontextbox"><a data-toggle="tab" href="#hubspot">
                                     <img class="d-block" src="{{ asset('assets/images/setup/Vectoric.png') }}" alt="">
-                                    HUBSPOT</a>
+                                    Website</a>
                             </li>
-                            <li class=" col icontextbox"><a data-toggle="tab" href="#chatbot">
+                            <li class=" col icontextbox"><a data-toggle="tab" href="#hubspot">
                                     <img class="d-block" src="{{ asset('assets/images/setup/Vectoric.png') }}" alt="">
-                                    API CHATBOT</a></li>
-                            <li class="col icontextbox"><a data-toggle="tab" href="#airtable">
+                                    ChatBot</a></li>
+                            <li class="col icontextbox"><a data-toggle="tab" href="#hubspot">
                                     <img class="d-block" src="{{ asset('assets/images/setup/Vectoric.png') }}" alt="">
-                                    AIRTABLE</a></li>
-                            <li class="col icontextbox"><a data-toggle="tab" href="#celendly">
+                                    Watsapp</a></li>
+                            <li class="col icontextbox"><a data-toggle="tab" href="#hubspot">
                                     <img class="d-block" src="{{ asset('assets/images/setup/Vectoric.png') }}" alt="">
                                     CALENDLY</a></li>
-                            <li class="col icontextbox"><a data-toggle="tab" href="#dialogflow">
+                            <li class="col icontextbox"><a data-toggle="tab" href="#hubspot">
                                     <img class="d-block" src="{{ asset('assets/images/setup/Vectoric.png') }}" alt="">
-                                    DIALOGFLOW</a></li>
+                                    DIALOGFLOW< /a></li>
                         </ul>
                     </div>
                     <div class="tab-content">
                         <div>
-                            <div class="accordinbox">
+                            <div class="accordinbox" style="height:300px">
                                 <p>Copy this code snippet ...</p>
                                 <h6><span>Note:-</span>Paste it in your Website / Blog (In the head tag)</h6>
                                 <div id="hubspot" class="acccorboxbg tab-pane fade in active">
-                                    <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
-                                        Ipsum has been the industry's standard dummy text ever since the 1500s, when an
-                                        unknown printer took a galley of type and scrambled it to make a type specimen
-                                        book. It has survived not only five centuries, but also the leap into electronic
-                                        typesetting, remaining essentially unchanged. It was popularised in the 1960s
-                                        with the release of Letraset sheets containing Lorem Ipsum passages, and more
-                                        recently with desktop publishing software like Aldus PageMaker including
-                                        versions of Lorem Ipsum.</p>
+                                    <p>{{ $bot->script_link }}
+                                       </p>
                                 </div>
 
-                                <div id="chatbot" class="acccorboxbg tab-pane fade in active">
-                                    <p>An API chatbot is a conversational tool that leverages natural language
-                                        processing (NLP) to interpret user inputs and interacts with external services
-                                        through APIs. It provides dynamic, real-time responses by retrieving or sending
-                                        data, making it ideal for tasks like customer support, product recommendations
-                                        bookings, and data retrieval. This enables businesses to automate interactions,
-                                        improve user engagement, and deliver personalized experiences efficiently across
-                                        various platforms such as websites and messaging apps.</p>
-                                </div>
-                                <div id="airtable" class="acccorboxbg tab-pane fade in active">
-                                    <p>
-                                        Airtable is a cloud-based collaboration platform that combines the functionality
-                                        of spreadsheets and databases. It allows users to organize data, create custom
-                                        workflows, and collaborate in real-time. With its easy-to-use interface,
-                                        Airtable is ideal for project management, content planning, and data tracking.
-                                        It integrates with various apps and services via APIs, enabling automation and
-                                        synchronization of data across platforms, making it a versatile tool for teams
-                                        to manage and visualize information efficiently.</p>
-                                </div>
-
-                                <div id="celendly" class="acccorboxbg tab-pane fade in active">
-                                    <p>
-                                        Calendly is a scheduling tool that simplifies meeting bookings by allowing users
-                                        to set their availability and share a personalized link. Invitees can choose
-                                        from available time slots, eliminating back-and-forth emails. It integrates with
-                                        calendars like Google, Outlook, and Office 365, and supports video conferencing
-                                        tools like Zoom. Calendly also offers automated reminders and follow-ups, making
-                                        it ideal for professionals to manage appointments, interviews, or consultations
-                                        efficiently across various industries.</p>
-                                </div>
-
-                                <div id="dialogflow" class="acccorboxbg tab-pane fade in active">
-                                    <p>Dialogflow is a natural language understanding (NLU) platform by Google that
-                                        enables the creation of conversational agents, such as chatbots and voice
-                                        assistants. It uses machine learning to process user inputs, identify intent,
-                                        and provide appropriate responses. Dialogflow supports multiple languages and
-                                        integrates with various platforms like Google Assistant, Slack, and Facebook
-                                        Messenger. Its API allows developers to build custom integrations, making it
-                                        ideal for creating dynamic, AI-driven conversations for customer support,
-                                        automation, and other business applications.</p>
-                                </div>
                             </div>
                         </div>
 

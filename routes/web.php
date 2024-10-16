@@ -11,6 +11,7 @@ use App\Http\Controllers\ChatBotController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\BotController;
 use App\Http\Controllers\TemplateController;
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\URL;
 
@@ -129,6 +130,15 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/addFaq', [FaqController::class, 'addFaq'])->name('addFaq');
     Route::get('/bot-faq-listing/{id}', [FaqController::class, 'singleBotFaqListing'])->name('singleBotFaqListing');
     Route::get('/delete-faq/{id?}',[FaqController::class,'deleteFaq'])->name('deleteFaq');
+
+
+    Route::get('/user-listing',[UserController::class,'userListing'])->name('userListing');
+    Route::get('/user-edit/{id?}',[UserController::class,'userEdit'])->name('userEdit');
+    Route::post('/user-save',[UserController::class,'userSave'])->name('userSave');
+    Route::get('/user-delete/{id?}',[UserController::class,'userDelete'])->name('userDelete');
+
+
+
 });
 
 

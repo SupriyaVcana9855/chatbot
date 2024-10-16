@@ -12,7 +12,7 @@ class QuestionController extends Controller
 {
     public function addOptionQuestion($id)
     {
-        $newQuestions = BotQuestion::with('options')->where('chat_bot_id',$id)->get();
+        $newQuestions = BotQuestion::with('options')->where('chat_bot_id',$id)->orderBy('id', 'DESC')->get();
         return view('question.questionList',compact('newQuestions'));
     }
     // public function addNewQuestion($id =null)

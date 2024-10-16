@@ -34,18 +34,19 @@ class ChatBotController extends Controller
     // }    
 
     //single bot question listing
-    // public function singleBotListing($id)
-    // {
-    //     $bots = BotQuestion::where('chat_bot_id', $id)->get();
-    //     $sequence = BotQuestion::select('sequence')->where('chat_bot_id', $id)->get();
+    public function singleBotListing($id)
+    {
+    
+        $bots = BotQuestion::where('chat_bot_id', $id)->get();
+        $sequence = BotQuestion::select('sequence')->where('chat_bot_id', $id)->get();
 
-    //     $questionFlowIds = BotQuestionFlow::pluck('bot_question_id2')->toArray();
-    //     $questionsNotInFlow = BotQuestion::where('chat_bot_id', $id)
-    //         ->whereNotIn('id', $questionFlowIds)
-    //         ->get();
+        $questionFlowIds = BotQuestionFlow::pluck('bot_question_id2')->toArray();
+        $questionsNotInFlow = BotQuestion::where('chat_bot_id', $id)
+            ->whereNotIn('id', $questionFlowIds)
+            ->get();
 
-    //     return view('bots.single-bot-listing', compact('bots', 'id', 'questionsNotInFlow'));
-    // }
+        return view('bots.single-bot-listing', compact('bots', 'id', 'questionsNotInFlow'));
+    }
     // // saving questions flow .
     // public function addQuestionFlow(Request $request)
     // {

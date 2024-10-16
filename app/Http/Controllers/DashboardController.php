@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Template;
 use App\Models\ChatBot;
+use App\Models\QuestionAnswer;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Auth;
 use Twilio\Rest\Client;
@@ -117,7 +119,11 @@ class DashboardController extends Controller
 
     public function index()
     {
-        return view('dashboard.dashboard');
+        $getUserCount = User::count();
+        $getBotCount = ChatBot::count();
+        $getChatCount = QuestionAnswer::count();
+        $getVisitorCount = QuestionAnswer::where('answer', 'LIKE', '%@gmail.com%')->count();
+        return view('dashboard.dashboard',compact('getUserCount','getBotCount','getChatCount','getVisitorCount'));
     }
 
 

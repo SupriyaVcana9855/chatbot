@@ -46,7 +46,8 @@
             <h6 style="    margin-top: 40px;">Bot Faqs</h6>
         </div>
         <div class="col-4 set-boat-heading">
-            <button class="btn btn-primary" style="margin-top: 40px; margin-left : 950px"><a style="color: black;" href="{{ route('faq', ['id' => $id]) }}">+Add</a></button>
+        <a style="color: black;" href="{{ route('faq', ['id' => $id]) }}"><button class="btn btn-primary" style="margin-top: 40px; margin-left : 950px">+Add</button></a>
+        
         </div>
 
         <div class="row bottable">

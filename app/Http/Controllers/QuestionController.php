@@ -12,7 +12,7 @@ class QuestionController extends Controller
 {
     public function addOptionQuestion($id)
     {
-        $newQuestions = BotQuestion::with('options')->where('chat_bot_id',$id)->get();
+        $newQuestions = BotQuestion::with('options')->where('chat_bot_id',$id)->orderBy('id', 'DESC')->get();
         return view('question.questionList',compact('newQuestions'));
     }
     // public function addNewQuestion($id =null)
@@ -32,12 +32,12 @@ class QuestionController extends Controller
             $optionIds = BotQuestion::pluck('option_id')->filter(function($value) {
                 return !is_null($value) && $value != 0;  // Filter out null and 0
             })->toArray();
-                    // Use these option IDs to filter out options in the QuestionOption table
         $newQuestions = QuestionOption::where('bot_question_id', $id)
             ->whereNotIn('id', $optionIds)
             ->get();
 
-        return view('question.question', compact('newQuestions'));
+
+        return view('question.question', compact('newQuestions','id'));
     }
     
     

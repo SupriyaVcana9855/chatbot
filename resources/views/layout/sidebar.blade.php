@@ -12,6 +12,8 @@
                             <li><a href="{{route('bots')}}"><img src="{{asset('/assets/images/BOTS.png')}}"><span class="text">BOTS</span></a>
                             <!-- <li><a href="{{route('website.bot')}}"><img src="{{asset('/assets/images/BOTS.png')}}"><span class="text">Website BOTS</span></a>
                             </li> -->
+                            <li><a href="{{route('userListing')}}"><img src="{{asset('/assets/images/setting.png')}}"><span class="text">USERS MANAGEMENT</span></a>
+                            </li>
                             <li><a href="{{route('agent')}}"><img src="{{asset('/assets/images/aiagents.png')}}"><span class="text">AI AGENTS</span></a></li>
                             <li><a href="{{route('templates')}}"><img src="{{asset('/assets/images/template.png')}}"><span class="text">TEMPLATES</span></a></li>                          
                         </ul>

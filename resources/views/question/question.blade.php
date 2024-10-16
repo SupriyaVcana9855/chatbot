@@ -1,16 +1,6 @@
 @extends('layout.app')
 @section('content')
 
-
-<?php
-
-
-$url = $_SERVER['REQUEST_URI'];
-$urlSegments = explode('/', $url);
-$chat_bot_id = end($urlSegments);
-
-?>
-
 <link rel="stylesheet" href="{{ asset('css/setup.css') }}">
 <div class="boxpadding">
     <div class="accordion-body">
@@ -20,8 +10,8 @@ $chat_bot_id = end($urlSegments);
                     <h1>Create Question with Options</h1>
                     <form id="questionForm" action="{{route('saveOptionQuestion')}}" method="post">
                         @csrf
-                        <input type="hidden" id="parent_id" name="parent_id" value="{{($newQuestions[0]->question->id) ? $newQuestions[0]->question->id: ''}}">
-                        <input type="hidden" id="chat_bot_id" name="chat_bot_id" value="{{($newQuestions[0]->question->chat_bot_id) ? $newQuestions[0]->question->chat_bot_id : ''}}">
+                        <input type="hidden" id="parent_id" name="parent_id" value="{{(count($newQuestions)) ? $newQuestions[0]->question->id: ''}}">
+                        <input type="hidden" id="chat_bot_id" name="chat_bot_id" value="{{(count($newQuestions)) ? $newQuestions[0]->question->chat_bot_id : $id}}">
                         <div class="row">
                             <div class="col-md-12">
                                 @if ($newQuestions->isNotEmpty())
@@ -52,9 +42,9 @@ $chat_bot_id = end($urlSegments);
 
                             <div class="col-md-12 mt-4">
                                 <div id="optionContainer">
-                                    <div class="option-group">
+                                    <!-- <div class="option-group">
                                         <input type="text" class="form-control" name="options[]" placeholder="Enter option" required>
-                                    </div>
+                                    </div> -->
                                 </div>
                             </div>
 

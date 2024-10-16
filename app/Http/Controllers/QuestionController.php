@@ -25,7 +25,10 @@ class QuestionController extends Controller
     public function addNewQuestion($id = null)
     {
       
-            // Get all option_id values from the BotQuestion table
+            // Get all option_id values from the BotQuestion tabl
+            
+            
+             
             $optionIds = BotQuestion::pluck('option_id')->filter(function($value) {
                 return !is_null($value) && $value != 0;  // Filter out null and 0
             })->toArray();
@@ -39,22 +42,8 @@ class QuestionController extends Controller
     
     
     public function saveOptionQuestion(Request $request)
-{
-    // Debugging the incoming request
-    // dd($request->all());
-
-    // $existingData = QuestionOption::where('question_id', '=', $request->parent_id)->first();
-    // if (!$existingData) {
-    //     return redirect()->back()->withErrors(['error' => 'This question already exist with us.']);
-    // }
-    // dd('out');
-    // Create a new question
-    // $newquestion = new NewQuestion();
-    // $newquestion->question = $request->question;
-    // $newquestion->chat_bot_id = $request->chat_bot_id;
-    // $newquestion->option_id = ($request->option_id) ? $request->option_id : 0;
-    // $newquestion->parent_id = ($request->parent_id) ? $request->parent_id : 0;
-    // $newquestion->save();    
+    {
+   
     $options = $request->options; // No need to check if it's an array, it already is
 
     // Create a new bot question
@@ -91,36 +80,5 @@ class QuestionController extends Controller
     return redirect()->route('addOptionQuestion', $data['chat_bot_id'])->with('success', 'Question added successfully.');
 }
 
-    
 
-    // public function saveOptionQuestion(Request $request)
-    // {
-    //     // dd($request->all());
-    //     $newquestion = new NewQuestion();
-    //     $newquestion->question = $request->question;
-    //     $newquestion->chat_bot_id = $request->chat_bot_id;
-    //     $newquestion->option_id = $request->option_id ?? 0;
-    //     $newquestion->parent_id = $request->parent_id ?? 0;
-    //     $newquestion->save();
-
-    //     // Handle question options (since $request->option is already an array)
-    //     $optionIds = [];
-    //     foreach ($request->options as $option) {
-
-    //         $questionoption = new QuestionOption();
-    //         $questionoption->option = $option;
-    //         $questionoption->question_id = $newquestion->id;
-    //         $questionoption->save();
-    //         $optionIds[] = $questionoption->id;
-    //     }
-
-    //     // Prepare the response data
-    //     $data = [
-    //         'parent_id' => $newquestion->id,
-    //         'option_ids' => $optionIds,
-    //         'chat_bot_id' => $request->chat_bot_id,
-    //     ];
-
-    //     return redirect()->route('addOptionQuestion')->with('success', 'Question add successfully.');
-    // }
 }

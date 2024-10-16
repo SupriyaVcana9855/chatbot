@@ -34,7 +34,7 @@ class AuthController extends Controller
                     'body' => 'This is a test email sent from Laravel.',
                     'otp'=>$otp,
                 ];
-                Mail::to('supriyachandel9855@gmail.com')->send(new SendEmail($details));
+                Mail::to($request->email)->send(new SendEmail($details));
                 return redirect('/otpverify')->with('error', 'Please verify your OTP.');
             }
     
@@ -86,7 +86,7 @@ class AuthController extends Controller
                 'body' => 'Please enter this code to complete your verification.',
                 'otp'=>$otp,
             ];
-            Mail::to('supriyachandel9855@gmail.com')->send(new SendEmail($details));
+            Mail::to($user->email)->send(new SendEmail($details));
         } catch (\Exception $e) {
             return 'Failed to send email. Error: ' . $e->getMessage();
         }
@@ -121,7 +121,7 @@ class AuthController extends Controller
                     'otp'=>$otp,
 
                 ];
-                Mail::to('supriyachandel9855@gmail.com')->send(new ForgetPassword($details));
+                Mail::to($request->email)->send(new ForgetPassword($details));
                 return view('text');
             }else
             {

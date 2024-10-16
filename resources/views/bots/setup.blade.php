@@ -489,7 +489,7 @@
                                     CALENDLY</a></li>
                             <li class="col icontextbox"><a data-toggle="tab" href="#hubspot">
                                     <img class="d-block" src="{{ asset('assets/images/setup/Vectoric.png') }}" alt="">
-                                    DIALOGFLOW< /a></li>
+                                    DIALOGFLOW</li>
                         </ul>
                     </div>
                     <div class="tab-content">

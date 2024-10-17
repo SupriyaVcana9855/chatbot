@@ -8,26 +8,12 @@
         </div>
         <div class="col-10">
             <div class="search-container">
-                <select class="form-control form-select mr-2 filter">
+                <select class="form-control form-select mr-2 filter" id="botFilter">
                     <option value="all">All</option>
                     <option value="lead">Lead Generation Bot</option>
                     <option value="support">Customer Support Bot</option>
-                    <!-- Add more options as needed -->
                 </select>
-                <div class="col-md-5 mr-2">
-                    <form id="searchForm" action="{{ route('bots') }}" method="GET">
-                        <div class="input-group set-select">
-                            <input type="text" id="searchInput" name="search" value="{{ request()->input('search', old('search')) }}" class="form-control" placeholder="Search Here For templates">
-                            <div class="input-group-prepend">
-                            <button type="button" id="clearSearch" class="input-group-text">
-                                    <i class="fas fa-times"></i> <!-- Cross icon -->
-                                </button>
-                                <button type="submit" class="input-group-text"><i class="fas fa-search"></i></button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-                <button class="btn" data-toggle="modal" data-target="#createBotModal">Built A WhizBot</button>
+                <button class="btn" id="btnWhizBot" data-toggle="modal" data-target="#createBotModal">Built A WhizBot</button>
             </div>
         </div>
     </div>
@@ -54,7 +40,20 @@
         </div>
         @endif
         <div class="col-12 bot-table mb-3">
-            <table class="table table-striped">
+            <table class="table table-striped" id="bot-table-id">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Setup</th>
+                        <th>Notifications</th>
+                        <th>Chat</th>
+                        <th>Questions</th>
+                        <th>Analytics</th>
+                        <th>Settings</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
                 <tbody>
                     @foreach($bots as $bot)
                     <tr>
@@ -72,8 +71,8 @@
                         <td><button class="btn btn-outline-secondary">
                                 <img src="./assets/images/boat/Triggers.png" title="Bot Notifications">
                             </button></td>
-                        <td><button class="btn btn-outline-secondary" >
-                                <a href="{{ route('botChat',$bot->id) }}"> <img src="./assets/images/boat/Bot Chats.png" title="Bot Chat" >
+                        <td><button class="btn btn-outline-secondary">
+                                <a href="{{ route('botChat',$bot->id) }}"> <img src="./assets/images/boat/Bot Chats.png" title="Bot Chat">
                                 </a></button></td>
 
                         @if($bot->type == 'support')
@@ -82,7 +81,7 @@
                                     @else
                                 </a></button></td>
                         <td><a href="{{ route('addOptionQuestion', $bot->id) }}"><button class="btn btn-outline-secondary">
-                               
+
                                     <img src="./assets/images/boat/Live Chat.png" title="Live Chat"></a>
                             </button></a></td>
                         @endif
@@ -211,6 +210,10 @@
 
 
 <style>
+    button#btnWhizBot {
+        width: -webkit-fill-available;
+    }
+
     .bot-option {
         display: flex;
         align-items: center;
@@ -252,34 +255,52 @@
     .modal-dialog {
         top: 151px;
     }
+
+    th {
+        color: #000 !important;
+        visibility: visible !important;
+    }
 </style>
 @endsection
 @section('java_scripts')
 <script>
-
-document.addEventListener('DOMContentLoaded', function() {
-    document.getElementById('clearSearch').addEventListener('click', clearSearch);
-});
-
-function clearSearch() {
-    // Clear the input value
-    document.getElementById('searchInput').value = '';
-    
-    // Create a new URL without the search query
-    const url = new URL(window.location.href);
-    url.searchParams.delete('search'); // Remove 'search' parameter
-    
-    // Redirect to the new URL
-    window.location.href = url.toString(); // Navigate to the updated URL
-}
-
-
     $(document).ready(function() {
-        // Use a class selector to target delete links
-        $(document).on('click', '.delete-bot', function(event) {
-            event.preventDefault(); // Prevent the default anchor behavior
+        // Initialize DataTable
+        let table = new DataTable('#bot-table-id');
+        const urlParams = new URLSearchParams(window.location.search);
+        const selectedType = urlParams.get('type') || 'all'; // Default to 'all' if no filter is selected
+        // Set the selected option in the dropdown
+        $('#botFilter').val(selectedType);
 
-            const botId = $(this).data('value'); // Use 'this' to get the current bot ID
+    // Filter the rows based on the selected filter
+
+
+        // Handle bot filter change
+        $('#botFilter').on('change', function() {
+            let selectedType = $(this).val();
+            $('tbody tr').each(function() {
+                let botType = $(this).data('bot-type');
+                if (selectedType === 'all' || botType === selectedType) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+
+            // Optionally update the URL to preserve filter selection
+            window.history.pushState({}, '', `?type=${selectedType}`);
+        });
+
+          // Handle URL redirection with filter preservation
+          $('#botFilter').on('change', function() {
+            let selectedType = $(this).val();
+            window.location.href = `{{ route('bots') }}?type=${selectedType}`;
+        });
+
+        // Handle bot deletion
+        $(document).on('click', '.delete-bot', function(event) {
+            event.preventDefault(); // Prevent default anchor behavior
+            const botId = $(this).data('value'); // Get the bot ID
 
             Swal.fire({
                 title: "Are you sure?",
@@ -291,17 +312,17 @@ function clearSearch() {
                 confirmButtonText: "Yes"
             }).then((result) => {
                 if (result.isConfirmed) {
-                    // Send the AJAX request to change status in the backend
+                    // Send AJAX request to delete the bot
                     $.ajax({
                         type: "GET",
-                        url: "{{ route('deleteBot', '') }}" + '/' + botId, // Ensure proper URL formation
+                        url: "{{ route('deleteBot', '') }}/" + botId, // Correct URL format
                         success: function(data) {
                             Swal.fire({
                                 title: "Deleted!",
                                 text: "The bot has been deleted.",
                                 icon: "success"
                             }).then(() => {
-                                window.location.reload(); // Reload the page after deletion
+                                window.location.reload(); // Reload page after deletion
                             });
                         },
                         error: function() {
@@ -316,6 +337,7 @@ function clearSearch() {
             });
         });
     });
+
 
     function dataType(data) {
         // Set the value of the input

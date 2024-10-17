@@ -28,6 +28,8 @@ use Illuminate\Support\Facades\URL;
 
 Route::get('/option-question/{id?}', [QuestionController::class, 'addOptionQuestion'])->name('addOptionQuestion');
 Route::get('/add-new-question/{id}', [QuestionController::class, 'addNewQuestion'])->name('addNewQuestion');
+Route::get('/edit-question/{id}', [QuestionController::class, 'editQuestion'])->name('editQuestion');
+Route::post('/edit-save-question', [QuestionController::class, 'editSaveQuestion'])->name('editSaveQuestion');
 
 Route::post('/option-question', [QuestionController::class, 'saveOptionQuestion'])->name('saveOptionQuestion');
 

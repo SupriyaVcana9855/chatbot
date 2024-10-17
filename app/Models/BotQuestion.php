@@ -13,7 +13,7 @@ class BotQuestion extends Model
     ];
     public function bot()
     {
-         return $this->belongsTo(ChatBot::class,'chat_bot_id');
+         return $this->belongsTo(ChatBot::class,foreignKey: 'chat_bot_id');
     }
     public function options()
     {
@@ -32,5 +32,14 @@ class BotQuestion extends Model
     public function triggerOption()
     {
         return $this->belongsTo(QuestionOption::class, 'option_id');
+    }
+    public function triggerParent()
+    {
+        return $this->belongsTo(QuestionOption::class, 'parent_id');
+    }
+
+    public function childQuestions()
+    {
+        return $this->hasMany(BotQuestion::class, 'parent_id');
     }
 }

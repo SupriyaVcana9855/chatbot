@@ -90,14 +90,25 @@ $chat_bot_id = end($urlSegments);
                     <thead>
                         <tr>
                             <th>Question</th>
+                            <th>Optios</th>
+                            <th>All Optios</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach($newQuestions as $bot)
+               
                         <tr>
                             <td style="color: black;">
                                 {{ $bot->question ?? 'No question available' }}
+                            </td>
+                            <td>
+                                {{ $bot->triggerOption->option ?? '' }}
+                            </td>
+                            <td>
+                                @foreach ($bot->options as $options)
+                                <button>{{ $options ?? 'No options available' }}</button>
+                                @endforeach
                             </td>
                             <td>
                                 <div class="dropdown set-menu-btn d-inline-flex ">
@@ -108,12 +119,17 @@ $chat_bot_id = end($urlSegments);
                                     </button>
                                     <ul class="dropdown-menu">
                                         <li class="border-bottom">
+                                            <a class="dropdown-item" href="{{ route('editQuestion',  $bot->id) }}">
+                                                Edit Question<span><img src="{{ asset('/assets/images/editicon.png') }}"></span>
+                                            </a>
+                                        </li>
+                                        <li class="border-bottom">
                                             <a class="dropdown-item" href="{{ route('addNewQuestion',  $bot->id) }}">
-                                                Edit <span><img src="{{ asset('/assets/images/editicon.png') }}"></span>
+                                                Add Sub Question <span><img src="{{ asset('/assets/images/editicon.png') }}"></span>
                                             </a>
                                         </li>
 
-                                        <li><a class="dropdown-item" id="deleteFaq" data-value="{{$bot->id}}" href="javascript:;">Delete <span><img src="{{asset('/assets/images/boat/Vector (6).png')}}"></span></a></li>
+                                        <!-- <li><a class="dropdown-item" id="deleteFaq" data-value="{{$bot->id}}" href="javascript:;">Delete <span><img src="{{asset('/assets/images/boat/Vector (6).png')}}"></span></a></li> -->
                                     </ul>
                                 </div>
                             </td>
@@ -168,44 +184,44 @@ $chat_bot_id = end($urlSegments);
 
 
         // Send the AJAX request to delete record in the backend
-        $(document).on('click', '#deleteFaq', function(event) {
-            event.preventDefault(); // Prevent the default anchor behavior
-            const deleteFaqId = $(this).data('value'); // Use 'this' to get the correct data-value
+        // $(document).on('click', '#deleteFaq', function(event) {
+        //     event.preventDefault(); // Prevent the default anchor behavior
+        //     const deleteFaqId = $(this).data('value'); // Use 'this' to get the correct data-value
 
-            Swal.fire({
-                title: "Are you sure?",
-                text: "You won't delete this Question!",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonColor: "#3085d6",
-                cancelButtonColor: "#d33",
-                confirmButtonText: "Yes"
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    // Send the AJAX request to delete the FAQ
-                    $.ajax({
-                        type: "GET", // Use DELETE method for deleting
-                        url: "{{ route('deleteFaq', '') }}" + '/' + deleteFaqId, // Use the route correctly
-                        success: function(data) {
-                            Swal.fire({
-                                title: "Deleted!",
-                                text: "Faq has been deleted.",
-                                icon: "success"
-                            }).then(() => {
-                                window.location.reload(); // Reload the page
-                            });
-                        },
-                        error: function(xhr) {
-                            Swal.fire({
-                                title: "Error!",
-                                text: "There was a problem deleting the FAQ.",
-                                icon: "error"
-                            });
-                        }
-                    });
-                }
-            });
-        });
+        //     Swal.fire({
+        //         title: "Are you sure?",
+        //         text: "You won't delete this Question!",
+        //         icon: "warning",
+        //         showCancelButton: true,
+        //         confirmButtonColor: "#3085d6",
+        //         cancelButtonColor: "#d33",
+        //         confirmButtonText: "Yes"
+        //     }).then((result) => {
+        //         if (result.isConfirmed) {
+        //             // Send the AJAX request to delete the FAQ
+        //             $.ajax({
+        //                 type: "GET", // Use DELETE method for deleting
+        //                 url: "{{ route('deleteFaq', '') }}" + '/' + deleteFaqId, // Use the route correctly
+        //                 success: function(data) {
+        //                     Swal.fire({
+        //                         title: "Deleted!",
+        //                         text: "Faq has been deleted.",
+        //                         icon: "success"
+        //                     }).then(() => {
+        //                         window.location.reload(); // Reload the page
+        //                     });
+        //                 },
+        //                 error: function(xhr) {
+        //                     Swal.fire({
+        //                         title: "Error!",
+        //                         text: "There was a problem deleting the FAQ.",
+        //                         icon: "error"
+        //                     });
+        //                 }
+        //             });
+        //         }
+        //     });
+        // });
     });
 
 

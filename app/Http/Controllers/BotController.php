@@ -21,17 +21,22 @@ class BotController extends Controller
         $bot = ChatBot::find($id);
         return view('bots.setup',compact('id','bot','scriptId'));
     }
-    public function bots()
+    public function bots(Request $request)
     {
-        if(Auth::user()->role == 1)
-        {
-            $bots = ChatBot::all();
-        }else
-        {
-            $bots = ChatBot::where('user_id',Auth::user()->id)->get();
+        $query = ChatBot::query();
+    
+        if (Auth::user()->role != 1) {
+            $query->where('user_id', Auth::user()->id);
         }
-        return view('bots.bots',compact('bots'));
+    
+        if ($request->has('type') && $request->type != 'all') {
+            $query->where('type', $request->type);
+        }
+    
+        $bots = $query->get();
+        return view('bots.bots', compact('bots'));
     }
+    
     public function agent()
     {
         return view('bots.ai-agent');

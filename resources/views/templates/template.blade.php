@@ -9,6 +9,61 @@
     button.btn {
         width: max-content;
     }
+
+.template-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%; 
+}
+
+
+.template-boxsado img {
+    width: 100%; 
+    height: 200px; 
+    object-fit: cover; 
+}
+
+.template-card h3 {
+    font-size: 1.2em;
+    margin: 10px 0;
+}
+
+.template-card p {
+    flex-grow: 1; 
+    font-size: 0.9em;
+    color: #666; 
+    margin-bottom: 15px;
+}
+
+.template-card a {
+    text-align: center;
+    display: block;
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+.set-menu-btn {
+    margin-left: auto;
+    margin-right: 0;
+    position: relative;
+    top: -30px;
+}
+
+@media (max-width: 768px) {
+    .template-card {
+        height: auto; 
+    }
+    
+    .template-boxsado img {
+        height: 150px; 
+    }
+}
+
+
 </style>
 <div class="boxpadding ">
     <div class="row searchi-section mt-4">

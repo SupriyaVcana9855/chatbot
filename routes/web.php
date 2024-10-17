@@ -125,6 +125,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/bot-questions-listing/{id}', [ChatBotController::class, 'singleBotListing'])->name('singleBotListing');
     Route::get('/website-bot', [ChatBotController::class, 'websiteChat'])->name('website.bot');
     Route::get('/bot-chat/{id?}', [ChatBotController::class, 'botChat'])->name('botChat');
+    Route::get('/get-bot-chat/{id?}', [ChatBotController::class, 'getBotChatData'])->name('getBotChatData');
 
     Route::get('/faq/{chat_bot_id?}/{questions_id?}', [FaqController::class, 'faq'])->name('faq');
     Route::post('/addFaq', [FaqController::class, 'addFaq'])->name('addFaq');

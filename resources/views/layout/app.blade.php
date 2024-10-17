@@ -7,7 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="{{asset('/assets/images/logo.png')}}" type="image/x-icon">
-    <title>WhizBot Template</title>
+    <title>WhizBot</title>
     <link rel="stylesheet" href="{{asset('/assets/sidebar.css')}}">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">

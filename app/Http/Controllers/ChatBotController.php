@@ -23,9 +23,22 @@ class ChatBotController extends Controller
     public function botChat($id)
     {
         // $botChats = ChatBot::with('botQuestions','botQuestions.questionAnswers')->where('id',$id)->get();
-        $botChats = BotUser::with('questionAnswer', 'questionAnswer.botQuestion', 'questionAnswer.chatBots')->where('id', $id)->get();
-        // dd($botChats);
+        // $botChats = BotUser::with('questionAnswer', 'questionAnswer.botQuestion', 'questionAnswer.chatBots')->where('id', $id)->get();
+        if(Auth::user()->role == 1){
+            $botChats = BotUser::with('bot')->get();
+        }else{
+            $botChats = BotUser::with('bot')->where('chat_bot_id', $id)->get();
+        }
+
         return view('bots.bot-chat', compact('botChats'));
+    }
+
+    public function getBotChatData($id)
+    {
+
+        $botChatData = QuestionAnswer::with('users','botQuestion')->where('chat_bot_id', $id)->get();
+
+        return response()->json(['data' => $botChatData]);
     }
 
     // public function editPrefrence(Request $request)
@@ -100,6 +113,7 @@ class ChatBotController extends Controller
         ->where('bot_user_id', $id)
         ->orWhere('bot_user_id', null)
         ->get();
+
 
     // Check if data is being retrieved correctly
     if ($data->isEmpty()) {

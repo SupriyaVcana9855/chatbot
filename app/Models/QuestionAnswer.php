@@ -10,6 +10,10 @@ class QuestionAnswer extends Model
     use HasFactory;
     protected $fillable = ['status'];
 
+    public function users()
+    {
+         return $this->belongsTo(User::class,'bot_user_id');
+    }
     public function botUser()
     {
          return $this->belongsTo(BotUser::class,'bot_user_id');

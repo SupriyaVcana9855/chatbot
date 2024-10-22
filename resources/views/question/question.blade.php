@@ -22,6 +22,7 @@
                                         @foreach ($newQuestions as $option)
                                         <option value="{{$option->id}}">{{$option->option}}</option>
                                         @endforeach
+                                        
                                     </select>
                                 </div>
                                 @endif

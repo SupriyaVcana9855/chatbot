@@ -141,4 +141,29 @@
 </script>
 
 </body>
+<script>
+
+ const dev = document.querySelector(".menu-btn")
+
+ 
+
+ dev.addEventListener("click",(e) => {
+
+  
+    if(document.querySelector("#side").style.width == "10%") {
+        document.querySelector("#side").style.width = "20%"
+        document.querySelector("#main_content").style.width ="80%"
+        document.querySelector("#side").style.transition = "all 2s"
+    }else {
+        document.querySelector("#side").style.width = "10%"
+        document.querySelector("#main_content").style.width ="90%"
+        document.querySelector("#main_content").style.transition = "all 2s"
+    }
+
+
+
+        
+})
+
+</script>
 </html>

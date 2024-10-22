@@ -16,6 +16,7 @@
                         <h4>{{ auth()->user()->name }}</h4>
                         <p>{{ auth()->user()->email }}</p>
                     </div>
+                    
                     <div class="set-profileimg"><img src="{{asset('/assets/images/proimg.png')}}"><i class="fa-solid fa-angle-down"
                             style="color: #777777;"></i></div>
                     <div class="dropdown-content">

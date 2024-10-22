@@ -22,20 +22,21 @@ class GeneralQuestionSeeder extends Seeder
         DB::table('bot_questions')->insert([
             [
                 'chat_bot_id' => 0,
-                'question' => 'What is your name?',
-                'options' => null,
-                'answer' => '',
-                'question_type' => 'general',
-                'answer_type' =>'name'
-            ],
-            [
-                'chat_bot_id' => 0,
                 'question' => 'What is your email ID?',
                'options' => null,
                 'answer' => '',
                 'question_type' => 'general',
                 'answer_type' =>'email'
 
+                
+            ],
+            [
+                'chat_bot_id' => 0,
+                'question' => 'What is your name?',
+                'options' => null,
+                'answer' => '',
+                'question_type' => 'general',
+                'answer_type' =>'name'
             ],
             [
                 'chat_bot_id' => 0,

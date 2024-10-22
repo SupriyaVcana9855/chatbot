@@ -98,7 +98,6 @@ class Helper
                 return $returndata;
            }
         }
-
         $botUserData = BotUser::find($request->bot_user_id);
         if($request->bot_id !='0')
         {
@@ -108,7 +107,7 @@ class Helper
                 $botUserData->save();
             } else {
                 if ($coloum != '') {
-                    $botUserData->$coloum = $message;
+                    $botUserData->$returndata = $message;
                     $botUserData->save();
                 }
             }

@@ -64,6 +64,7 @@
     }
 
     @keyframes spin {
+        
         0% { transform: translate(-50%, -50%) rotate(0deg); }
         100% { transform: translate(-50%, -50%) rotate(360deg); }
     }
@@ -71,7 +72,7 @@
     /* Blur effect class */
     .blur-background {
         filter: blur(5px);
-        pointer-events: none; /* Disable interactions with background while loading */
+        pointer-events: none; /* Disable interactions with background whil-e loading */
     }
 </style>
 
@@ -117,6 +118,7 @@
         showSpinner();  // Show spinner on page load
         setTimeout(function() {
             hideSpinner();  // Hide spinner and remove blur after 2 seconds
+            
         }, 1000);  
     });
 

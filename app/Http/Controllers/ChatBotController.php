@@ -39,8 +39,9 @@ class ChatBotController extends Controller
     {
 
         $botChatData = QuestionAnswer::with('users','botQuestion')->where('chat_bot_id', $id)->get();
-
+        
         return response()->json(['data' => $botChatData]);
+        
     }
 
     // public function editPrefrence(Request $request)

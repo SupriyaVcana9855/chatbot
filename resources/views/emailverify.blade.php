@@ -16,7 +16,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
-  <title>Email Verify</title>
+  <title>Email</title>
 
 </head>
 <style>
@@ -69,14 +69,24 @@
           <div class="login-form  set_facebook">
            
             <h3 class="text-center">Verify Your Email</h3>
-            <form action ="{{route('sendTestEmail')}}" method ="post">
+            <form action ="{{route('forgetpassword')}}" method ="post">
               @csrf
               <div class="row set-data">
                 <div class="form-group col-lg-12  mt-3 ">
-                  <input type="email" class="form-control mt-3" name="email" id="email" placeholder="Enter Your Email" >
+                  <input type="email" class="form-control mt-3  @error('email') is-invalid @enderror" name="email" id="email" placeholder="Enter Your Email" >
+                    @error('email')
+                      <div style="color:red">{{ $message }}</div>
+                    @enderror
                 </div>
                 <h6 class="text-center mt-3 mb-3">Enter the email address and then the <br>confirmation email will be sent</h6>
                 <div class=" col-12 set_sign mt-3">
+                   @if (session('error'))
+                    <div class="col-sm-12">
+                        <div class="alert  alert-danger " role="alert">
+                            {{ session('error') }}
+                        </div>
+                    </div>
+                  @endif
                 <button type="submit" class="verify_button">Verify Email</button>
               </div>
               </div>

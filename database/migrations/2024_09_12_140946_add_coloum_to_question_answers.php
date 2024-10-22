@@ -16,6 +16,7 @@ return new class extends Migration
         Schema::table('question_answers', function (Blueprint $table) {
              $table->integer('bot_user_id'); 
 
+
         });
     }
 
@@ -27,7 +28,8 @@ return new class extends Migration
     public function down()
     {
         Schema::table('question_answers', function (Blueprint $table) {
-            //
+            $table->dropColumn('bot_user_id');
+
         });
     }
 };

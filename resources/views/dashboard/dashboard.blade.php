@@ -10,19 +10,19 @@
           <div class="col-lg-3 col-md-6 mt-3 mb-3">
             <div class="set-total">
               <div class="set-inner-content">
-                <h6>TOTAL CHATS</h6>
-                <p>1</p>
+                <h6>TOTAL BOTS</h6>
+                <p>{{$getBotCount}}</p>
               </div>
               <div class="">
-                <img src="{{asset('/assets/images/totalchat.png')}}" >
+                <img src="{{asset('/assets/images/BOTS.png')}}" >
               </div>
           </div>
         </div>
           <div class="col-lg-3 col-md-6 mt-3 mb-3">
             <div class="set-total">
               <div class="set-inner-content">
-                <h6>TOTAL MESSAGES</h6>
-                <p>59</p>
+                <h6>TOTAL CHATS</h6>
+                <p>{{$getChatCount}}</p>
               </div>
              
               <div class="">
@@ -33,8 +33,8 @@
           <div class="col-lg-3 col-md-6 mt-3 mb-3">
             <div class="set-total">
               <div class="set-inner-content">
-                <h6>TOTAL FEEDBACKS</h6>
-                <p>0</p>
+                <h6>TOTAL USERS</h6>
+                <p>{{$getUserCount}}</p>
               </div>
              
               <div class="">
@@ -46,7 +46,7 @@
             <div class="set-total">
               <div class="set-inner-content">
                 <h6>TOTAL VISITORS</h6>
-                <p>189</p>
+                <p>{{$getVisitorCount}}</p>
               </div>
               <div class="">
                 <img src="{{asset('/assets/images/TOTAL VISITORS.png')}}" >

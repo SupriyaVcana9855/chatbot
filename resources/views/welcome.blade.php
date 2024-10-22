@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -163,12 +164,21 @@
             </div>
         </div>
         <div class="chatbot-footer">
-            <input type="text" placeholder="Enter your message...">
-            <button><i class="fa-solid fa-paper-plane"></i></button>
+            <form action="{{route('send.message')}}" method="post">
+                @csrf
+            <input type="text" name="to" placeholder="Enter your number..." >
+            <input type="text" name="message" placeholder="Enter your message...">
+            <button type="submit"><i class="fa-solid fa-paper-plane"></i></button>
+            </form>
         </div>
         <div class="powered-by">
             Powered by <a href="#">SmartBot</a>
         </div>
     </div>
 </body>
-</html>
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
+<!-- <script src="https://8d4d-122-160-201-111.ngrok-free.app/scriptchatbots/1"></script> -->
+<!-- <script src="http://127.0.0.1:8000/scriptchatbots/1"></script> -->
+
+</html> 

@@ -1,2 +1,0 @@
-[30-Oct-2023 11:55:31 UTC] PHP Warning:  Undefined variable $fresh_install in /home/vglobal/public_html/chatbot/install/db_conn.php on line 140
-[30-Oct-2023 11:57:32 UTC] PHP Parse error:  syntax error, unexpected token "=", expecting ";" in /home/vglobal/public_html/chatbot/class/class.jaklic.php on line 171

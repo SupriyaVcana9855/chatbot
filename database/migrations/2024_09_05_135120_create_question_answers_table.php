@@ -17,17 +17,18 @@ return new class extends Migration
             $table->id();
             
             // Correct table name for the foreign key
-            $table->unsignedBigInteger('bot_question_id'); 
-            $table->foreign('bot_question_id')->references('id')->on('bot_questions')->onDelete('cascade');
+            $table->integer('bot_question_id')->nullable(); 
             
+
             $table->text('answer')->nullable(); 
             $table->string('status')->nullable(); 
 
             $table->unsignedBigInteger('user_id'); 
+            
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             
             $table->unsignedBigInteger('chat_bot_id'); 
-            $table->foreign('chat_bot_id')->references('id')->on('chat_bots')->onDelete('cascade');
+        $table->foreign('chat_bot_id')->references('id')->on('chat_bots')->onDelete('cascade');
             
             $table->timestamps();
         });

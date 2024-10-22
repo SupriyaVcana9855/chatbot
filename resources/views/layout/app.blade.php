@@ -4,7 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="{{asset('/assets/images/logo.png')}}" type="image/x-icon">
     <title>WhizBot Template</title>
     <link rel="stylesheet" href="{{asset('/assets/sidebar.css')}}">
     <script src="https://unpkg.com/@phosphor-icons/web"></script>
@@ -21,7 +23,7 @@
     
     <link rel="stylesheet" href="https://cdn.datatables.net/2.1.5/css/dataTables.dataTables.css" />
   
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+        <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 </head>
 <style>
@@ -39,7 +41,23 @@
     margin-right: 20px;
     padding-right: 25px !important;
 }
+.fade-out {
+    opacity: 1;
+    transition: opacity 5s ease-out;
+    animation: fadeOut 5s forwards;
+}
 
+@keyframes fadeOut {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+td.dt-empty {
+    color: #777777 !important;
+}
          
 </style>
 <body>
@@ -56,6 +74,7 @@
 </div>
 
       @include('layout.footer')
+      @yield('java_scripts')
 
 </body>
 <script>
@@ -68,15 +87,13 @@
 
   
     if(document.querySelector("#side").style.width == "10%") {
-document.querySelector("#side").style.width = "20%"
-document.querySelector("#main_content").style.width ="80%"
-document.querySelector("#side").style.transition = "all 2s"
-
+        document.querySelector("#side").style.width = "20%"
+        document.querySelector("#main_content").style.width ="80%"
+        document.querySelector("#side").style.transition = "all 2s"
     }else {
-document.querySelector("#side").style.width = "10%"
-document.querySelector("#main_content").style.width ="90%"
-document.querySelector("#main_content").style.transition = "all 2s"
-
+        document.querySelector("#side").style.width = "10%"
+        document.querySelector("#main_content").style.width ="90%"
+        document.querySelector("#main_content").style.transition = "all 2s"
     }
 
 

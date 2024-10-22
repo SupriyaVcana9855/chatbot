@@ -32,7 +32,7 @@ class SendEmail extends Mailable
     public function envelope()
     {
         return new Envelope(
-            subject: 'Send Email',
+            subject: 'Otp Verify',
         );
     }
 

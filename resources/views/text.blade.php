@@ -1,0 +1,1 @@
+<h1>Please check mail reset link is sent.</h1>

@@ -399,6 +399,8 @@ class ChatBotController extends Controller
 
     public function scriptchatbots($id)
     {
+        $addClass ='';
+
         $chatbot = ChatBot::find($id);
         $questionsIds = QuestionAnswer::pluck('bot_question_id')->where('chat_bot_id ', $id)->where('status ', '0')->toArray();
         $questions = BotQuestion::where('chat_bot_id', $id)
@@ -418,6 +420,10 @@ class ChatBotController extends Controller
         if (!$chatbot) {
             return response('Chatbot not found', 404);
         }
+        if($chatbot->bot_position == 'center')
+        {
+            $addClass = "chat-toggle-center";
+        }
         $csrfToken = csrf_token();
         $script = "(function() {
             // Function to inject the chatbot HTML and CSS into the page
@@ -433,7 +439,7 @@ class ChatBotController extends Controller
                              <input type='hidden' name='chat_bot_id' value='" . $chatbot->id . "' class='chat_bot_id'>
                                 <input type='hidden' name='selected_option_id' value='' class='selected_option_id'>
                                 <input type='hidden' name='bot_user_id' value='' class='bot_user_id'>
-                                <div class='chat-toggle chat-boat-position chat-boat-position-" . $chatbot->bot_position . "' id='chatMessages'>
+                                <div class='chat-toggle chat-boat-position  ".$addClass."  chat-boat-position-" . $chatbot->bot_position . "' id='chatMessages'>
                                     <img src='" . $logoUrl . "' alt='Chat Icon' id='chat-toggle-btn'>
                                 </div>
                                 <div class='chat-container chat-boat-position chat-boat-position-" . $chatbot->bot_position . "' id='chat-container'>
@@ -504,14 +510,14 @@ class ChatBotController extends Controller
                                     margin-top: 15px !important;
                                 }
                                 .chat-boat-position-left {
-                                    --bottom: 20px;
+                                    --bottom: 5px;
                                     --left: 20px;
                                 }
                                 
-                                .chat-boat-position-center {
-                                    --top: 51%;
-                                    --right: 20px;
-                                }
+                                 .chat-boat-position-center {
+                                                bottom: 15%;
+                                                --right: 20px;
+                                            }
                                 
                                 
                                 .chat-toggle {
@@ -519,7 +525,14 @@ class ChatBotController extends Controller
                                     width: 50px;
                                     height: 50px;
                                     cursor: pointer;
+                                     position: fixed;
+                                  
                                 }
+                                  .chat-toggle-center {
+                                 
+                                     top: 50%; 
+                                     right: 2%; 
+                                }   
                                 
                                 .chat-toggle img {
                                     width: 100%;
@@ -534,7 +547,7 @@ class ChatBotController extends Controller
                                     font-family: Arial, sans-serif;
                                     display: flex;
                                     flex-direction: column;
-                                    position:absolute;
+                                    position:fixed;
                                     /* bottom: 80px;
                                     right: 20px; */
                                     display: none; /* Initially hidden */
@@ -574,7 +587,7 @@ class ChatBotController extends Controller
                                     padding: 10px;
                                     flex-grow: 1;
                                     overflow-y: auto;
-                                    height: 335px;
+                                    height: 45vh;
                                 }
                                 
                                 .message {

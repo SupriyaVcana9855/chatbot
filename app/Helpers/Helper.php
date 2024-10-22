@@ -104,9 +104,10 @@ class Helper
             if (!$botUserData) {
                 $botUserData = new BotUser;
                 $botUserData->chat_bot_id = $bot->id;
+                $botUserData->$returndata = $message;
                 $botUserData->save();
             } else {
-                if ($coloum != '') {
+                if ($returndata != '') {
                     $botUserData->$returndata = $message;
                     $botUserData->save();
                 }

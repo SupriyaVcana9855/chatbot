@@ -6,40 +6,44 @@ use App\Models\NewQuestion;
 use App\Models\QuestionOption;
 use App\Models\BotQuestion;
 use Illuminate\Http\Request;
-use App\Models\ChatBot;
+use App\Models\LastResponse;
 
 
 class Helper
 {
 
 
-    public static function getData($message, $bot)
+    public static function getData($message, $bot,$request=null,$botUserData=null,$question=null)
     {
-        if ($message == 'schedule a meeting') {
-            $url = '<a target="_blank" href="https://calendly.com/anshul_seo/30min?month=2024-09">click here to schedule a meeting</a>';
-            $data = [
-                'message' => $url,
-                'question_id' => 0,
-                'chat_bot_type' => $bot->type,
-            ];
-            return $data;
-        } else if ($bot->type != 'lead' && $message == 'chat with live agent') {
-            $data = [
-                'message' => "Let me check if any agent is available for you....please wait.",
-                'question_id' => 0,
-                'chat_bot_type' => $bot->type,
-            ];
-            return $data;
-        } elseif ($message == 'exit') {
-            $data = [
-                'message' => "Thanx for the information we will contact you soon.......",
-                'question_id' => 0,
-                'chat_bot_type' => $bot->type,
-            ];
-            return $data;
-        } else {
+        if ($message == 'schedule a meeting') 
+        {
+            $text =   '<a target="_blank" href="https://calendly.com/anshul_seo/30min?month=2024-09">click here to schedule a meeting</a>';
+        } else if ($bot->type != 'lead' && $message == 'chat with live agent') 
+        {
+            $text =  "Let me check if any agent is available for you....please wait.";
+        } elseif ($message == 'exit') 
+        {
+            $text =  "Thanx for the information we will contact you soon.......";
+        } else 
+        {
           return $data = [];
         }
+        $data = LastResponse::where('bot_user_id',$request->bot_user_id)->first();
+        if(!$data){
+            $lastresponse = new LastResponse();
+            $lastresponse->bot_user_id = $request->bot_user_id;
+            $lastresponse->question = $message;
+            $lastresponse->answer = $text;
+            $lastresponse->save();
+        }
+        // self::saveLatResponse($question,$botUserData,$request,$bot,$message);
+        $data = [
+            'message' => $text,
+            'question_id' => 0,
+            'chat_bot_type' => $bot->type,
+            'bot_user_id' =>$request->bot_user_id
+        ];
+        return $data;
     }
 
     public static function validatedata($question,$message)
@@ -87,6 +91,20 @@ class Helper
     }
 
 
+    public static function saveQuestionAnser($question,$botUserData,$request,$bot,$message)
+    {
+        //make diffrent common function
+        $saveanswer = new QuestionAnswer;
+        $saveanswer->bot_question_id = ($question) ? $question->id : '0';
+        $saveanswer->answer = $message;
+        $saveanswer->user_id = 1; //chat bot ka malik 
+        $saveanswer->chat_bot_id = $bot->id;
+        $saveanswer->status = '1';
+        $saveanswer->bot_user_id = ($botUserData)?$botUserData->id:$request->bot_user_id; // kon chat krne aaya
+        $saveanswer->save();
+    }
+
+
     public static function generateReply($message, $bot, $question, $request)
     {
         $coloum = '';
@@ -113,14 +131,10 @@ class Helper
                 }
             }
         }
-        $saveanswer = new QuestionAnswer;
-        $saveanswer->bot_question_id = ($question) ? $question->id : '0';
-        $saveanswer->answer = $message;
-        $saveanswer->user_id = 1; //chat bot ka malik 
-        $saveanswer->chat_bot_id = $bot->id;
-        $saveanswer->status = '1';
-        $saveanswer->bot_user_id = ($botUserData)?$botUserData->id:$request->bot_user_id; // kon chat krne aaya
-        $saveanswer->save();
+
+        $saveanswer = self::saveQuestionAnser($question,$botUserData,$request,$bot,$message);
+
+        
 
         $questionsIds = QuestionAnswer::where('chat_bot_id', $bot->id)
             ->where('status', '1')
@@ -181,7 +195,7 @@ class Helper
                     if($message == 'schedule a meeting' || $message =='chat with live agent' || $message == 'exit')
                     {
 
-                        return self:: getData($message,$bot);
+                        return self::getData($message, $bot,$request,$botUserData,$question);
                     }
                    else {
 
@@ -232,7 +246,7 @@ class Helper
 
             if($message == 'schedule a meeting' || $message =='chat with live agent' || $message == 'exit')
             {
-                return self:: getData($message,$bot);
+                return self:: getData($message, $bot,$request,$botUserData,$question);
             }
            else {
                 $optionNew = array('schedule a meeting', 'exit');
@@ -241,6 +255,7 @@ class Helper
                     'question_id' => 0,
                     'chat_bot_type' => $bot->type,
                     'options' =>  $optionNew,
+                    'bot_user_id'=>$botUserData->id
     
                 ];
 

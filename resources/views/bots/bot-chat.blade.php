@@ -472,7 +472,7 @@
 
                     // Set the user's name from the response
                     document.getElementById('user_name').textContent = getBotChatData[0].name ?? '';
-                    document.getElementById('pills-contact-tab').setAttribute('data-id', getBotChatData[0].bot_user_id);
+                    document.getElementById('pills-contact-tab').setAttribute('data-id',bot_user_id);
 
                     // Loop through the response and append each message dynamically
                     $.each(getBotChatData[0].question_answer, function(key, value) {

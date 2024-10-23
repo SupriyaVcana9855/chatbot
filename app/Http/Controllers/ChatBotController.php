@@ -154,7 +154,7 @@ class ChatBotController extends Controller
         $botId = $request->input('bot_id');
         $question = BotQuestion::find($botId);
         $bot = ChatBot::find($request->chatbotId);
-        $reply = Helper::getData($message, $bot);
+        $reply = Helper::getData($message, $bot,$request);
         if(count($reply))
         {
             return response()->json(['reply' => $reply]);

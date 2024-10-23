@@ -14,6 +14,7 @@ use App\Http\Controllers\TemplateController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\URL;
+use App\Models\BotUser;
 
 /*
 |--------------------------------------------------------------------------
@@ -107,7 +108,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/delete-questions/{id?}',[ChatBotController::class,'questionsDelete'])->name('questionsDelete');
 
     Route::get('/download-history-pdf/{id?}',[ChatBotController::class,'downloadHistoryPdf'])->name('download-history-pdf');
-
+    // Route::get('/download-history-pdf/{id?}', function ($id) {
+    //     $data = BotUser::with('bot', 'questionAnswer', 'questionAnswer.botQuestion')
+    //         ->where('id', $id)
+    //         ->get(); // Use first() instead of get() since you expect a single user
+    
+    //     return view('bots.chat-history', compact('data'));
+    // });
+    
 
 
     Route::get('templates', [TemplateController::class, 'templates'])->name('templates');
@@ -149,7 +157,7 @@ Route::middleware(['auth'])->group(function () {
 /// Admin Routes
 Route::middleware(['auth', 'role:1'])->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('admin.dashboard');
-    Route::get('/chatanalytics', [DashboardController::class, 'chatanalytics'])->name('chatanalytics');
+    Route::get('/chatanalytics/{id?}', [DashboardController::class, 'chatanalytics'])->name('chatanalytics');
     Route::get('/agent',[AiAgentBotController::class,'agents'])->name('agent');
     Route::get('/add-agent/{id?}',[AiAgentBotController::class,'addAgentform'])->name('addagentform');
     Route::post('/save-agent',[AiAgentBotController::class,'saveAgent'])->name('saveAgent');

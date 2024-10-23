@@ -72,7 +72,6 @@
 @endsection
 
 @section('java_scripts')
-<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 <script>
 $(document).ready(function() {
     // Parse the JSON data passed from PHP

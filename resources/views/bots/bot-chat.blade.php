@@ -325,9 +325,10 @@
                                 </div>
                                 <div>
                                 </div>
+                 
                                 @if (count($botChats) > 0)
                                 @foreach ($botChats as $bots)
-                                <div class="user-data mt-4 d-flex userChatData" data-id="{{$bots->bot->id ?? ''}}">
+                                <div class="user-data mt-4 d-flex userChatData" data-id="{{$bots->id ?? ''}}">
                                     <div class="user-image">
                                         <img src="{{asset('assets/images/userk.png')}}" alt="" class="mr-2">
                                     </div>
@@ -456,25 +457,27 @@
     for (let i = 0; i < chatElements.length; i++) {
         chatElements[i].addEventListener('click', function() {
             // Get the data-id attribute from the clicked element
-            var chat_bot_id = this.getAttribute('data-id');
+            var bot_user_id = this.getAttribute('data-id');
 
             // Make an AJAX request to fetch chat data
             $.ajax({
-                url: "{{route('getBotChatData')}}" + '/' + chat_bot_id,
+                url: "{{route('getBotChatData')}}" + '/' + bot_user_id,
                 type: 'GET',
                 success: function(response) {
                     const getBotChatData = response.data;
-                    console.log(getBotChatData[0].bot_user_id);
+                    // console.log(getBotChatData);
                     // Clear the chat body before appending new messages
                     const chatBody = document.querySelector('.chat-body');
                     chatBody.innerHTML = '';
 
                     // Set the user's name from the response
-                    document.getElementById('user_name').textContent = getBotChatData[0].users.name;
+                    document.getElementById('user_name').textContent = getBotChatData[0].name ?? '';
                     document.getElementById('pills-contact-tab').setAttribute('data-id', getBotChatData[0].bot_user_id);
 
                     // Loop through the response and append each message dynamically
-                    $.each(getBotChatData, function(key, value) {
+                    $.each(getBotChatData[0].question_answer, function(key, value) {
+
+                        // console.log('value',value.bot_question);
                         // Append bot question if available
                         if (value.bot_question) {
                             const botMessage = `
@@ -485,15 +488,27 @@
                             chatBody.insertAdjacentHTML('beforeend', botMessage);
                         }
 
+                         if (value.bot_question.chat_bot_id != '0' && value.bot_question.answer != null)
+                         {
+                             const userMessage = `
+                               <div class="message sent">
+                                 <div class="text">${value.bot_question.answer}</div>
+                             </div>
+                         `;
+                             chatBody.insertAdjacentHTML('beforeend', userMessage);
+                         }else{
+
+                            if (value.answer) {
+                                const userMessage = `
+                                <div class="message sent">
+                                    <div class="text">${value.answer}</div>
+                                </div>
+                            `;
+                                chatBody.insertAdjacentHTML('beforeend', userMessage);
+                            }
+                         }
+
                         // Append user's answer if available
-                        if (value.answer) {
-                            const userMessage = `
-                            <div class="message sent">
-                                <div class="text">${value.answer}</div>
-                            </div>
-                        `;
-                            chatBody.insertAdjacentHTML('beforeend', userMessage);
-                        }
                     });
 
                     // Show the chat and details sections

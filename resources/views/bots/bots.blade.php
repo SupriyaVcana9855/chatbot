@@ -86,7 +86,7 @@
                             </button></a></td>
                         @endif
                         <td><button class="btn btn-outline-secondary">
-                                <a href="{{ route('chatanalytics') }}"><img src="./assets/images/boat/Analytics.png" title="Chat Analytics">
+                                <a href="{{ route('chatanalytics',$bot->id) }}"><img src="./assets/images/boat/Analytics.png" title="Chat Analytics">
                                 </a></button></td>
                         <td><button class="btn btn-outline-secondary">
                                 <a href="{{ route('setup', $bot->id) }}">

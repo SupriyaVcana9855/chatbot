@@ -248,8 +248,39 @@ public function index()
 
 
 
-    public function chatanalytics()
-    {
-        return view('dashboard.chatanalytics');
+public function chatanalytics($id)
+{
+    // Define time frames for chart data
+    $timeFrames = [
+        '5years' => Carbon::now()->subYears(5),
+        'year' => Carbon::now()->subYear(),
+        'month' => Carbon::now()->subDays(30),
+        'week' => Carbon::now()->subDays(7),
+    ];
+
+    $chartData = [];
+
+    foreach ($timeFrames as $key => $startDate) {
+        // Group bot users by date and count for each time frame
+        $botUsersByDate = BotUser::select(DB::raw('DATE(created_at) as date'), DB::raw('count(*) as count'))
+            ->where('created_at', '>=', $startDate)
+            ->where('chat_bot_id', $id)
+            ->groupBy('date')
+            ->orderBy('date', 'asc')
+            ->get()
+            ->pluck('count', 'date');
+        
+        // Store the data for the chart
+        $chartData[$key] = [
+            'categories' => $botUsersByDate->keys(), // dates (categories for x-axis)
+            'counts' => $botUsersByDate->values(), // counts (data for y-axis)
+        ];
     }
+
+    // Convert chart data to JSON
+    $chartDataJson = json_encode($chartData);
+
+    return view('dashboard.chatanalytics', compact('chartDataJson'));
+}
+
 }

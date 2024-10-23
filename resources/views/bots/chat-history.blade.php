@@ -202,9 +202,10 @@
         <!-- Chat header -->
         <div class="chat-header">
             <div class="user-info">
+          
                 <div class="user-avatar"></div>
                 <div>
-                    <h4>User Name</h4>
+                    <h4>{{$data[0]['bot']->name}}</h4>
                     <p>Online</p>
                 </div>
             </div>
@@ -214,21 +215,21 @@
         <div class="chat-box">
             <div class="message received">
                 <div class="message-bubble">
-                    Hello
+                   {{$data[0]->bot->intro_message}}
                 </div>
             </div>
-            @foreach ($data as $chat)
+            @foreach ($data[0]['questionAnswer'] as $chat)
             <div class="message received">
                 <div class="message-bubble">
                     {{$chat->botQuestion->question ?? ''}}
-                    <div class="timestamp">{{$chat->botQuestion->created_at ?? ''}}</div>
+                    <!-- <div class="timestamp"> {{ isset($chat->created_at) ? \Carbon\Carbon::parse($chat->created_at)->format('Y-m-d h:i a') : '' }}</div> -->
                 </div>
             </div>
 
             <div class="message sent">
                 <div class="message-bubble">
                     {{$chat->answer}}
-                    <div class="timestamp">{{$chat->created_at}}</div>
+                    <!-- <div class="timestamp">{{ isset($chat->created_at) ? \Carbon\Carbon::parse($chat->created_at)->format('Y-m-d h:i a') : '' }}</div> -->
                 </div>
             </div>
             @endforeach

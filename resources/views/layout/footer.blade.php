@@ -52,11 +52,18 @@
             //     });
             // });
             $(document).ready(function() {
+                
                 $('.download-history').on('click', function() {
-                    var chatbotId = $(this).data('id');
+                    // var chatbotId = $(this).data('id');
+                    var bot_user_id = $('.bot_user_id').val();
+                    // alert(chatbotId);
+                    if (bot_user_id == '') {
+                        alert('This user does not have any chat');
+                        return false;
+                    }
 
                     $.ajax({
-                        url: '{{ route("download-history-pdf", ":id") }}'.replace(':id', chatbotId),
+                        url: '{{ route("download-history-pdf", ":id") }}'.replace(':id', bot_user_id),
                         method: 'GET',
                         xhrFields: {
                             responseType: 'blob'
@@ -89,6 +96,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 <script src="https://cdn.datatables.net/2.1.5/js/dataTables.js"></script>  
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
     {{-- <script src="http://localhost:8000/chatbot-script/1"></script> --}}
       {{-- <script src="http://localhost:8000/scriptchatbot/1"></script> --}}

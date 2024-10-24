@@ -189,7 +189,7 @@ class DashboardController extends Controller
 public function index()
 {
     // Total counts
-    $getUserCount = User::count();
+    $getUserCount = User::where('role','!=','1')->count();
     $getBotCount = ChatBot::count();
     $getBotUserCount = BotUser::count();
     $getChatCount = QuestionAnswer::count();
@@ -208,11 +208,12 @@ public function index()
         // Group users by date and count for each time frame
         $usersByDate = User::select(DB::raw('DATE(created_at) as date'), DB::raw('count(*) as count'))
             ->where('created_at', '>=', $startDate)
+            ->where('role','!=','1')
             ->groupBy('date')
             ->orderBy('date', 'asc')
             ->get()
             ->pluck('count', 'date'); // Return key-value pairs of 'date' => 'count'
-
+// dd( $usersByDate);
         // Group bots by date and count for each time frame
         $botsByDate = ChatBot::select(DB::raw('DATE(created_at) as date'), DB::raw('count(*) as count'))
             ->where('created_at', '>=', $startDate)

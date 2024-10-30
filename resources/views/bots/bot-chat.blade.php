@@ -363,24 +363,6 @@
                                     </div>
 
                                     <div class="chat-body">
-                                        <!-- <div class="message">
-                                            <div class="avatar"><img src="avatar1.png" alt="User Avatar"></div>
-                                            <div class="text">Hello</div>
-                                        </div>
-                                        <div class="message">
-                                            <div class="avatar"><img src="avatar1.png" alt="User Avatar"></div>
-                                            <div class="text">Lorem Ipsum</div>
-                                        </div>
-
-                                        <div class="message sent">
-                                            <div class="text">Hi</div>
-                                            <div class="avatar"><img src="avatar2.png" alt="User Avatar"></div>
-                                        </div>
-
-                                        <div class="message">
-                                            <div class="avatar"><img src="avatar1.png" alt="User Avatar"></div>
-                                            <div class="text">Thank You</div>
-                                        </div> -->
                                     </div>
 
                                     <div class="chat-footer">
@@ -399,12 +381,7 @@
 
                     </div>
                     <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-
-
                     </div>
-                    <!-- <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab"> -->
-
-
                     </div>
                 </div>
             </div>
@@ -549,17 +526,6 @@
                                 chatBody.insertAdjacentHTML('beforeend', botMessage);
                             }
                         }
-
-                        // Check for last answer
-                        // if (lastResponse.answer) {
-                        //     // Display the last answer
-                        //     const botMessage = `
-                        //         <div class="message">
-                        //             <div class="text">${lastResponse.answer}</div>
-                        //         </div>
-                        //     `;
-                        //     chatBody.insertAdjacentHTML('beforeend', botMessage);
-                        // }
                     }
 
 

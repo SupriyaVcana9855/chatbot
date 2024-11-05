@@ -306,6 +306,8 @@ class ChatBotController extends Controller
                 $getAllOptions = QuestionOption::where('bot_question_id', $questions->id)
                 ->pluck('id');
                 $optionNew = ($questions->options) ? $questions->options : null;
+              
+
                 $questionId = $questions->id;
             } else {
                 if ($length > 0) {
@@ -367,7 +369,10 @@ class ChatBotController extends Controller
                     $questionId = $questions->id;
                 }
             }
-          
+          if($optionNew)
+          {
+            array_push($optionNew, "exit");
+          }
             $data = [
                 'message' => $questionNew,
                 'question_id' => ($questions->count() > 0) ? $questionId : '',

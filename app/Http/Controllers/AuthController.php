@@ -1,30 +1,32 @@
 <?php
+
 namespace App\Http\Controllers;
-use App\Mail\ForgetPassword;
-use App\Mail\SendEmail;
-use Mail;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
+
+use App\Http\Requests\LoginRequest;
+use App\Http\Requests\SignupRequest;
+use App\Http\Requests\ForgetPasswordRequest;
+use App\Http\Requests\SavePasswordRequest;
+use App\Http\Requests\SaveChangePasswordRequest;
+use App\Http\Requests\OtpVerifyRequest;
 use App\Models\User;
-use Hash;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendEmail;
+use App\Mail\ForgetPassword;
 
 class AuthController extends Controller
 {
-    public function login(Request $request)
+    public function login(LoginRequest $request)
     {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required'
-        ], [
-            'email.required' => 'Please enter your email address.',
-            'email.email' => 'The email address format is not valid.',
-            'password.required' => 'Please enter your Password.',
-        ]);
+        // dd($request->all());
+        if (!User::where('email', $request->email)->exists()) {
+            return redirect()->back()->with('error', 'This email does not exist in our records.');
+        }        
         $credentials = $request->only('email', 'password');
     
         if (Auth::attempt($credentials)) {
             $user = Auth::user();
-            // Check if user status is inactive
             if ($user->status == 'inactive') {
                 $otp = rand(100000, 999999);
                 $user->otp = $otp;
@@ -32,13 +34,12 @@ class AuthController extends Controller
                 $details = [
                     'title' => 'Mail from Vcana Global',
                     'body' => 'This is a test email sent from Laravel.',
-                    'otp'=>$otp,
+                    'otp' => $otp,
                 ];
                 Mail::to($request->email)->send(new SendEmail($details));
                 return redirect('/otpverify')->with('error', 'Please verify your OTP.');
             }
-    
-            // Redirect based on role
+
             if ($user->role == 1) {
                 return redirect('/');
             } elseif ($user->role == 2) {
@@ -47,27 +48,18 @@ class AuthController extends Controller
                 return redirect('/subadmin/dashboard');
             }
         }
-    
+
         return redirect()->back()->with('error', 'Invalid credentials');
     }
-    public function signup(Request $request)
+
+    public function signup(SignupRequest $request)
     {
-        $otp = rand(100000, 999999);
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'phone_number' => 'max:15|unique:users',
-            'password' => 'required|string|min:8',
-        ]  , [
-            'name.required' => 'Please enter your email address.',
-            'email.required' => 'Please enter your email address.',
-            'email.email' => 'The email address format is not valid.',
-            'password.required' => 'Please enter your Password.',
-        ]
+
+        if (User::where('email', $request->email)->exists()) {
+            return redirect()->back()->with('error', 'Account already exists with this email.');
+        }
         
-    
-    
-    );
+        $otp = rand(100000, 999999);
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -78,13 +70,11 @@ class AuthController extends Controller
             'otp' => $otp,
         ]);
         Auth::login($user);
-        try 
-        {
-            $user->save();
+        try {
             $details = [
                 'title' => 'Mail from Vcana Global',
                 'body' => 'Please enter this code to complete your verification.',
-                'otp'=>$otp,
+                'otp' => $otp,
             ];
             Mail::to($user->email)->send(new SendEmail($details));
         } catch (\Exception $e) {
@@ -93,63 +83,42 @@ class AuthController extends Controller
         return redirect()->intended('otpverify');
     }
 
-    public function forget(Request $request)
+    public function forgetpassword(ForgetPasswordRequest $request)
     {
-        return view('emailverify');
-    }
-    public function forgetpassword(Request $request)
-    {
-        $request->validate([
-            'email' => 'required|email',
-        ], [
-            'email.required' => 'Please enter your email address.',
-            'email.email' => 'The email address format is not valid.',
-           
-        ]);
         $otp = rand(100000, 999999);
-        $user = User::where('email',$request->email)->first();
+        $user = User::where('email', $request->email)->first();
         
-            if($user)
-            {
-                $user->reset_otp =$otp;
-                $user->save();
-                $url = route('resetPassword');
-                $details = [
-                    'title' => 'Mail from Vcana Global',
-                    'body' => 'Please click on given link for reset the password.',
-                    'url'=>$url,
-                    'otp'=>$otp,
-
-                ];
-                Mail::to($request->email)->send(new ForgetPassword($details));
-                return view('text');
-            }else
-            {
-                return back()->with('error','Enter Registered Email.');
-            }
-       
+        if ($user) {
+            $user->reset_otp = $otp;
+            $user->save();
+            $url = route('resetPassword');
+            $details = [
+                'title' => 'Mail from Vcana Global',
+                'body' => 'Please click on the given link to reset the password.',
+                'url' => $url,
+                'otp' => $otp,
+            ];
+            Mail::to($request->email)->send(new ForgetPassword($details));
+            return view('text');
+        } else {
+            return back()->with('error', 'Enter Registered Email.');
+        }
     }
-    function resetPassword()
-    {
 
+    public function resetPassword()
+    {
         return view('reset_password');
     }
-    public function savePassword(Request $request)
-    {   
-        $request->validate([
-            'otp' => 'required',
-            'password' => 'required|confirmed|min:6',
-        ]);
-        $user = User::where('reset_otp',$request->otp)->first();
-        if($user)
-        {
+
+    public function savePassword(SavePasswordRequest $request)
+    {
+        $user = User::where('reset_otp', $request->otp)->first();
+        if ($user) {
             $user->password = Hash::make($request->password);
             $user->save();
             return redirect()->route('login');
-        }else
-        {
-            return back()->with('error','Enter Valid otp .
-            ');
+        } else {
+            return back()->with('error', 'Enter Valid OTP.');
         }
     }
 
@@ -157,28 +126,19 @@ class AuthController extends Controller
     {
         return view('change_password');
     }
-    public function saveChangePassword(Request $request)
+
+    public function saveChangePassword(SaveChangePasswordRequest $request)
     {
-        $request->validate([
-            'password' => 'required|confirmed|min:6',
-        ]);
-        $user = User::where('email',Auth()->user()->email)->first();
-        if($user)
-        {
-            $user->password = Hash::make($request->password);
-            $user->save();
-            return redirect('/');
-        }else
-        {
-            return back()->with('error','Enter Valid otp .
-            ');
-        }
+        $user = Auth::user();
+        $user->password = Hash::make($request->password);
+        $user->save();
+        return redirect('/');
     }
-    public function otpverify(Request $request)
+
+    public function otpverify(OtpVerifyRequest $request)
     {
-        $user = User::where('email',auth()->user()->email)->where('otp',$request->otp)->first();
-        if($user)
-        {
+        $user = User::where('email', auth()->user()->email)->where('otp', $request->otp)->first();
+        if ($user) {
             $user->status = 'active';
             $user->save();
             if ($user->role == 1) {
@@ -188,10 +148,8 @@ class AuthController extends Controller
             } elseif ($user->role == 3) {
                 return redirect('/subadmin/dashboard');
             }
-        }else
-        {
+        } else {
             return redirect()->intended('otpverify');
         }
-        
     }
 }

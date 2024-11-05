@@ -202,10 +202,9 @@
         <!-- Chat header -->
         <div class="chat-header">
             <div class="user-info">
-          
                 <div class="user-avatar"></div>
                 <div>
-                    <h4>{{$data[0]['bot']->name}}</h4>
+                    <h4>{{$data[0]->name}}</h4>
                     <p>Online</p>
                 </div>
             </div>
@@ -234,19 +233,33 @@
             </div>
             @endforeach
 
-            <div class="message received">
-                <div class="message-bubble">
-                    <div class="text">Thank You</div>
+         
+            @if ($data[0]['lastResponse']->isNotEmpty())
+                <div class="message sent">
+                    <div class="message-bubble">
+                        {{ $data[0]['lastResponse'][0]->question }}
+                    </div>
                 </div>
-            </div>
+
+                <div class="message received">
+                    <div class="message-bubble">
+                        @php
+                            // Extract the URL from the href attribute in the answer field using regex
+                            $answer = $data[0]['lastResponse'][0]->answer;
+                            preg_match('/href="([^"]*)"/', $answer, $matches);
+                            $extractedUrl = $matches[1] ?? null;
+                        @endphp
+
+                        @if($extractedUrl)
+                            {{ $extractedUrl }}
+                        @else
+                            {!! $data[0]['lastResponse'][0]->answer !!}
+                        @endif
+                    </div>
+                </div>
+            @endif
 
         </div>
-
-        <!-- Chat input -->
-        <!-- <div class="chat-input">
-    <input type="text" placeholder="Type a message...">
-    <button>&#9658;</button>
-  </div> -->
     </div>
 
 </body>

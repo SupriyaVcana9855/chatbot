@@ -333,8 +333,8 @@
                                         <img src="{{asset('assets/images/userk.png')}}" alt="" class="mr-2">
                                     </div>
                                     <div>
-                                        <h4>{{$bots->bot->name ?? ''}}</h4>
-                                        <p>{{$bots->bot->intro_message ?? ''}}</p>
+                                        <h4>{{$bots->name ?? ''}}</h4>
+                                        <p>{{$bots->email ?? ''}}</p>
                                     </div>
                                 </div>
                                 @endforeach
@@ -363,24 +363,6 @@
                                     </div>
 
                                     <div class="chat-body">
-                                        <!-- <div class="message">
-                                            <div class="avatar"><img src="avatar1.png" alt="User Avatar"></div>
-                                            <div class="text">Hello</div>
-                                        </div>
-                                        <div class="message">
-                                            <div class="avatar"><img src="avatar1.png" alt="User Avatar"></div>
-                                            <div class="text">Lorem Ipsum</div>
-                                        </div>
-
-                                        <div class="message sent">
-                                            <div class="text">Hi</div>
-                                            <div class="avatar"><img src="avatar2.png" alt="User Avatar"></div>
-                                        </div>
-
-                                        <div class="message">
-                                            <div class="avatar"><img src="avatar1.png" alt="User Avatar"></div>
-                                            <div class="text">Thank You</div>
-                                        </div> -->
                                     </div>
 
                                     <div class="chat-footer">
@@ -399,12 +381,7 @@
 
                     </div>
                     <div class="tab-pane fade" id="pills-profile" role="tabpanel" aria-labelledby="pills-profile-tab">
-
-
                     </div>
-                    <!-- <div class="tab-pane fade" id="pills-contact" role="tabpanel" aria-labelledby="pills-contact-tab"> -->
-
-
                     </div>
                 </div>
             </div>
@@ -458,7 +435,7 @@
         chatElements[i].addEventListener('click', function() {
             // Get the data-id attribute from the clicked element
             var bot_user_id = this.getAttribute('data-id');
-
+            // alert(bot_user_id);
             // Make an AJAX request to fetch chat data
             $.ajax({
                 url: "{{route('getBotChatData')}}" + '/' + bot_user_id,
@@ -472,12 +449,12 @@
 
                     // Set the user's name from the response
                     document.getElementById('user_name').textContent = getBotChatData[0].name ?? '';
-                    document.getElementById('pills-contact-tab').setAttribute('data-id', getBotChatData[0].bot_user_id);
+                    document.getElementById('pills-contact-tab').setAttribute('data-id',bot_user_id);
 
                     // Loop through the response and append each message dynamically
                     $.each(getBotChatData[0].question_answer, function(key, value) {
 
-                        // console.log('value',value.bot_question);
+                        // console.log('value',value);
                         // Append bot question if available
                         if (value.bot_question) {
                             const botMessage = `
@@ -487,6 +464,7 @@
                         `;
                             chatBody.insertAdjacentHTML('beforeend', botMessage);
                         }
+
 
                          if (value.bot_question.chat_bot_id != '0' && value.bot_question.answer != null)
                          {
@@ -507,9 +485,49 @@
                                 chatBody.insertAdjacentHTML('beforeend', userMessage);
                             }
                          }
-
-                        // Append user's answer if available
                     });
+                
+                    // Check if last_response exists and has at least one element
+                    if (getBotChatData[0].last_response && getBotChatData[0].last_response.length > 0) {
+                        // Get the last message in the array
+                        let lastResponse = getBotChatData[0].last_response[getBotChatData[0].last_response.length - 1];
+
+                        // Check for last question
+                        if (lastResponse.question) {
+                            // Display the last question
+                            const userMessage = `
+                                <div class="message sent">
+                                    <div class="text">${lastResponse.question}</div>
+                                </div>
+                            `;
+                            chatBody.insertAdjacentHTML('beforeend', userMessage);
+                        }
+
+                        console.log(lastResponse.answer);
+                        console.log(lastResponse.answer);
+
+                        // Check if lastResponse.answer contains a link and extract the URL
+                        if (lastResponse.answer) {
+                            // Regular expression to match the href URL inside the anchor tag
+                            const urlRegex = /href="([^"]*)"/;
+                            const match = lastResponse.answer.match(urlRegex);
+
+                            if (match && match[1]) {
+                                // Extracted URL
+                                const extractedUrl = match[1];
+                                console.log(extractedUrl); // Outputs the extracted URL
+
+                                // Display the extracted URL (instead of the full anchor tag)
+                                const botMessage = `
+                                    <div class="message">
+                                        <div class="text">${extractedUrl}</div>
+                                    </div>
+                                `;
+                                chatBody.insertAdjacentHTML('beforeend', botMessage);
+                            }
+                        }
+                    }
+
 
                     // Show the chat and details sections
                     document.getElementById('user-chat-section').style.display = 'block';

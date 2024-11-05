@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\SaveAgentRequest;
 use App\Models\AiAgent;
 use App\Models\UserChat;
 use Illuminate\Http\Request;
@@ -104,29 +105,10 @@ class AiAgentBotController extends Controller
         return view('ai_agent.add_agent', compact('agent'));
     }
     
-    public function saveAgent(Request $request)
+    public function saveAgent(SaveAgentRequest $request)
     {
-        $validated = $request->validate(
-            [
-                'name' => 'required|min:3',
-                'email' => 'required|email|unique:ai_agents,email,' . $request->agent_id,
-                'phone_number' => 'required|digits_between:10,15|unique:ai_agents,phone_number,' . $request->agent_id,
-            ],
-            [
-                'name.required' => 'The name field is required.',
-                'name.min' => 'The name must be at least 3 characters long.',
-                'email.required' => 'The email field is required.',
-                'email.email' => 'The email must be a valid email address.',
-                'email.unique' => 'This email is already taken.',
-                'phone_number.required' => 'The phone number field is required.',
-                'phone_number.digits_between' => 'The phone number must be between 10 and 15 digits.',
-                'phone_number.unique' => 'This phone number is already taken.',
-            ]
-        );
-        
-    
+        $validated = $request->all();
         $agent = AiAgent::find($request->agent_id) ?? new AiAgent();
-        
         $agent->name = $validated['name'];
         $agent->email = $validated['email'];
         $agent->phone_number = $validated['phone_number'];

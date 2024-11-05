@@ -177,7 +177,7 @@
     color: #fff;
 }
 .chat-btn button:hover{
-  opacity: 0.8;
+  opacity:0.8;
 }
 .chat-img img{
     width:57px;
@@ -307,8 +307,6 @@ button.option1Select {
 
             function appendUserMessage(message) {
                 console.log(message);
-                
-
                 const userMessageDiv = $('<div>', { class: 'message user' });
                 const messageTextDiv = $('<div>', { class: 'text', text: message });
 

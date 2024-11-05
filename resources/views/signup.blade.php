@@ -28,7 +28,18 @@
         <div class="col-lg-6"></div>
         <div class="col-lg-6 form_section">
           <div class="login-form ">
-            <h2 class="text-left set_mainheading">Sign In</h2>
+
+          <div class="row">
+                <div class="col-6">
+                <h2 class="text-left set_mainheading">Sign In</h2>
+
+                </div>
+                <div class="col-6">
+                <a class="text-left setacount" href="{{url('/login')}}">You already have a account</a>
+                </div>
+            </div>
+
+   
             <div class="row">
               <div class="col-lg-6">
 
@@ -46,7 +57,7 @@
               <div class="row set-data">
                 <div class="form-group col-lg-6  ">
                   <label for="name">Name</label>
-                  <input type="text" class="form-control  @error('name') is-invalid @enderror" id="email" placeholder="Type Your Name" name = "name">
+                  <input type="text" value="{{ old('name') }}" class="form-control  @error('name') is-invalid @enderror" id="email" placeholder="Type Your Name" name = "name">
                   @error('name')
                       <div style="color:red">{{ $message }}</div>
                   @enderror
@@ -54,21 +65,21 @@
 
                 <div class="form-group col-lg-6 set-pass-icon">
                   <label for="Phone">Phone</label>
-                  <input type="tel" class="form-control  @error('phone_number') is-invalid @enderror" id="email" placeholder="Enter Your Phone" name = "phone_number">
+                  <input type="tel" value="{{ old('phone_number') }}" class="form-control  @error('phone_number') is-invalid @enderror" id="email" placeholder="Enter Your Phone" name="phone_number">
                   @error('phone_number')
                       <div style="color:red">{{ $message }}</div>
                   @enderror
                 </div>   
                 <div class="form-group col-lg-6  ">
                   <label for="email">Your Email</label>
-                  <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" id="email" placeholder="typeyourmail@example.com" >
+                  <input type="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email') }}" name="email" id="email" placeholder="typeyourmail@example.com" >
                   @error('email')
                       <div style="color:red">{{ $message }}</div>
                   @enderror
                 </div>
                 <div class="form-group col-lg-6 set-pass-icon">
                   <label for="password">Password</label>
-                  <input id="password-field" type="password" class="form-control @error('password') is-invalid @enderror" name="password" >
+                  <input id="password-field" type="password" value="{{ old('password') }}" class="form-control @error('password') is-invalid @enderror" name="password" >
                   @error('password')
                       <div style="color:red">{{ $message }}</div>
                   @enderror

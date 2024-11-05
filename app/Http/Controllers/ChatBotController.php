@@ -27,7 +27,7 @@ class ChatBotController extends Controller
         // $botChats = ChatBot::with('botQuestions','botQuestions.questionAnswers')->where('id',$id)->get();
         // $botChats = BotUser::with('questionAnswer', 'questionAnswer.botQuestion', 'questionAnswer.chatBots')->where('id', $id)->get();
         if(Auth::user()->role == 1){
-            $botChats = BotUser::with('bot', 'questionAnswer','questionAnswer.botQuestion')->get();
+            $botChats = BotUser::with('bot', 'questionAnswer','questionAnswer.botQuestion')->where('chat_bot_id', $id)->get();
         }else{
             $botChats = BotUser::with('bot', 'questionAnswer','questionAnswer.botQuestion')->where('chat_bot_id', $id)->get();
         }
@@ -38,7 +38,7 @@ class ChatBotController extends Controller
     public function getBotChatData($id)
     {
        
-        $botChatData = BotUser::with('bot', 'questionAnswer','questionAnswer.botQuestion')->where('id', $id)->get();
+        $botChatData = BotUser::with('bot', 'questionAnswer','questionAnswer.botQuestion','lastResponse')->where('id', $id)->get();
         // dd($botChatData);
         return response()->json(['data' => $botChatData]);
         
@@ -85,7 +85,7 @@ class ChatBotController extends Controller
     public function downloadHistoryPdf($id)
     {
    
-        $data = BotUser::with('bot', 'questionAnswer','questionAnswer.botQuestion')
+        $data = BotUser::with('bot', 'questionAnswer','questionAnswer.botQuestion','lastResponse')
                 ->where('id', $id)
                 ->get();
             if ($data->isEmpty()) {

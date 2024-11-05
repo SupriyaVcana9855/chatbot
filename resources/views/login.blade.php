@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -21,7 +20,7 @@
 </head>
 
 <body>
-    
+
   <section class="login-container">
     <div class="container ">
       <div class="row">
@@ -29,48 +28,56 @@
         <div class="col-lg-6 form_section">
           <div class="login-form ">
             <div class="row">
-                <div class="col-6">
+              <div class="col-6">
                 <h2 class="text-left set_mainheading">Sign In</h2>
 
-                </div>
-                <div class="col-6">
+              </div>
+              <div class="col-6">
                 <a class="text-left setacount" href="{{url('/signup')}}">Create Your Acount</a>
-                </div>
+              </div>
             </div>
-            
+
             <div class="row">
               <div class="col-lg-6">
 
                 <button class="btn setBtn_primary mb-2"><i class="fa-brands fa-google" style="color: #ffffff;"></i> Sign
                   in with Google</button>
               </div>
-
-               
               <div class="col-lg-6 set_facebook">
-                
+
                 <button class="btn setBtn_primary_white mb-2"> <i class="fa-brands fa-facebook-f"
                     style="color: #005b96;"></i> With Facebook</button>
               </div>
             </div>
             <div class="Set_usign">Or Sign in Using Your Email Address</div>
-            <form action ="{{route('login')}}" method ="post">
+            @if (session('error'))
+            <div class="col-sm-12">
+              <div class="alert  alert-danger alert-dismissible fade show" role="alert">
+                {{ session('error') }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+            </div>
+            @endif
+            <form action="{{route('login')}}" method="post">
               @csrf()
               <div class="row set-data">
                 <div class="form-group col-lg-6  ">
                   <label for="email">Your Email</label>
-                  <input type="email" class="form-control" name="email" id="email" placeholder="typeyourmail@example.com" >
-                 @if ($errors->has('email'))
-                    <div style="color: red;">
-                        {{ $errors->first('email') }}
-                    </div>
-                @endif
+                  <input type="email" class="form-control" name="email" id="email" placeholder="typeyourmail@example.com">
+                  @if ($errors->has('email'))
+                  <div style="color: red;">
+                    {{ $errors->first('email') }}
+                  </div>
+                  @endif
                 </div>
 
-                <div class="form-group col-lg-6 set-pass-icon"> 
+                <div class="form-group col-lg-6 set-pass-icon">
                   <label for="password">Password</label>
-                  <input id="password-field" type="password" class="form-control @error('password') is-invalid @enderror" name="password" >
+                  <input id="password-field" type="password" class="form-control @error('password') is-invalid @enderror" name="password">
                   @error('password')
-                      <div style="color:red">{{ $message }}</div>
+                  <div style="color:red">{{ $message }}</div>
                   @enderror
                   <span toggle="#password-field" class="fa fa-fw fa-eye field-icon toggle-password"></span>
                 </div>
@@ -81,17 +88,9 @@
                 <div class="col-lg-8 set_pass ">
                   <a href="{{ route('forgetpassword') }}">Forgot Password?</a>
                 </div>
-
-                  @if (session('error'))
-                    <div class="col-sm-12">
-                        <div class="alert  alert-danger " role="alert">
-                            {{ session('error') }}
-                        </div>
-                    </div>
-                  @endif
                 <div class=" col-12 set_sign">
-                <button type="submit" class="setBtn_primary signin_button">Sign In</button>
-              </div>
+                  <button type="submit" class="setBtn_primary signin_button">Sign In</button>
+                </div>
               </div>
             </form>
           </div>
@@ -103,7 +102,7 @@
   <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
   <script>
-    $(".toggle-password").click(function () {
+    $(".toggle-password").click(function() {
 
       $(this).toggleClass("fa-eye fa-eye-slash");
       var input = $($(this).attr("toggle"));

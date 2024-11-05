@@ -367,6 +367,7 @@ class ChatBotController extends Controller
                     $questionId = $questions->id;
                 }
             }
+          
             $data = [
                 'message' => $questionNew,
                 'question_id' => ($questions->count() > 0) ? $questionId : '',
@@ -374,7 +375,7 @@ class ChatBotController extends Controller
                 'chat_bot_type' => $bot->type,
                 'options' =>  $optionNew,
                 'questions' => $questions,
-                'question_option_ids'=> ($getAllOptions)?$getAllOptions:$questionId,//add ids here for the otions we have
+                'question_option_ids' => $getAllOptions ?? ($questionId ?? ''),
             ];
         } else {
 
@@ -726,6 +727,7 @@ class ChatBotController extends Controller
                     const chatMessages = $('#chatMessages');
                     const userMessageInput = $('#userMessage');
                     const sendButton = $('#sendButton');
+
                     const chatBody = $('.chat-body');
 
                  $(document).on('click', '.option1Select', function() {

@@ -107,7 +107,7 @@ class Helper
 
     public static function generateReply($message, $bot, $question, $request)
     {
-        $coloum = '';
+        $returndata = '';
         if ($question) {
 
            $returndata =  self::validateData($question,$message);
@@ -125,10 +125,10 @@ class Helper
                 $botUserData->$returndata = $message;
                 $botUserData->save();
             } else {
-                // if ($returndata != '') {
+                if ($returndata != '') {
                     $botUserData->$returndata = $message;
                     $botUserData->save();
-                // }
+                }
             }
         }
 
@@ -215,14 +215,14 @@ class Helper
                             {
                                 if($botAnswer->answer)
                                 {
-                                    $optionNew = array('Please select to know more about our website.....','schedule a meeting', 'chat with live agent', 'exit');
+                                    $optionNew = array('Please select to know more about our website.....','schedule a meeting', 'chat with live agent');
                                 }else
                                 {
-                                    $optionNew = array('schedule a meeting', 'chat with live agent', 'exit');
+                                    $optionNew = array('schedule a meeting', 'chat with live agent');
                                 }
                             }else
                             {
-                                $optionNew = array('schedule a meeting', 'chat with live agent', 'exit');
+                                $optionNew = array('schedule a meeting', 'chat with live agent');
                             }
                            
                         }
@@ -235,22 +235,24 @@ class Helper
                     $questionId = $questions->id;
                 }
             }
-            // dd($getAllOptions);
-
-            $data = [
-                'message' => $questionNew,
-                'question_id' => ($questions->count() > 0) ? $questionId : '',
-                'bot_user_id' => ($botUserData)?$botUserData->id:'',
-                'chat_bot_type' => $bot->type,
-                'options' =>  $optionNew,
-                'questions' => $questions,
-                'question_option_ids'=> ($getAllOptions)?$getAllOptions:$questionId,//add ids here for the otions we have
-            ];
+                if($optionNew)
+                {
+                    array_push($optionNew, "exit");
+                }
+              $data = [
+                  'message' => $questionNew,
+                  'question_id' => ($questions->count() > 0) ? $questionId : '',
+                  'bot_user_id' => ($botUserData)?$botUserData->id:'',
+                  'chat_bot_type' => $bot->type,
+                  'options' =>  $optionNew,
+                  'questions' => $questions,
+                  'question_option_ids' => $getAllOptions ?? ($questionId ?? ''),
+              ];
         } else {
 
             if($message == 'schedule a meeting' || $message =='chat with live agent' || $message == 'exit')
             {
-                return self:: getData($message, $bot,$request,$botUserData,$question);
+                return self::getData($message, $bot,$request,$botUserData,$question);
             }
            else {
                 $optionNew = array('schedule a meeting', 'exit');

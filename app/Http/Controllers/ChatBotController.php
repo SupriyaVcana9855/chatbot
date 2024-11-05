@@ -149,14 +149,14 @@ class ChatBotController extends Controller
         $botId = $request->input('bot_id');
         $question = BotQuestion::find($botId);
         $bot = ChatBot::find($request->chatbotId);
-        $reply = $this->getData($message, $bot,$request);
+        $reply = $this->getData($message,$bot,$request);
         if(count($reply))
         {
             return response()->json(['reply' => $reply]);
         }
         else {
 
-            $reply =$this->generateReply($message, $bot, $question, $request);
+             $reply = $this->generateReply($message,$bot,$question,$request);
         }
         return response()->json(['reply' => $reply]);
     }

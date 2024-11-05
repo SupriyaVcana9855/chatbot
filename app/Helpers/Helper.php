@@ -240,7 +240,7 @@ class Helper
                 'chat_bot_type' => $bot->type,
                 'options' =>  $optionNew,
                 'questions' => $questions,
-                'question_option_ids'=> ($getAllOptions)?$getAllOptions:'',//add ids here for the otions we have
+                'question_option_ids'=> ($getAllOptions)?$getAllOptions:$questionId,//add ids here for the otions we have
             ];
         } else {
 

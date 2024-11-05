@@ -44,11 +44,6 @@ class ChatBotController extends Controller
         
     }
 
-    // public function editPrefrence(Request $request)
-    // {
-    //    return 1;
-    // }    
-
     //single bot question listing
 
     public function singleBotListing($id)
@@ -736,9 +731,9 @@ class ChatBotController extends Controller
                          var option_data_id = $(this).attr('dataID');
                         var selected_option_id = $(this).attr('dataattr');
 
-                         if(option_data_id)
+                         if(selected_option_id)
                          {
-                                $('.question_id').val(option_data_id);
+                                $('.question_id').val(selected_option_id);
                          }
                             console.log(selected_option_id);
 

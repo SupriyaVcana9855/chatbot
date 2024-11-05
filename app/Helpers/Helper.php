@@ -125,10 +125,10 @@ class Helper
                 $botUserData->$returndata = $message;
                 $botUserData->save();
             } else {
-                if ($returndata != '') {
+                // if ($returndata != '') {
                     $botUserData->$returndata = $message;
                     $botUserData->save();
-                }
+                // }
             }
         }
 
@@ -228,11 +228,15 @@ class Helper
                         }
                     }
                 } else {
+
+
                     $questionNew = $questions->question;
                     $optionNew = ($questions->options) ? $questions->options : null;
                     $questionId = $questions->id;
                 }
             }
+            // dd($getAllOptions);
+
             $data = [
                 'message' => $questionNew,
                 'question_id' => ($questions->count() > 0) ? $questionId : '',

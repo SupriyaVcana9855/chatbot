@@ -135,6 +135,7 @@ class Helper
         $saveanswer = self::saveQuestionAnser($question,$botUserData,$request,$bot,$message);
 
         
+        
 
         $questionsIds = QuestionAnswer::where('chat_bot_id', $bot->id)
             ->where('status', '1')

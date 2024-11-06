@@ -217,6 +217,7 @@
                    {{$data[0]->bot->intro_message}}
                 </div>
             </div>
+     
             @foreach ($data[0]['questionAnswer'] as $chat)
             <div class="message received">
                 <div class="message-bubble">
@@ -224,13 +225,22 @@
                     <!-- <div class="timestamp"> {{ isset($chat->created_at) ? \Carbon\Carbon::parse($chat->created_at)->format('Y-m-d h:i a') : '' }}</div> -->
                 </div>
             </div>
-
+            @if ($chat->botQuestion->question_type === 'faq' && $chat->botQuestion->chat_bot_id != 0)
+            <div class="message sent">
+                <div class="message-bubble">
+                    {{$chat->botQuestion->answer}}
+                    <!-- <div class="timestamp">{{ isset($chat->created_at) ? \Carbon\Carbon::parse($chat->created_at)->format('Y-m-d h:i a') : '' }}</div> -->
+                </div>
+            </div>
+            @else
+            
             <div class="message sent">
                 <div class="message-bubble">
                     {{$chat->answer}}
                     <!-- <div class="timestamp">{{ isset($chat->created_at) ? \Carbon\Carbon::parse($chat->created_at)->format('Y-m-d h:i a') : '' }}</div> -->
                 </div>
             </div>
+            @endif
             @endforeach
 
          

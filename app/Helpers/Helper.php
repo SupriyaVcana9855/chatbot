@@ -181,6 +181,8 @@ class Helper
         }
         $getAllOptions = '';
         if ($questions) {
+            $questionId=[];
+
             $arr = [];
             if ($bot->type == 'lead') {
                 $questionNew = $questions->question;
@@ -235,10 +237,17 @@ class Helper
                     $questionId = $questions->id;
                 }
             }
-                if($optionNew)
-                {
-                    array_push($optionNew, "exit");
-                }
+            if($optionNew)
+            {
+              array_push($optionNew, "exit");
+            }
+            if($questions)
+            {
+              $newQuestionId = $questionId;
+            }else
+            {
+              $newQuestionId = '';
+            }
               $data = [
                   'message' => $questionNew,
                   'question_id' => ($questions->count() > 0) ? $questionId : '',
@@ -246,7 +255,7 @@ class Helper
                   'chat_bot_type' => $bot->type,
                   'options' =>  $optionNew,
                   'questions' => $questions,
-                  'question_option_ids' => $getAllOptions ?? ($questionId ?? ''),
+                  'question_option_ids' => ($getAllOptions) ?$getAllOptions:$newQuestionId,
               ];
         } else {
 
@@ -255,7 +264,14 @@ class Helper
                 return self::getData($message, $bot,$request,$botUserData,$question);
             }
            else {
-                $optionNew = array('schedule a meeting', 'exit');
+                if($bot->type == 'lead')
+                {
+                    $optionNew = array('schedule a meeting','exit');
+
+                }else{
+                    $optionNew = array('schedule a meeting');
+
+                }
                 $data = [
                     'message' => "Please Select from following to know more about us...",
                     'question_id' => 0,

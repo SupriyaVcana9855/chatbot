@@ -160,286 +160,286 @@ class ChatBotController extends Controller
         }
         return response()->json(['reply' => $reply]);
     }
-    public function getData($message, $bot)
-    {
-        if ($message == 'schedule a meeting') {
-            $url = '<a target="_blank" href="https://calendly.com/anshul_seo/30min?month=2024-09">click here to schedule a meeting</a>';
-            $data = [
-                'message' => $url,
-                'question_id' => 0,
-                'chat_bot_type' => $bot->type,
-            ];
-            return $data;
-        } else if ($bot->type != 'lead' && $message == 'chat with live agent') {
-            $data = [
-                'message' => "Let me check if any agent is available for you....please wait.",
-                'question_id' => 0,
-                'chat_bot_type' => $bot->type,
-            ];
-            return $data;
-        } elseif ($message == 'exit') {
-            $data = [
-                'message' => "Thanx for the information we will contact you soon.......",
-                'question_id' => 0,
-                'chat_bot_type' => $bot->type,
-            ];
-            return $data;
-        } else {
-          return $data = [];
-        }
-    }
+    // public function getData($message, $bot)
+    // {
+    //     if ($message == 'schedule a meeting') {
+    //         $url = '<a target="_blank" href="https://calendly.com/anshul_seo/30min?month=2024-09">click here to schedule a meeting</a>';
+    //         $data = [
+    //             'message' => $url,
+    //             'question_id' => 0,
+    //             'chat_bot_type' => $bot->type,
+    //         ];
+    //         return $data;
+    //     } else if ($bot->type != 'lead' && $message == 'chat with live agent') {
+    //         $data = [
+    //             'message' => "Let me check if any agent is available for you....please wait.",
+    //             'question_id' => 0,
+    //             'chat_bot_type' => $bot->type,
+    //         ];
+    //         return $data;
+    //     } elseif ($message == 'exit') {
+    //         $data = [
+    //             'message' => "Thanx for the information we will contact you soon.......",
+    //             'question_id' => 0,
+    //             'chat_bot_type' => $bot->type,
+    //         ];
+    //         return $data;
+    //     } else {
+    //       return $data = [];
+    //     }
+    // }
 
-    private function generateReply($message, $bot, $question, $request)
-    {
-        $coloum = '';
-        if ($question) {
-            if ($question->answer_type == 'email') {
-                if (!preg_match('/^[\w._%+-]+@[\w.-]+\.[a-zA-Z]{2,}$/', $message)) {
-                    $data = [
-                        'message' => "Enter a valid email!",
-                        'question_id' => $question->id
-                    ];
-                    return $data;
-                }
-                $coloum = 'email';
-            } else if ($question->answer_type == 'contact') {
-                if (!preg_match('/^\+?[0-9]{10,15}$/', $message)) {
-                    $data = [
-                        'message' => "Enter a valid phone number!",
-                        'question_id' => $question->id
-                    ];
-                    return $data;
-                }
-                $coloum = 'contact';
-            } else if ($question->answer_type == 'name') {
-                if (!preg_match('/^[\p{L} ]+$/u', $message)) {
+    // private function generateReply($message, $bot, $question, $request)
+    // {
+    //     $coloum = '';
+    //     if ($question) {
+    //         if ($question->answer_type == 'email') {
+    //             if (!preg_match('/^[\w._%+-]+@[\w.-]+\.[a-zA-Z]{2,}$/', $message)) {
+    //                 $data = [
+    //                     'message' => "Enter a valid email!",
+    //                     'question_id' => $question->id
+    //                 ];
+    //                 return $data;
+    //             }
+    //             $coloum = 'email';
+    //         } else if ($question->answer_type == 'contact') {
+    //             if (!preg_match('/^\+?[0-9]{10,15}$/', $message)) {
+    //                 $data = [
+    //                     'message' => "Enter a valid phone number!",
+    //                     'question_id' => $question->id
+    //                 ];
+    //                 return $data;
+    //             }
+    //             $coloum = 'contact';
+    //         } else if ($question->answer_type == 'name') {
+    //             if (!preg_match('/^[\p{L} ]+$/u', $message)) {
 
-                    $data = [
-                        'message' => "Enter a valid name!",
-                        'question_id' => $question->id
-                    ];
-                    return $data;
-                }
-                $coloum = 'name';
-            } else {
-                if (!preg_match('/./', $message)) { // Simple check for non-empty string
-                    $data = [
-                        'message' => "Enter a valid data!",
-                        'question_id' => $question->id
-                    ];
-                    return $data;
-                }
-            }
-        }
+    //                 $data = [
+    //                     'message' => "Enter a valid name!",
+    //                     'question_id' => $question->id
+    //                 ];
+    //                 return $data;
+    //             }
+    //             $coloum = 'name';
+    //         } else {
+    //             if (!preg_match('/./', $message)) { // Simple check for non-empty string
+    //                 $data = [
+    //                     'message' => "Enter a valid data!",
+    //                     'question_id' => $question->id
+    //                 ];
+    //                 return $data;
+    //             }
+    //         }
+    //     }
 
-        $botUserData = BotUser::find($request->bot_user_id);
-        if($request->bot_id !='0')
-        {
-            if (!$botUserData) {
-                $botUserData = new BotUser;
-                $botUserData->chat_bot_id = $bot->id;
-                $botUserData->save();
-            } else {
-                if ($coloum != '') {
-                    $botUserData->$coloum = $message;
-                    $botUserData->save();
-                }
-            }
-        }
-        $saveanswer = new QuestionAnswer;
-        $saveanswer->bot_question_id = ($question) ? $question->id : '0';
-        $saveanswer->answer = $message;
-        $saveanswer->user_id = 1; //chat bot ka malik 
-        $saveanswer->chat_bot_id = $bot->id;
-        $saveanswer->status = '1';
-        $saveanswer->bot_user_id = ($botUserData)?$botUserData->id:$request->bot_user_id; // kon chat krne aaya
-        $saveanswer->save();
+    //     $botUserData = BotUser::find($request->bot_user_id);
+    //     if($request->bot_id !='0')
+    //     {
+    //         if (!$botUserData) {
+    //             $botUserData = new BotUser;
+    //             $botUserData->chat_bot_id = $bot->id;
+    //             $botUserData->save();
+    //         } else {
+    //             if ($coloum != '') {
+    //                 $botUserData->$coloum = $message;
+    //                 $botUserData->save();
+    //             }
+    //         }
+    //     }
+    //     $saveanswer = new QuestionAnswer;
+    //     $saveanswer->bot_question_id = ($question) ? $question->id : '0';
+    //     $saveanswer->answer = $message;
+    //     $saveanswer->user_id = 1; //chat bot ka malik 
+    //     $saveanswer->chat_bot_id = $bot->id;
+    //     $saveanswer->status = '1';
+    //     $saveanswer->bot_user_id = ($botUserData)?$botUserData->id:$request->bot_user_id; // kon chat krne aaya
+    //     $saveanswer->save();
 
-        $questionsIds = QuestionAnswer::where('chat_bot_id', $bot->id)
-            ->where('status', '1')
-            ->where('bot_question_id', '!=', '0')
-            ->pluck('bot_question_id')
-            ->toArray();
-        $questionsIds = array_unique($questionsIds);
-        if ($bot->type == 'lead') {
-            if($request->option_id != '')
-            {
-                $questions = BotQuestion::where(function ($query) use ($bot, $request) {
-                    // Match chat_bot_id with the specific bot id or global (0)
-                    $query->where('chat_bot_id', $bot->id)
-                        ->orWhere('chat_bot_id', 0);
-                        })
-                ->whereNotIn('id', $questionsIds)
-                ->where('option_id',$request->option_id) 
-                ->first();
-            }else{
-                $questions = BotQuestion::where(function ($query) use ($bot,$request) {
-                    $query->where('chat_bot_id', $bot->id)
-                        ->orWhere('chat_bot_id', 0);
-                })
-                ->whereNotIn('id', $questionsIds)
-                ->first();
-            }
-        } else {
+    //     $questionsIds = QuestionAnswer::where('chat_bot_id', $bot->id)
+    //         ->where('status', '1')
+    //         ->where('bot_question_id', '!=', '0')
+    //         ->pluck('bot_question_id')
+    //         ->toArray();
+    //     $questionsIds = array_unique($questionsIds);
+    //     if ($bot->type == 'lead') {
+    //         if($request->option_id != '')
+    //         {
+    //             $questions = BotQuestion::where(function ($query) use ($bot, $request) {
+    //                 // Match chat_bot_id with the specific bot id or global (0)
+    //                 $query->where('chat_bot_id', $bot->id)
+    //                     ->orWhere('chat_bot_id', 0);
+    //                     })
+    //             ->whereNotIn('id', $questionsIds)
+    //             ->where('option_id',$request->option_id) 
+    //             ->first();
+    //         }else{
+    //             $questions = BotQuestion::where(function ($query) use ($bot,$request) {
+    //                 $query->where('chat_bot_id', $bot->id)
+    //                     ->orWhere('chat_bot_id', 0);
+    //             })
+    //             ->whereNotIn('id', $questionsIds)
+    //             ->first();
+    //         }
+    //     } else {
 
-            $data = BotQuestion::where(function ($query) use ($bot) {
-                $query->Where('chat_bot_id', 0);
-            })
-            ->whereNotIn('id', $questionsIds)
-            ->first();
+    //         $data = BotQuestion::where(function ($query) use ($bot) {
+    //             $query->Where('chat_bot_id', 0);
+    //         })
+    //         ->whereNotIn('id', $questionsIds)
+    //         ->first();
         
 
-            if ($data) {
-                $length = 0;
-                $questions = $data;
-            } else {
-                $length = 1;
-                $questions = BotQuestion::where(function ($query) use ($bot) {
-                    $query->where('chat_bot_id', $bot->id);
-                })
-                ->whereNotIn('id', $questionsIds)
-                ->get();
-            }
-        }
-        $getAllOptions = '';
-        if ($questions) {
-            $arr = [];
-            if ($bot->type == 'lead') {
-                $questionNew = $questions->question;
-                $getAllOptions = QuestionOption::where('bot_question_id', $questions->id)
-                ->pluck('id');
-                $optionNew = ($questions->options) ? $questions->options : null;
+    //         if ($data) {
+    //             $length = 0;
+    //             $questions = $data;
+    //         } else {
+    //             $length = 1;
+    //             $questions = BotQuestion::where(function ($query) use ($bot) {
+    //                 $query->where('chat_bot_id', $bot->id);
+    //             })
+    //             ->whereNotIn('id', $questionsIds)
+    //             ->get();
+    //         }
+    //     }
+    //     $getAllOptions = '';
+    //     if ($questions) {
+    //         $arr = [];
+    //         if ($bot->type == 'lead') {
+    //             $questionNew = $questions->question;
+    //             $getAllOptions = QuestionOption::where('bot_question_id', $questions->id)
+    //             ->pluck('id');
+    //             $optionNew = ($questions->options) ? $questions->options : null;
               
 
-                $questionId = $questions->id;
-            } else {
-                $questionId=[];
-                if ($length > 0) {
-                    if ($message == 'schedule a meeting') {
-                        //add anchor tag linkis not working
-                        $url = '<a href="https://calendly.com/anshul_seo/30min?month=2024-09">click here to schedule a meeting</a>';
-                        $data = [
-                            'message' => $url,
-                            'question_id' => 0,
-                        ];
-                        return $data;
-                    } else if ($message == 'chat with live agent') {
+    //             $questionId = $questions->id;
+    //         } else {
+    //             $questionId=[];
+    //             if ($length > 0) {
+    //                 if ($message == 'schedule a meeting') {
+    //                     //add anchor tag linkis not working
+    //                     $url = '<a href="https://calendly.com/anshul_seo/30min?month=2024-09">click here to schedule a meeting</a>';
+    //                     $data = [
+    //                         'message' => $url,
+    //                         'question_id' => 0,
+    //                     ];
+    //                     return $data;
+    //                 } else if ($message == 'chat with live agent') {
 
-                        // add twilio acount and end message to the livwe agent using agent function.
-                        $data = [
-                            'message' => "Let me check if any agent is available for you....please wait.",
-                            'question_id' => 0,
-                        ];
-                        return $data;
-                    } elseif ($message == 'exit') {
-                        $data = [
-                            'message' => "Thanx for the information we will contact you soon...",
-                            'question_id' => 0,
-                        ];
-                        return $data;
-                    } else {
+    //                     // add twilio acount and end message to the livwe agent using agent function.
+    //                     $data = [
+    //                         'message' => "Let me check if any agent is available for you....please wait.",
+    //                         'question_id' => 0,
+    //                     ];
+    //                     return $data;
+    //                 } elseif ($message == 'exit') {
+    //                     $data = [
+    //                         'message' => "Thanx for the information we will contact you soon...",
+    //                         'question_id' => 0,
+    //                     ];
+    //                     return $data;
+    //                 } else {
 
-                        $botAnswer = BotQuestion::where('question', 'LIKE', '%' . $message . '%')->first();
+    //                     $botAnswer = BotQuestion::where('question', 'LIKE', '%' . $message . '%')->first();
                       
 
-                        $questionNew = ($botAnswer) ? $botAnswer->answer : '' . '<br><br>Please select to know more about our website.....';
+    //                     $questionNew = ($botAnswer) ? $botAnswer->answer : '' . '<br><br>Please select to know more about our website.....';
 
-                        foreach ($questions as $ques) {
-                            //will add the question only
+    //                     foreach ($questions as $ques) {
+    //                         //will add the question only
 
-                            $arr[] = $ques->question;
-                            $questionId[] = $ques->id;
-                        }
-                    // dd($questionId);
+    //                         $arr[] = $ques->question;
+    //                         $questionId[] = $ques->id;
+    //                     }
+    //                 // dd($questionId);
 
-                        $optionNew = $arr;
-                        if (!count($optionNew)) {
-                            if($botAnswer)
-                            {
-                                if($botAnswer->answer)
-                                {
-                                    $optionNew = array('Please select to know more about our website.....','schedule a meeting', 'chat with live agent');
-                                }else
-                                {
-                                    $optionNew = array('schedule a meeting', 'chat with live agent');
-                                }
-                            }else
-                            {
-                                $optionNew = array('schedule a meeting', 'chat with live agent');
-                            }
+    //                     $optionNew = $arr;
+    //                     if (!count($optionNew)) {
+    //                         if($botAnswer)
+    //                         {
+    //                             if($botAnswer->answer)
+    //                             {
+    //                                 $optionNew = array('Please select to know more about our website.....','schedule a meeting', 'chat with live agent');
+    //                             }else
+    //                             {
+    //                                 $optionNew = array('schedule a meeting', 'chat with live agent');
+    //                             }
+    //                         }else
+    //                         {
+    //                             $optionNew = array('schedule a meeting', 'chat with live agent');
+    //                         }
                            
-                        }
-                    }
-                } else {
-                    // dd('dsfsdfdsfgd');
-                    $questionNew = $questions->question;
-                    $optionNew = ($questions->options) ? $questions->options : null;
-                    $questionId = $questions->id;
-                }
-            }
-          if($optionNew)
-          {
-            array_push($optionNew, "exit");
-          }
-          if($questions)
-          {
-            $newQuestionId = $questionId;
-          }else
-          {
-            $newQuestionId = '';
-          }
-            $data = [
-                'message' => $questionNew,
-                'question_id' => ($questions->count() > 0) ? $questionId : '',
-                'bot_user_id' => ($botUserData)?$botUserData->id:'',
-                'chat_bot_type' => $bot->type,
-                'options' =>  $optionNew,
-                'questions' => $questions,
-                'question_option_ids' => ($getAllOptions) ?$getAllOptions:$newQuestionId,
-            ];
-        } else {
+    //                     }
+    //                 }
+    //             } else {
+    //                 // dd('dsfsdfdsfgd');
+    //                 $questionNew = $questions->question;
+    //                 $optionNew = ($questions->options) ? $questions->options : null;
+    //                 $questionId = $questions->id;
+    //             }
+    //         }
+    //       if($optionNew)
+    //       {
+    //         array_push($optionNew, "exit");
+    //       }
+    //       if($questions)
+    //       {
+    //         $newQuestionId = $questionId;
+    //       }else
+    //       {
+    //         $newQuestionId = '';
+    //       }
+    //         $data = [
+    //             'message' => $questionNew,
+    //             'question_id' => ($questions->count() > 0) ? $questionId : '',
+    //             'bot_user_id' => ($botUserData)?$botUserData->id:'',
+    //             'chat_bot_type' => $bot->type,
+    //             'options' =>  $optionNew,
+    //             'questions' => $questions,
+    //             'question_option_ids' => ($getAllOptions) ?$getAllOptions:$newQuestionId,
+    //         ];
+    //     } else {
 
-            if ($message == 'schedule a meeting') {
-                //add anchor tag linkis not working
-                $url = '<a href="https://calendly.com/anshul_seo/30min?month=2024-09">click here to schedule a meeting</a>';
-                $data = [
-                    'message' => $url,
-                    'question_id' => 0,
-                ];
-            } else if ($message == 'chat with live agent') {
-                $data = [
-                    'message' => "Let me check if any agent is available for you....please wait.",
-                    'question_id' => 0,
-                ];
-            } elseif ($message == 'exit') {
-                $data = [
-                    'message' => "Thanx for the information we will contact you soon.......",
-                    'question_id' => 0,
-                    'chat_bot_type' => $bot->type,
+    //         if ($message == 'schedule a meeting') {
+    //             //add anchor tag linkis not working
+    //             $url = '<a href="https://calendly.com/anshul_seo/30min?month=2024-09">click here to schedule a meeting</a>';
+    //             $data = [
+    //                 'message' => $url,
+    //                 'question_id' => 0,
+    //             ];
+    //         } else if ($message == 'chat with live agent') {
+    //             $data = [
+    //                 'message' => "Let me check if any agent is available for you....please wait.",
+    //                 'question_id' => 0,
+    //             ];
+    //         } elseif ($message == 'exit') {
+    //             $data = [
+    //                 'message' => "Thanx for the information we will contact you soon.......",
+    //                 'question_id' => 0,
+    //                 'chat_bot_type' => $bot->type,
     
-                ];
-                return $data;
-            } else {
-                if($bot->type == 'lead')
-                {
-                    $optionNew = array('schedule a meeting','exit');
+    //             ];
+    //             return $data;
+    //         } else {
+    //             if($bot->type == 'lead')
+    //             {
+    //                 $optionNew = array('schedule a meeting','exit');
 
-                }else{
-                    $optionNew = array('schedule a meeting');
+    //             }else{
+    //                 $optionNew = array('schedule a meeting');
 
-                }
-                $data = [
-                    'message' => "Please Select from following to know more about us...",
-                    'question_id' => 0,
-                    'chat_bot_type' => $bot->type,
-                    'options' =>  $optionNew,
+    //             }
+    //             $data = [
+    //                 'message' => "Please Select from following to know more about us...",
+    //                 'question_id' => 0,
+    //                 'chat_bot_type' => $bot->type,
+    //                 'options' =>  $optionNew,
     
-                ];
-                return $data;
-            }
-        }
-        return $data;
-    }
+    //             ];
+    //             return $data;
+    //         }
+    //     }
+    //     return $data;
+    // }
 
 
     public function scriptchatbots($id)

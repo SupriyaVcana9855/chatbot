@@ -281,11 +281,14 @@ class ChatBotController extends Controller
                 ->first();
             }
         } else {
+
             $data = BotQuestion::where(function ($query) use ($bot) {
                 $query->Where('chat_bot_id', 0);
             })
             ->whereNotIn('id', $questionsIds)
             ->first();
+        
+
             if ($data) {
                 $length = 0;
                 $questions = $data;
@@ -310,8 +313,8 @@ class ChatBotController extends Controller
 
                 $questionId = $questions->id;
             } else {
+                $questionId=[];
                 if ($length > 0) {
-
                     if ($message == 'schedule a meeting') {
                         //add anchor tag linkis not working
                         $url = '<a href="https://calendly.com/anshul_seo/30min?month=2024-09">click here to schedule a meeting</a>';
@@ -335,9 +338,11 @@ class ChatBotController extends Controller
                         ];
                         return $data;
                     } else {
-                        $botAnswer = BotQuestion::where('question', 'LIKE', '%' . $message . '%')->first();
-                        $questionNew = ($botAnswer) ? $botAnswer->answer : '' . '<br><br>Please select to know more about our website.....';
 
+                        $botAnswer = BotQuestion::where('question', 'LIKE', '%' . $message . '%')->first();
+                      
+
+                        $questionNew = ($botAnswer) ? $botAnswer->answer : '' . '<br><br>Please select to know more about our website.....';
 
                         foreach ($questions as $ques) {
                             //will add the question only
@@ -345,25 +350,28 @@ class ChatBotController extends Controller
                             $arr[] = $ques->question;
                             $questionId[] = $ques->id;
                         }
+                    // dd($questionId);
+
                         $optionNew = $arr;
                         if (!count($optionNew)) {
                             if($botAnswer)
                             {
                                 if($botAnswer->answer)
                                 {
-                                    $optionNew = array('Please select to know more about our website.....','schedule a meeting', 'chat with live agent', 'exit');
+                                    $optionNew = array('Please select to know more about our website.....','schedule a meeting', 'chat with live agent');
                                 }else
                                 {
-                                    $optionNew = array('schedule a meeting', 'chat with live agent', 'exit');
+                                    $optionNew = array('schedule a meeting', 'chat with live agent');
                                 }
                             }else
                             {
-                                $optionNew = array('schedule a meeting', 'chat with live agent', 'exit');
+                                $optionNew = array('schedule a meeting', 'chat with live agent');
                             }
                            
                         }
                     }
                 } else {
+                    // dd('dsfsdfdsfgd');
                     $questionNew = $questions->question;
                     $optionNew = ($questions->options) ? $questions->options : null;
                     $questionId = $questions->id;
@@ -373,6 +381,13 @@ class ChatBotController extends Controller
           {
             array_push($optionNew, "exit");
           }
+          if($questions)
+          {
+            $newQuestionId = $questionId;
+          }else
+          {
+            $newQuestionId = '';
+          }
             $data = [
                 'message' => $questionNew,
                 'question_id' => ($questions->count() > 0) ? $questionId : '',
@@ -380,7 +395,7 @@ class ChatBotController extends Controller
                 'chat_bot_type' => $bot->type,
                 'options' =>  $optionNew,
                 'questions' => $questions,
-                'question_option_ids' => $getAllOptions ?? ($questionId ?? ''),
+                'question_option_ids' => ($getAllOptions) ?$getAllOptions:$newQuestionId,
             ];
         } else {
 
@@ -405,7 +420,14 @@ class ChatBotController extends Controller
                 ];
                 return $data;
             } else {
-                $optionNew = array('schedule a meeting', 'exit');
+                if($bot->type == 'lead')
+                {
+                    $optionNew = array('schedule a meeting','exit');
+
+                }else{
+                    $optionNew = array('schedule a meeting');
+
+                }
                 $data = [
                     'message' => "Please Select from following to know more about us...",
                     'question_id' => 0,

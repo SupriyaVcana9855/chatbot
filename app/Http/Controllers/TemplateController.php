@@ -130,6 +130,7 @@ class TemplateController extends Controller
         $tempData->font_size = $request->font_size;
         $tempData->button_design = $radiusValueData;
         $tempData->text_alignment = $request->text_alignment;
+        $tempData->message_bubble = $request->message_bubble;
         $tempData->bot_position = $request->position;
         $tempData->radius = $radiusValueData;
         $tempData->main_color = $request->header_color;
@@ -143,7 +144,7 @@ class TemplateController extends Controller
         $tempData->temp_description = $request->temp_description;
     
         // Save the template data
-        $tempData->save();
+        $tempData->save(); 
     
         // Return success or error message based on save result
         if ($tempData) {

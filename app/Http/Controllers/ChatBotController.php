@@ -463,6 +463,18 @@ class ChatBotController extends Controller
         if (!$chatbot) {
             return response('Chatbot not found', 404);
         }
+
+        $chatRadius = '';
+
+        if ($chatbot->message_bubble == '3') {
+            $chatRadius = '36.5px';
+        } else if ($chatbot->message_bubble == '2') {
+            $chatRadius = '15px 15px 15px 0px';
+        } else {
+            $chatRadius = '20px';
+        }
+
+
         $csrfToken = csrf_token();
         $script = "(function() {
             // Function to inject the chatbot HTML and CSS into the page
@@ -508,7 +520,7 @@ class ChatBotController extends Controller
                                     </div>
                                     <div class='chat-body'>
                                         <div class='message bot'>
-                                            <div class='text'><h4 style='font-size: 16px;
+                                            <div class='text'><h4 style='font-size: 26px;
                                                 font-weight: 600'>" . htmlspecialchars($chatbot->intro_message) . "</h4></div>
                                         </div>
                                         " . ($questions ? "
@@ -648,29 +660,35 @@ class ChatBotController extends Controller
                                     margin-right: 0;
                                     background-color: #014263;
                                 }
+
+                               
                                 
                                 .message.bot .text {
                                     width: 70%;
                                     padding: 10px;
                                     background-color:$chatbot->question_color;
-                                    border-radius: $chatbot->radius;
+                                    border-radius: $chatRadius;
                                     position: relative;
                                     color: white;
                                     font-weight: 400;
                                     line-height: 25px;
                                     word-wrap: break-word;
+                                    font-family: $chatbot->font;
+                                    font-size: $chatbot->font_size;
                                 }
                                 
                                 .message.user .text {
                                     background-color: $chatbot->answer_color;
                                     color: white;
-                                    border-radius: $chatbot->radius;
+                                    border-radius: $chatRadius;
                                     width: 70% !important;
                                     padding: 10px;
                                     position: relative;
                                     font-weight: 400;
                                     line-height: 25px;
                                     word-wrap: break-word;
+                                    font-family: $chatbot->font;
+                                    font-size: $chatbot->font_size;
                                 }
                                 
                                 .chat-footer {

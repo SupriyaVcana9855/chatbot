@@ -141,33 +141,50 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
 <script>
-    $(document).ready(function() {
-        const temp = <?php echo json_encode($templates); ?>;
-        // console.log(temp);
+ $(document).ready(function() {
+    const temp = <?php echo json_encode($templates); ?>;
+    console.log(temp.message_bubble);
 
-        // Apply the font, font size, and alignment to the chat container
-        $('.chat-container-temp').css({
-            'font-family': temp.font,
-            'font-size': temp.font_size,
-            'text-align': temp.text_alignment,
-            'background-color': temp.text_color,
-            'color': temp.text_color,
-        });
+    // Set the border radius based on message_bubble value
+    let tempRadius;
+    if (temp.message_bubble == 3) {
+        tempRadius = '36.5px';
+    } else if (temp.message_bubble == 2) {
+        tempRadius = '15px 15px 15px 0px';
+    } else {
+        tempRadius = '20px';
+    }
 
-        // Apply the styles for bot messages (question_color)
-        $('.message.bot .text').css({
-            'background-color': temp.question_color,
-            'border-radius': temp.radius,
-            'color': temp.text_color,
-        });
+    // Apply the font, font size, and alignment to the chat container
+    $('.chat-container-temp').css({
+        'font-family': temp.font,
+        'font-size': temp.font_size,
+        'text-align': temp.text_alignment,
+        'background-color': temp.text_color,
+        'color': temp.text_color,
+    });
 
-        // Apply the styles for user messages (answer_color)
-        $('.message.user .text').css({
-            'background-color': temp.answer_color,
-            'border-radius':  temp.radius,
-            'color': temp.text_color,
-        });
+    $('.chat-header').css({
+        'background': temp.header_color,
+    });
 
+    // Apply the styles for bot messages
+    $('.message.bot .text').css({
+        'background-color': temp.question_color,
+        'border-radius': tempRadius,
+        'color': temp.text_color,
+        'font-family': temp.font,
+        'font-size': temp.font_size,
+    });
+
+    // Apply the styles for user messages
+    $('.message.user .text').css({
+        'background-color': temp.answer_color,
+        'border-radius': tempRadius,
+        'color': temp.text_color,
+        'font-family': temp.font,
+        'font-size': temp.font_size,
+    });
         // Apply border-radius to buttons
         $('.chat-btn button').css({
             'padding': '11px 21px',

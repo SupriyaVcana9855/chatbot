@@ -158,7 +158,7 @@
 }
 
 .chat-header {
-    background: linear-gradient(90deg, #001A2B 0%, #005791 100%);
+    /* background: linear-gradient(90deg, #001A2B 0%, #005791 100%); */
     color: white;
     padding: 10px;
     border-top-left-radius: 10px;

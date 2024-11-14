@@ -23,7 +23,7 @@
                             </div>
                             <div class="input-group flex-nowrap mt-3">
                                 <input type="text" class="form-control" placeholder="Bot Name"
-                                    aria-label="Bot Name" name="name" value="{{$tempData->name ?? ''}}" aria-describedby="addon-wrapping">
+                                    aria-label="Bot Name" name="name" value="{{old('name',$tempData->name ?? '')}}" aria-describedby="addon-wrapping">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="addon-wrapping"><i
                                             class="bi bi-info-circle-fill"></i>
@@ -37,7 +37,7 @@
                             <span class="text-danger">{{ $message }}</span>
                             @enderror
                             <div class="input-group flex-nowrap mt-3">
-                                <input type="text" class="form-control" value="{{$tempData->intro_message ?? ''}}" placeholder="Welcome Text"
+                                <input type="text" class="form-control" value="{{old('intro_message',$tempData->intro_message ?? '')}}" placeholder="Welcome Text"
                                     aria-label="Welcome Text" name="intro_message" aria-describedby="addon-wrapping">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="addon-wrapping"><i
@@ -50,7 +50,7 @@
                             </div>
                             <div class="input-group flex-nowrap mt-3">
                                 <input type="text" class="form-control" placeholder="Bot Description"
-                                    aria-label="Bot Description" value="{{$tempData->description ?? ''}}" name="description" aria-describedby="addon-wrapping">
+                                    aria-label="Bot Description" value="{{old('description' ,$tempData->description ?? '')}}" name="description" aria-describedby="addon-wrapping">
                                 <div class="input-group-prepend">
                                     <span class="input-group-text" id="addon-wrapping"><i
                                             class="bi bi-info-circle-fill"></i>
@@ -61,89 +61,94 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <select class="form-select mt-3" name="font" aria-label="Choose A Font Family">
+                                <select class="form-select mt-3" name="font" aria-label="Choose A Font Family" required>
                                     <option selected disabled>Choose A Font Family</option>
+
                                     <option disabled style="font-weight: bold; background-color: #EEEEEE">Serif Fonts</option>
                                     <option value="Georgia,serif" style="font-family: Georgia, serif;"
-                                        @selected(isset($tempData) && $tempData->font === 'Georgia,serif')>
+                                        @selected(old('font')=='Georgia,serif' || (isset($tempData) && $tempData->font === 'Georgia,serif'))>
                                         Georgia
                                     </option>
                                     <option value="Palatino Linotype,Book Antiqua,Palatino,serif" style="font-family: Palatino Linotype,Book Antiqua,Palatino,serif"
-                                        @selected(isset($tempData) && $tempData->font === 'Palatino Linotype,Book Antiqua,Palatino,serif')>
+                                        @selected(old('font')=='Palatino Linotype,Book Antiqua,Palatino,serif' || (isset($tempData) && $tempData->font === 'Palatino Linotype,Book Antiqua,Palatino,serif'))>
                                         Palatino Linotype
                                     </option>
                                     <option value="Times New Roman,Times,serif" style="font-family: Times New Roman,Times,serif"
-                                        @selected(isset($tempData) && $tempData->font === 'Times New Roman,Times,serif')>
+                                        @selected(old('font')=='Times New Roman,Times,serif' || (isset($tempData) && $tempData->font === 'Times New Roman,Times,serif'))>
                                         Times New Roman
                                     </option>
+
                                     <option disabled style="font-weight: bold; background-color: #EEEEEE">Sans-Serif Fonts</option>
                                     <option value="Arial,Helvetica,sans-serif" style="font-family: Arial,Helvetica,sans-serif"
-                                        @selected(isset($tempData) && $tempData->font === 'Arial,Helvetica,sans-serif')>
+                                        @selected(old('font')=='Arial,Helvetica,sans-serif' || (isset($tempData) && $tempData->font === 'Arial,Helvetica,sans-serif'))>
                                         Arial
                                     </option>
                                     <option value="Arial Black,Gadget,sans-serif" style="font-family: Arial Black,Gadget,sans-serif"
-                                        @selected(isset($tempData) && $tempData->font === 'Arial Black,Gadget,sans-serif')>
+                                        @selected(old('font')=='Arial Black,Gadget,sans-serif' || (isset($tempData) && $tempData->font === 'Arial Black,Gadget,sans-serif'))>
                                         Arial Black
                                     </option>
                                     <option value="Comic Sans MS,cursive,sans-serif" style="font-family: Comic Sans MS,cursive,sans-serif"
-                                        @selected(isset($tempData) && $tempData->font === 'Comic Sans MS,cursive,sans-serif')>
+                                        @selected(old('font')=='Comic Sans MS,cursive,sans-serif' || (isset($tempData) && $tempData->font === 'Comic Sans MS,cursive,sans-serif'))>
                                         Comic Sans MS
                                     </option>
                                     <option value="Impact,Charcoal,sans-serif" style="font-family: Impact,Charcoal,sans-serif"
-                                        @selected(isset($tempData) && $tempData->font === 'Impact,Charcoal,sans-serif')>
+                                        @selected(old('font')=='Impact,Charcoal,sans-serif' || (isset($tempData) && $tempData->font === 'Impact,Charcoal,sans-serif'))>
                                         Impact
                                     </option>
                                     <option value="Lucida Sans Unicode,Lucida Grande,sans-serif" style="font-family: Lucida Sans Unicode,Lucida Grande,sans-serif"
-                                        @selected(isset($tempData) && $tempData->font === 'Lucida Sans Unicode,Lucida Grande,sans-serif')>
+                                        @selected(old('font')=='Lucida Sans Unicode,Lucida Grande,sans-serif' || (isset($tempData) && $tempData->font === 'Lucida Sans Unicode,Lucida Grande,sans-serif'))>
                                         Lucida Sans Unicode
                                     </option>
                                     <option value="Tahoma,Geneva,sans-serif" style="font-family: Tahoma,Geneva,sans-serif"
-                                        @selected(isset($tempData) && $tempData->font === 'Tahoma,Geneva,sans-serif')>
+                                        @selected(old('font')=='Tahoma,Geneva,sans-serif' || (isset($tempData) && $tempData->font === 'Tahoma,Geneva,sans-serif'))>
                                         Tahoma
                                     </option>
                                     <option value="Trebuchet MS,Helvetica,sans-serif" style="font-family: Trebuchet MS,Helvetica,sans-serif"
-                                        @selected(isset($tempData) && $tempData->font === 'Trebuchet MS,Helvetica,sans-serif')>
+                                        @selected(old('font')=='Trebuchet MS,Helvetica,sans-serif' || (isset($tempData) && $tempData->font === 'Trebuchet MS,Helvetica,sans-serif'))>
                                         Trebuchet MS
                                     </option>
                                     <option value="Verdana,Geneva,sans-serif" style="font-family: Verdana,Geneva,sans-serif"
-                                        @selected(isset($tempData) && $tempData->font === 'Verdana,Geneva,sans-serif')>
+                                        @selected(old('font')=='Verdana,Geneva,sans-serif' || (isset($tempData) && $tempData->font === 'Verdana,Geneva,sans-serif'))>
                                         Verdana
                                     </option>
+
                                     <option disabled style="font-weight: bold; background-color: #EEEEEE">Monospace Fonts</option>
                                     <option value="Courier New,Courier,monospace" style="font-family: Courier New,Courier,monospace"
-                                        @selected(isset($tempData) && $tempData->font === 'Courier New,Courier,monospace')>
+                                        @selected(old('font')=='Courier New,Courier,monospace' || (isset($tempData) && $tempData->font === 'Courier New,Courier,monospace'))>
                                         Courier New
                                     </option>
                                     <option value="Lucida Console,Monaco,monospace" style="font-family: Lucida Console,Monaco,monospace"
-                                        @selected(isset($tempData) && $tempData->font === 'Lucida Console,Monaco,monospace')>
+                                        @selected(old('font')=='Lucida Console,Monaco,monospace' || (isset($tempData) && $tempData->font === 'Lucida Console,Monaco,monospace'))>
                                         Lucida Console
                                     </option>
                                 </select>
+
                                 @error('font')
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                             <div class="row">
-                                <select class="form-select mt-3" name="font_size" aria-label="Font Size">
+                                <select class="form-select mt-3" name="font_size" aria-label="Font Size" required>
                                     <option selected disabled>Font Size</option>
-                                    <option value="8px" @selected(isset($tempData) && $tempData->font_size === '8px')> 8px</option>
-                                    <option value="10px" @selected(isset($tempData) && $tempData->font_size === '10px')> 10px</option>
-                                    <option value="12px" @selected(isset($tempData) && $tempData->font_size === '12px')> 12px</option>
-                                    <option value="14px" @selected(isset($tempData) && $tempData->font_size === '14px')> 14px </option>
-                                    <option value="16px" @selected(isset($tempData) && $tempData->font_size === '16px')> 16px </option>
-                                    <option value="20px" @selected(isset($tempData) && $tempData->font_size === '20px')> 20px </option>
-                                    <option value="24px" @selected(isset($tempData) && $tempData->font_size === '24px')> 24px </option>
-                                    <option value="28px" @selected(isset($tempData) && $tempData->font_size === '28px')> 28px </option>
-                                    <option value="34px" @selected(isset($tempData) && $tempData->font_size === '34px')> 34px </option>
-                                    <option value="40px" @selected(isset($tempData) && $tempData->font_size === '40px')> 40px </option>
-                                    <option value="46px" @selected(isset($tempData) && $tempData->font_size === '46px')> 46px </option>
-                                    <option value="44px" @selected(isset($tempData) && $tempData->font_size === '44px')> 44px </option>
-                                    <option value="66px" @selected(isset($tempData) && $tempData->font_size === '66px')> 66px </option>
-                                    <option value="88px" @selected(isset($tempData) && $tempData->font_size === '88px')> 88px </option>
+                                    <option value="8px" @selected(old('font_size')=='8px' || (isset($tempData) && $tempData->font_size === '8px'))>8px</option>
+                                    <option value="10px" @selected(old('font_size')=='10px' || (isset($tempData) && $tempData->font_size === '10px'))>10px</option>
+                                    <option value="12px" @selected(old('font_size')=='12px' || (isset($tempData) && $tempData->font_size === '12px'))>12px</option>
+                                    <option value="14px" @selected(old('font_size')=='14px' || (isset($tempData) && $tempData->font_size === '14px'))>14px</option>
+                                    <option value="16px" @selected(old('font_size')=='16px' || (isset($tempData) && $tempData->font_size === '16px'))>16px</option>
+                                    <option value="20px" @selected(old('font_size')=='20px' || (isset($tempData) && $tempData->font_size === '20px'))>20px</option>
+                                    <option value="24px" @selected(old('font_size')=='24px' || (isset($tempData) && $tempData->font_size === '24px'))>24px</option>
+                                    <option value="28px" @selected(old('font_size')=='28px' || (isset($tempData) && $tempData->font_size === '28px'))>28px</option>
+                                    <option value="34px" @selected(old('font_size')=='34px' || (isset($tempData) && $tempData->font_size === '34px'))>34px</option>
+                                    <option value="40px" @selected(old('font_size')=='40px' || (isset($tempData) && $tempData->font_size === '40px'))>40px</option>
+                                    <option value="46px" @selected(old('font_size')=='46px' || (isset($tempData) && $tempData->font_size === '46px'))>46px</option>
+                                    <option value="44px" @selected(old('font_size')=='44px' || (isset($tempData) && $tempData->font_size === '44px'))>44px</option>
+                                    <option value="66px" @selected(old('font_size')=='66px' || (isset($tempData) && $tempData->font_size === '66px'))>66px</option>
+                                    <option value="88px" @selected(old('font_size')=='88px' || (isset($tempData) && $tempData->font_size === '88px'))>88px</option>
                                 </select>
+
                                 @error('font_size')
-                            <span class="text-danger">{{ $message }}</span>
-                            @enderror
+                                <span class="text-danger">{{ $message }}</span>
+                                @enderror
                             </div>
                         </div>
                     </div>
@@ -168,10 +173,13 @@
                                         <h4>Avatar</h4>
                                         <div class="imgarea mt-1">
                                             <input class="clickImage" type="file" name="logo" style="display:none;">
-                                            <input type="hidden" id="selectedAvatar" name="selected_avatar" value="">
+                                            <!-- Set the default selected avatar here -->
+                                            <input type="hidden" id="selectedAvatar" name="selected_avatar" value="{{ asset('assets/images/setup/2.avif') }}">
+                                            
+                                            <!-- Set a default selected class for styling -->
                                             <img class="selectImg" src="{{ asset('assets/images/setup/fistic.png') }}" alt="">
                                             <img src="{{ asset('assets/images/setup/1.avif') }}" alt="">
-                                            <img src="{{ asset('assets/images/setup/2.avif') }}" alt="">
+                                            <img src="{{ asset('assets/images/setup/2.avif') }}" class="default-avatar" alt=""> <!-- Default Image -->
                                             <img src="{{ asset('assets/images/setup/3.avif') }}" alt="">
                                             <img src="{{ asset('assets/images/setup/4.avif') }}" alt="">
                                             <img src="{{ asset('assets/images/setup/5.avif') }}" alt="">
@@ -184,6 +192,7 @@
                                         </div>
                                     </div>
                                 </div>
+
                             </div>
 
                         </div>
@@ -195,6 +204,7 @@
                         <div class="boxinner">
                             <input type="hidden" name="form_type" value="form3">
                             <input type="hidden" id="button_design" name="button_design" value="">
+                            <input type="hidden" id="message_bubble" name="message_bubble" value="1">
                             <input type="hidden" id="text_alignment" name="text_alignment" value="">
                             <input type="hidden" id="bot_position" name="position" data-attr="left" value="">
                             <div class="textbox">
@@ -363,7 +373,7 @@
                                 <div class="input-group flex-nowrap mt-3">
                                     <label for="">Title</label>
                                 </div>
-                                <input type="text" value="{{$tempData->temp_title ?? ''}}" class="form-control" placeholder="title" name="temp_title">
+                                <input type="text" value="{{old('temp_title',$tempData->temp_title ?? '')}}" class="form-control" placeholder="title" name="temp_title">
                                 @error('temp_title')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -372,8 +382,8 @@
                                 <div class="input-group flex-nowrap mt-3">
                                     <label for="">Description</label>
                                 </div>
-                                <input type="text" class="form-control" value="{{$tempData->temp_description ?? ''}}" placeholder="Description"
-                                    name="temp_description">
+                                <textarea class="form-control" placeholder="Description" name="temp_description">{{ old('temp_description', $tempData->temp_description ?? '') }}</textarea>
+
                                 @error('temp_description')
                                 <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -417,6 +427,7 @@
         $('.button_design').on('click', function() {
             var design = $(this).val();
             $('#button_design').val(design);
+            $('#message_bubble').val(design);
         });
         $('.text_alignment').on('click', function() {
             var alignment = $(this).val();
